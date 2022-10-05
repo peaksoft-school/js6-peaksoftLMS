@@ -1,5 +1,11 @@
 import React from 'react'
+import GroupCard from './components/UI/GroupCard'
 
-export const App = () => {
-   return <div>App</div>
+function App() {
+   return (
+      <div>
+         <GroupCard />
+      </div>
+   )
 }
+export default App
