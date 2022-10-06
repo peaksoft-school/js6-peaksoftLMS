@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function TextArea() {
+function TextArea({ placeholder, name }) {
    return (
       <TextAreaContainer>
-         <TextAreaIn placeholder="Описания группы" name="text" />
+         <TextAreaIn placeholder={placeholder} name={name} />
       </TextAreaContainer>
    )
 }
@@ -25,9 +25,13 @@ const TextAreaIn = styled.textarea`
    font-weight: 400;
    font-size: 16px;
    line-height: 22px;
-   color: #8d949e;
+   color: black;
    margin: 10px 18px;
    border: none;
    outline: none;
    resize: none;
+   ::placeholder {
+      color: #8d949e;
+      font-size: 16px;
+   }
 `
