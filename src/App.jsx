@@ -1,5 +1,10 @@
 import React from 'react'
+import TextArea from './components/UI/TextArea'
 
 export const App = () => {
-   return <div>App</div>
+   return (
+      <div>
+         <TextArea />
+      </div>
+   )
 }
