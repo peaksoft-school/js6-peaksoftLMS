@@ -1,29 +1,22 @@
-import { Button, Grid, Modal, styled, Typography } from '@mui/material/'
-import { useState } from 'react'
+import { Grid, Modal, styled, Typography } from '@mui/material/'
 
 export const ModalWindow = ({
    modalTitle,
    bodyContent,
    headerContent,
    footerContent,
+   open,
+   handleClose,
 }) => {
-   const [open, setOpen] = useState(false)
-   const handleOpen = () => setOpen(true)
-   const handleClose = () => setOpen(false)
    return (
-      <>
-         <Button onClick={handleOpen} variant="contained">
-            Contained
-         </Button>
-         <ModalMain open={open} onClose={handleClose}>
-            <ModalBlock>
-               <TitleBlock>{modalTitle}</TitleBlock>
-               <Grid>{headerContent}</Grid>
-               <Grid>{bodyContent}</Grid>
-               <Grid>{footerContent}</Grid>
-            </ModalBlock>
-         </ModalMain>
-      </>
+      <ModalMain open={open} onClose={handleClose}>
+         <ModalBlock>
+            <TitleBlock>{modalTitle}</TitleBlock>
+            <Grid>{headerContent}</Grid>
+            <Grid>{bodyContent}</Grid>
+            <Grid>{footerContent}</Grid>
+         </ModalBlock>
+      </ModalMain>
    )
 }
 
