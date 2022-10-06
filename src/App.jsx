@@ -1,12 +1,12 @@
 import React from 'react'
 // import TextArea from './components/UI/TextArea'
-// import GroupCard from './components/UI/GroupCard'
+import GroupCard from './components/UI/GroupCard'
 
 function App() {
    return (
       <div>
          {/* <TextArea /> */}
-         {/* <GroupCard /> */}
+         <GroupCard />
       </div>
    )
 }
