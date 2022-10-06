@@ -6,7 +6,13 @@ function App() {
    return (
       <div>
          {/* <TextArea /> */}
-         <GroupCard />
+         <GroupCard
+            someImage="https://www.fa-mag.com/userfiles/0000002019_IMAGES_ALL/FA_ISSUES_2019/10_FA_OCTOBER_2019/LONGVIEW_Lessons-From-A-Young-Professional_Patel--600x400.jpg"
+            someName="Data Engineer"
+            someYear="2019-2020"
+            someParagraph="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Ornare pretium placerat ut .."
+         />
       </div>
    )
 }
