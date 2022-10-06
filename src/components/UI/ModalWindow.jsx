@@ -1,0 +1,49 @@
+import { Grid, Modal, styled, Typography } from '@mui/material/'
+
+export const ModalWindow = ({
+   modalTitle,
+   bodyContent,
+   headerContent,
+   footerContent,
+   open,
+   handleClose,
+}) => {
+   return (
+      <ModalMain open={open} onClose={handleClose}>
+         <ModalBlock>
+            <TitleBlock>{modalTitle}</TitleBlock>
+            <Grid>{headerContent}</Grid>
+            <Grid>{bodyContent}</Grid>
+            <Grid>{footerContent}</Grid>
+         </ModalBlock>
+      </ModalMain>
+   )
+}
+
+const ModalMain = styled(Modal)`
+   height: 100vh;
+   width: 100vw;
+   position: fixed;
+   top: 0;
+   left: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+`
+
+const ModalBlock = styled(Grid)`
+   border-radius: 10px;
+   background-color: #fff;
+   text-align: center;
+   padding: 0 0 10px 0;
+   width: 540px;
+`
+const TitleBlock = styled(Typography)`
+   border-radius: 10px 10px 0 0;
+   width: auto;
+   font-size: 20px;
+   font-weight: 400;
+   padding: 25px 190px;
+   background: #1f6ed4;
+   color: #fff;
+`
