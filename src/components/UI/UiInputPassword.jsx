@@ -1,45 +1,47 @@
-// import styled from 'styled-components'
+import styled from 'styled-components'
 import { useState } from 'react'
-// import { InputViewOff, InputViewOn } from 'assets/icons/index'
-import {
-   FormControl,
-   InputLabel,
-   IconButton,
-   //    InputAdornment,
-   OutlinedInput,
-   VisibilityOff,
-   Visibility,
-} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { IconButton, OutlinedInput, FormControl } from '@mui/material'
 
-const UiInputPassword = () => {
-   const [values, setValues] = useState({
-      amount: '',
-      password: '',
-      weight: '',
-      weightRange: '',
-      showPassword: false,
-   })
+const UiInputPassword = ({ error, placeholder, onChange }) => {
+   const [values, setValues] = useState(false)
 
    function handleViewOnOff() {
       setValues((prevState) => !prevState)
    }
    return (
-      <div>
-         <FormControl>
-            <InputLabel>Password</InputLabel>
-            <OutlinedInput
-               error={false}
-               type={values ? 'password' : 'text'}
-               endAdornment={
-                  <IconButton onClick={() => handleViewOnOff()}>
-                     {values ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-               }
-               label="Password"
-            />
-         </FormControl>
-      </div>
+      <FormControl>
+         <InputPassword
+            onChange={onChange}
+            placeholder={placeholder}
+            error={error}
+            type={values ? 'text' : 'password'}
+            endAdornment={
+               <IconButton onClick={() => handleViewOnOff()}>
+                  {values ? <Visibility /> : <VisibilityOff />}
+               </IconButton>
+            }
+         />
+      </FormControl>
    )
 }
 
 export default UiInputPassword
+const InputPassword = styled(OutlinedInput)`
+   &:hover {
+      border: none;
+   }
+   &.MuiInputBase-root {
+      height: 42px;
+      border-radius: 8px;
+      background: #ffffff;
+      caret-color: #258aff;
+   }
+
+   &.MuiOutlinedInput-notchedOutline {
+      border: solid 1px #d4d4d4;
+   }
+   &.Mui-focused {
+      border: none;
+   }
+`
