@@ -1,10 +1,14 @@
 import React from 'react'
-import UiInput from './components/UI/UiInput'
+import styled from 'styled-components'
+import UiInputPassword from './components/UI/UiInputPassword'
 
 export const App = () => {
    return (
-      <div>
-         <UiInput />
-      </div>
+      <Dive>
+         <UiInputPassword />
+      </Dive>
    )
 }
+const Dive = styled.div`
+   background: #000;
+`
