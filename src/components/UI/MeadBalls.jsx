@@ -1,75 +1,44 @@
 import React, { useState } from 'react'
-import IconButton from '@mui/material/IconButton'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
+import styled from 'styled-components'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 
-const options = [
-   'None',
-   'Atria',
-   'Callisto',
-   'Dione',
-   'Ganymede',
-   'Hangouts Call',
-   'Luna',
-   'Oberon',
-   'Phobos',
-   'Pyxis',
-   'Sedna',
-   'Titania',
-   'Triton',
-   'Umbriel',
-]
+export const MeadBalls = ({ children }) => {
+   const [open, isOpen] = useState(false)
 
-const ITEM_HEIGHT = 48
-
-export const MeadBalls = () => {
-   const [anchorEl, setAnchorEl] = useState(null)
-   const open = Boolean(anchorEl)
-   const handleClick = (event) => {
-      setAnchorEl(event.currentTarget)
-   }
-   const handleClose = () => {
-      setAnchorEl(null)
+   const clickHandler = () => {
+      isOpen((prev) => !prev)
    }
 
    return (
-      <div>
-         <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={open ? 'long-menu' : undefined}
-            aria-expanded={open ? 'true' : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-         >
-            <MoreHorizIcon fill="#000" />
-         </IconButton>
-         <Menu
-            id="long-menu"
-            MenuListProps={{
-               'aria-labelledby': 'long-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-               style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: '20ch',
-               },
-            }}
-         >
-            {options.map((option) => (
-               <MenuItem
-                  key={option}
-                  selected={option === 'Pyxis'}
-                  onClick={handleClose}
-               >
-                  {option}
-               </MenuItem>
-            ))}
-         </Menu>
-      </div>
+      <>
+         <IconBlock onClick={clickHandler}>
+            <MoreHorizIcon fill="#343a40" />
+         </IconBlock>
+
+         {open && (
+            <MenuBox>
+               <p>{children}</p>
+            </MenuBox>
+         )}
+      </>
    )
 }
+
+const IconBlock = styled.div`
+   padding: 2px;
+   cursor: pointer;
+`
+const MenuBox = styled.div`
+   width: 218px;
+   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
+   border-radius: 10px;
+   background: #fff;
+   p {
+      font-size: 16px;
+      padding: 5px;
+      transition: all 0.3s;
+   }
+   p:hover {
+      background: rgba(26, 35, 126, 0.07);
+   }
+`
