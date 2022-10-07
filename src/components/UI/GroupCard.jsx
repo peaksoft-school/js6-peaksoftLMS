@@ -74,6 +74,9 @@ const Year = styled.h4`
    white-space: wrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   -webkit-line-clamp: 1;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
 `
 const TypographyName = styled(Typography)`
    &.MuiTypography-root {
@@ -89,6 +92,9 @@ const TypographyName = styled(Typography)`
    white-space: wrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   -webkit-line-clamp: 1;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
 `
 const HorizonIcon = styled.div`
    display: flex;
@@ -103,9 +109,10 @@ const TypographyParagraph = styled(Typography)`
       line-height: 22px;
       color: #1d293f;
    }
-   white-space: wrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   width: 234px;
    height: 66px;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   -webkit-line-clamp: 3;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
 `
