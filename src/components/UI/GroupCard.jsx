@@ -19,9 +19,9 @@ function GroupCard({ someImage, someName, someYear, someParagraph }) {
                   </TypographyName>
                   <Year>{someYear}</Year>
                </TypographyYear>
-               <Typography variant="body2" color="text.secondary">
+               <TypographyParagraph variant="body2" color="text.secondary">
                   {someParagraph}
-               </Typography>
+               </TypographyParagraph>
                <HorizonIcon>
                   <MoreHorizIcon />
                </HorizonIcon>
@@ -63,12 +63,17 @@ const TypographyYear = styled.div`
    align-items: center;
 `
 const Year = styled.h4`
+   width: 74px;
+   height: 12px;
    font-family: 'Open Sans';
    font-style: normal;
    font-weight: 400;
    font-size: 12px;
    line-height: 140.1%;
    color: #1d293f;
+   white-space: wrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 `
 const TypographyName = styled(Typography)`
    &.MuiTypography-root {
@@ -79,8 +84,28 @@ const TypographyName = styled(Typography)`
       line-height: 25px;
       color: #1d293f;
    }
+   width: 136px;
+   height: 24px;
+   white-space: wrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 `
 const HorizonIcon = styled.div`
    display: flex;
    justify-content: end;
+`
+const TypographyParagraph = styled(Typography)`
+   &.MuiTypography-root {
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      color: #1d293f;
+   }
+   white-space: wrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   width: 234px;
+   height: 66px;
 `
