@@ -1,44 +1,58 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import { styled as style, Menu, Button, MenuItem } from '@mui/material/'
 
-export const MeadBalls = ({ children }) => {
-   const [open, isOpen] = useState(false)
+export const MeadBalls = ({ options, icon, itemValue }) => {
+   const [anchorEl, setAnchorEl] = useState(null)
+   const open = Boolean(anchorEl)
 
-   const clickHandler = () => {
-      isOpen((prev) => !prev)
+   const handleClick = (event) => {
+      setAnchorEl(event.currentTarget)
    }
-
+   const handleClose = (element) => {
+      setAnchorEl(null)
+      itemValue(element) // Для передачи выбранных данных на верх
+   }
    return (
-      <>
-         <IconBlock onClick={clickHandler}>
-            <MoreHorizIcon fill="#343a40" />
-         </IconBlock>
-
-         {open && (
-            <MenuBox>
-               <p>{children}</p>
-            </MenuBox>
-         )}
-      </>
+      <div>
+         <MeatBallsButton
+            id="basic-button"
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+         >
+            <MoreHorizIcon />
+         </MeatBallsButton>
+         <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+               'aria-labelledby': 'basic-button',
+            }}
+         >
+            {options.map((element) => (
+               // options - фейковый массив для проверки корректности вывода
+               <MenuItems onClick={() => handleClose(element)}>
+                  {icon}
+                  {element}
+               </MenuItems> // mui компонент для рендеринга элементов внутри меню
+            ))}
+         </Menu>
+      </div>
    )
 }
 
-const IconBlock = styled.div`
-   padding: 2px;
-   cursor: pointer;
+const MeatBallsButton = style(Button)`
+   color: #343a40;
+   padding: 0;
+   margin: 0;
 `
-const MenuBox = styled.div`
-   width: 218px;
-   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.16);
-   border-radius: 10px;
-   background: #fff;
-   p {
-      font-size: 16px;
-      padding: 5px;
-      transition: all 0.3s;
-   }
-   p:hover {
+const MenuItems = style(MenuItem)`
+   transition: all 0.2s;
+   :hover {
       background: rgba(26, 35, 126, 0.07);
    }
 `

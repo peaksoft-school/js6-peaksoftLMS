@@ -17,14 +17,14 @@ const options = [
    'Triton',
    'Umbriel',
 ]
+
 export const App = () => {
+   const newPost = (data) => {
+      console.log(data)
+   }
    return (
       <div>
-         <MeadBalls>
-            {options.map((element) => (
-               <p>{element}</p>
-            ))}
-         </MeadBalls>
+         <MeadBalls options={options} itemValue={newPost} />
       </div>
    )
 }
