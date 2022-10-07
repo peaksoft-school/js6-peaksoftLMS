@@ -1,5 +1,10 @@
 import React from 'react'
+import UiInput from './components/UI/UiInput'
 
 export const App = () => {
-   return <div>App</div>
+   return (
+      <div>
+         <UiInput />
+      </div>
+   )
 }

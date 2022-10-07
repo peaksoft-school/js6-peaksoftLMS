@@ -1,8 +1,26 @@
 import { TextField } from '@mui/material'
 import styled from 'styled-components'
 
-const UiInput = ({ ...props }) => {
-   return <Input {...props} />
+const UiInput = ({
+   value,
+   placeholder,
+   onChange,
+   type,
+   error,
+   maxRows,
+   minRows,
+}) => {
+   return (
+      <Input
+         error={error}
+         value={value}
+         placeholder={placeholder}
+         onChange={onChange}
+         type={type}
+         maxRows={maxRows}
+         minRows={minRows}
+      />
+   )
 }
 
 export default UiInput
