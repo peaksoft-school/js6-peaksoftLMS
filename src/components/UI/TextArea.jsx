@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function TextArea({ placeholder, name }) {
+function TextArea({ ...props }) {
    return (
       <TextAreaContainer>
-         <TextAreaIn placeholder={placeholder} name={name} />
+         <TextAreaIn {...props} />
       </TextAreaContainer>
    )
 }
