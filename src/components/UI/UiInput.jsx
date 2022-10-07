@@ -1,24 +1,13 @@
 import { TextField } from '@mui/material'
 import styled from 'styled-components'
 
-const UiInput = ({
-   value,
-   placeholder,
-   onChange,
-   type,
-   error,
-   maxRows,
-   minRows,
-}) => {
+const UiInput = ({ value, placeholder, type, error }) => {
    return (
       <Input
-         error={error}
          value={value}
+         error={error}
          placeholder={placeholder}
-         onChange={onChange}
          type={type}
-         maxRows={maxRows}
-         minRows={minRows}
       />
    )
 }
