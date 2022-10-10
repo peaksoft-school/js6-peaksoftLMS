@@ -1,25 +1,17 @@
 import { Button } from '@mui/material'
 import React from 'react'
 import styled from 'styled-components'
+import { ReactComponent as PlusIcon } from '../../assets/plusIcon.svg'
 
-const IconButton = ({
-   startIcon,
-   variant,
-   background,
-   hover,
-   clicked,
-   ...other
-}) => {
+const IconButton = ({ hover, variant, clicked, background }) => {
    return (
       <ButtonIcon
-         variant={variant}
-         background={background}
          hover={hover}
+         variant={variant}
          clicked={clicked}
-         {...other}
-      >
-         {startIcon}
-      </ButtonIcon>
+         background={background}
+         startIcon={<PlusIcon />}
+      />
    )
 }
 
@@ -28,6 +20,7 @@ const ButtonIcon = styled(Button)`
       width: 58px;
       height: 58px;
       margin: auto;
+      padding-left: 27.85px;
       border-radius: 50%;
       background-color: ${(props) => props.background};
       border: none;
