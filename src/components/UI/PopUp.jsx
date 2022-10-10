@@ -1,14 +1,10 @@
-import { Alert, Button, Snackbar } from '@mui/material'
+import { Alert, Snackbar, styled } from '@mui/material'
 import React, { useState } from 'react'
-import ErrorIcon from '../../assets/error.png'
-import SuccesIcon from '../../assets/success.svg'
+import { ReactComponent as ErrorIcon } from '../../assets/error.svg'
+import { ReactComponent as SuccesIcon } from '../../assets/success.svg'
 
 export const PopUp = ({ message, messageType }) => {
    const [open, setOpen] = useState(true)
-
-   const handleClick = () => {
-      setOpen((prev) => !prev)
-   }
    const handleClose = (reason) => {
       if (reason === 'clickaway') {
          return
@@ -18,21 +14,31 @@ export const PopUp = ({ message, messageType }) => {
 
    return (
       <div>
-         <Button onClick={handleClick}>Open simple snackbar</Button>
          <Snackbar
             open={open}
             autoHideDuration={3000}
             onClose={handleClose}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
          >
-            <Alert
+            <AlertBlock
                variant="filled"
-               iconMapping={{ error: ErrorIcon, success: SuccesIcon }}
+               iconMapping={{ error: <ErrorIcon />, success: <SuccesIcon /> }}
                severity={messageType}
             >
-               {message}
-            </Alert>
+               <p>{message}</p>
+            </AlertBlock>
          </Snackbar>
       </div>
    )
 }
+
+const AlertBlock = styled(Alert)`
+   display: flex;
+   flex-direction: row-reverse;
+   justify-items: center;
+   align-items: center;
+   border-radius: 10px;
+   p {
+      margin-right: 12px;
+   }
+`
