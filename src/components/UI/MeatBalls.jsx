@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { styled as style, Menu, Button, MenuItem } from '@mui/material/'
 
-export const MeadBalls = ({ options, icon, itemValue }) => {
+export const MeatBalls = ({ menuContent, icon, itemValue }) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
 
@@ -33,13 +33,10 @@ export const MeadBalls = ({ options, icon, itemValue }) => {
                'aria-labelledby': 'basic-button',
             }}
          >
-            {options.map((element) => (
-               // options - фейковый массив для проверки корректности вывода
-               <MenuItems onClick={() => handleClose(element)}>
-                  {icon}
-                  {element}
-               </MenuItems> // mui компонент для рендеринга элементов внутри меню
-            ))}
+            <MenuItems onClick={() => handleClose()}>
+               {icon}
+               {menuContent}
+            </MenuItems>
          </Menu>
       </div>
    )
