@@ -1,5 +1,6 @@
 import { Alert, Snackbar, styled } from '@mui/material'
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { ReactComponent as ErrorIcon } from '../../assets/error.svg'
 import { ReactComponent as SuccesIcon } from '../../assets/success.svg'
 
@@ -30,6 +31,17 @@ export const PopUp = ({ message, messageType }) => {
          </Snackbar>
       </div>
    )
+
+   // eslint-disable-next-line no-unreachable
+   PopUp.propTypes = {
+      // eslint-disable-next-line react/require-default-props
+      messageType: PropTypes.oneOf(['error', 'success']),
+      message: PropTypes.string,
+   }
+   PopUp.defaultProps = {
+      messageType: 'success' || 'error',
+      message: [],
+   }
 }
 
 const AlertBlock = styled(Alert)`
