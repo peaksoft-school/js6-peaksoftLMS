@@ -1,10 +1,10 @@
 import React from 'react'
-import LessonCard from './components/UI/LessonCard'
+import Switcher from './components/UI/Switcher'
 
 export const App = () => {
    return (
       <div>
-         <LessonCard />
+         <Switcher />
       </div>
    )
 }
