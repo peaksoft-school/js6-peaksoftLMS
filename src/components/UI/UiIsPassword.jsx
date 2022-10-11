@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { IconButton, OutlinedInput, FormControl } from '@mui/material'
 
-const UiInputPassword = ({ error, placeholder, onChange }) => {
+const UiIsPassword = ({ error, placeholder, onChange }) => {
    const [values, setValues] = useState(false)
 
    function handleViewOnOff() {
@@ -26,7 +26,7 @@ const UiInputPassword = ({ error, placeholder, onChange }) => {
    )
 }
 
-export default UiInputPassword
+export default UiIsPassword
 const InputPassword = styled(OutlinedInput)`
    &:hover {
       border: none;
