@@ -1,45 +1,37 @@
 import React from 'react'
-import 'date-fns'
-import Grid from '@material-ui/core/Grid'
-import DateFnsUtils from '@date-io/date-fns'
-import {
-   MuiPickersUtilsProvider,
-   KeyboardDatePicker,
-} from '@material-ui/pickers'
+import Stack from '@mui/material/Stack'
+import TextField from '@mui/material/TextField'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
+import { ru } from 'date-fns/locale'
+import styled from 'styled-components'
 
-export default function MaterialUIPickers() {
-   // The first commit of Material-UI
-   const [selectedDate, setSelectedDate] = React.useState(
-      new Date('2014-08-18T21:11:54')
-   )
+function DatePicker() {
+   const [value, setValue] = React.useState(new Date())
 
-   const handleDateChange = (date) => {
-      setSelectedDate(date)
+   const handleChange = (newValue) => {
+      setValue(newValue)
    }
 
    return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-         <Grid container justifyContent="space-around">
-            <KeyboardDatePicker
-               disableToolbar
-               variant="inline"
-               format="MM/dd/yyyy"
-               margin="normal"
-               id="date-picker-inline"
-               value={selectedDate}
-               onChange={handleDateChange}
-               KeyboardButtonProps={{
-                  'aria-label': 'change date',
-               }}
+      <LocalizationProvider dateAdapter={AdapterDateFns} locale={ru}>
+         <Stack spacing={3}>
+            <DeskDatePicker
+               inputFormat="dd-MM-yyyy"
+               value={value}
+               onChange={handleChange}
+               renderInput={(params) => <TextField {...params} />}
             />
-         </Grid>
-      </MuiPickersUtilsProvider>
+         </Stack>
+      </LocalizationProvider>
    )
 }
 
-// const DeskDatePicker = styled(DesktopDatePicker)`
-//    width: 149px;
-//    height: 42px;
-//    border: 110px solid #ca3838;
-//    border-radius: 10px;
-// `
+export default DatePicker
+const DeskDatePicker = styled(DesktopDatePicker)`
+   width: 149px;
+   height: 42px;
+   border: 110px solid #ca3838;
+   border-radius: 10px;
+`
