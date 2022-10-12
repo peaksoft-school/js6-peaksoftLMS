@@ -1,36 +1,38 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import * as React from 'react'
-import Switch from '@mui/material/Switch'
-import styled from 'styled-components'
+import { FormControlLabel, Switch } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } }
-
-export default function BasicSwitches() {
+export const Switcher = () => {
    return (
-      <ContainerSwitch>
-         <Switcher {...label} />
-      </ContainerSwitch>
+      <FormControlLabel
+         control={<CustomSwitch sx={{ m: 1 }} defaultChecked />}
+      />
    )
 }
-const ContainerSwitch = styled.div`
-   height: 68px;
-   width: auto;
-   text-align: center;
-`
-const Switcher = styled(Switch)`
-   /* &.MuiSwitch-track {
-      height: 31px;
-      width: 51px;
-      background: #36ac0c;
-   } */
-   /* &.MuiSwitch-root {
-      width: 75px;
-      height: 55px;
-   } */
-
-   &.MuiSwitch-thumb {
-      height: 28px;
-      width: 28px;
-      background: #36ac0c;
-   }
-`
+const CustomSwitch = styled((props) => (
+   <Switch size="medium" focusVisibleClassName=".Mui-focusVisible" {...props} />
+))(({ theme }) => ({
+   width: 42,
+   height: 26,
+   padding: 0,
+   '& .MuiSwitch-switchBase': {
+      padding: 0,
+      margin: 2,
+      color: '#C91E1E',
+      '&.Mui-checked': {
+         transform: 'translateX(16px)',
+         color: '#36AC0C',
+         '& + .MuiSwitch-track': {
+            backgroundColor:
+               theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+            opacity: 1,
+            border: 0,
+         },
+      },
+   },
+   '& .MuiSwitch-track': {
+      borderRadius: 26 / 2,
+      backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
+      opacity: 1,
+   },
+}))
