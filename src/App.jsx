@@ -1,10 +1,11 @@
+// import { Checkbox } from '@mui/material'
 import React from 'react'
-import Switcher from './components/UI/Switcher'
+import CheckBox from './components/UI/CheckBox'
 
 export const App = () => {
    return (
       <div>
-         <Switcher />
+         <CheckBox />
       </div>
    )
 }
