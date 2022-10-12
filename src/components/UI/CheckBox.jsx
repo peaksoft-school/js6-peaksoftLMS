@@ -20,5 +20,9 @@ const Box = styled(Checkbox)`
       :hover {
          color: #1f6ed4;
       }
+      &.MuiSvgIcon-root {
+         width: 21px;
+         height: 21px;
+      }
    }
 `
