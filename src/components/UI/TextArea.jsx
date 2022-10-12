@@ -8,7 +8,7 @@ function TextArea({ onChange, value, type, placeholder, ...props }) {
             onChange={onChange}
             value={value}
             placeholder={placeholder}
-            // {...props}
+            {...props}
          />
       </TextAreaContainer>
    )
