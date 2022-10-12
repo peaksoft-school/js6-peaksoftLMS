@@ -7,13 +7,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import { ru } from 'date-fns/locale'
 import styled from 'styled-components'
 
-function DatePicker() {
-   const [value, setValue] = React.useState(new Date())
-
-   const handleChange = (newValue) => {
-      setValue(newValue)
-   }
-
+function DatePicker({ value, handleChange }) {
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns} locale={ru}>
          <Stack spacing={3}>
