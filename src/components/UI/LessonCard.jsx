@@ -1,20 +1,30 @@
 import React from 'react'
 import styled from 'styled-components'
-import { EditIcon } from '@mui/icons-material/'
-const LessonCard = () => {
+
+const LessonCard = (props) => {
+   const { title, headerIcon, actionIcon, actionButton, bodyItem, bodyIcon } =
+      props
    return (
-      <CardContainer>
-         <EditIcon />
-         <h3>LESSON_1</h3>
-      </CardContainer>
+      <div className="Card">
+         <CardHeader>
+            <div className="header-left">
+               <h2>
+                  {headerIcon}
+                  {title}
+               </h2>
+            </div>
+            <div className="header-right">
+               {actionButton} <p>{actionIcon}</p>
+            </div>
+         </CardHeader>
+         <div className="Body">
+            <p>
+               {bodyIcon}
+               {bodyItem}
+            </p>
+         </div>
+      </div>
    )
 }
-
 export default LessonCard
-
-const CardContainer = styled.div`
-   width: 560px;
-   height: 306px;
-   border-radius: 10px;
-   background-color: red;
-`
+const CardHeader = styled.div``
