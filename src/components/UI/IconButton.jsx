@@ -3,11 +3,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { ReactComponent as PlusIcon } from '../../assets/plusIcon.svg'
 
-const IconButton = ({ hover, variant, clicked, background }) => {
+const IconButton = ({ hover, clicked, background }) => {
    return (
       <ButtonIcon
          hover={hover}
-         variant={variant}
+         variant="contained"
          clicked={clicked}
          background={background}
          startIcon={<PlusIcon />}
