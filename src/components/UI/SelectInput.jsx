@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
-import { OutlinedInput, MenuItem, FormControl, Select } from '@mui/material/'
+import {
+   OutlinedInput,
+   MenuItem,
+   FormControl,
+   Select,
+   styled,
+} from '@mui/material/'
 
-const staticData = [
-   'Oliver Hansen',
-   'Van Henry',
-   'April Tucker',
-   'Ralph Hubbard',
-   'Omar Alexander',
-   'Carlos Abbott',
-   'Miriam Wagner',
-   'Bradley Wilkerson',
-   'Virginia Andrews',
-   'Kelly Snyder',
-]
+const staticData = ['Видеоурок', 'Презентация', 'Задание', 'Ссылка', 'Тест']
+
 export const SelectInput = (props) => {
    const { defaultPlaceholder } = props
    const [personName, setPersonName] = useState('')
@@ -21,34 +17,62 @@ export const SelectInput = (props) => {
    }
    return (
       <div>
-         <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
-            <Select
+         <FormControl sx={{ m: 1, width: 300, mt: 3, borderRadius: 40 }}>
+            <SelectContainer
                displayEmpty
                value={personName}
                input={<OutlinedInput />}
+               sx={{ marginLeft: 2 }}
                renderValue={(selected) => {
                   if (selected.length === 0) {
                      return defaultPlaceholder ? (
-                        <em>{defaultPlaceholder}</em>
+                        <p>{defaultPlaceholder}</p>
                      ) : (
                         'Добавить'
                      )
                   }
-                  return <em>{personName}</em>
+                  return <p>{personName}</p>
                }}
             >
                {staticData.map((name) => (
-                  <MenuItem
+                  <MenuContainer
                      onClick={() => clickHandler(name)}
                      selected
                      key={name}
                      value={name}
                   >
                      {name}
-                  </MenuItem>
+                  </MenuContainer>
                ))}
-            </Select>
+            </SelectContainer>
          </FormControl>
       </div>
    )
 }
+
+const SelectContainer = styled(Select)`
+   width: 141px;
+   height: 44px;
+   border-radius: 8px;
+   font-weight: 600;
+   font-size: 14px;
+   line-height: 19px;
+   &.MuiSvgIcon-fontSizeMedium {
+      width: 30px;
+   }
+   & .MuiSvgIcon-root {
+      color: black;
+   }
+`
+const MenuContainer = styled(MenuItem)`
+   width: 147px;
+   height: 43px;
+   border-bottom: 1px solid rgba(36, 36, 36, 0.08);
+   :last-child {
+      border-bottom: none;
+   }
+   :focus {
+      background-color: rgba(26, 35, 126, 0.07);
+      color: #3772ff;
+   }
+`
