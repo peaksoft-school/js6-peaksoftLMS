@@ -2,11 +2,7 @@
 import { FormControlLabel, Switch } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-export const Switcher = ({ setIsClicked }) => {
-   const clickHandler = () => {
-      setIsClicked((prev) => !prev)
-   }
-
+export const Switcher = ({ clickHandler }) => {
    return (
       <FormControlLabel
          onClick={clickHandler}
