@@ -1,13 +1,5 @@
-// import { Checkbox } from '@mui/material'
-import React, { useState } from 'react'
-import CheckBox from './components/UI/CheckBox'
+import React from 'react'
 
 export const App = () => {
-   const [clicked, setIsClicked] = useState(false)
-   console.log(clicked)
-   return (
-      <div>
-         <CheckBox setIsClicked={setIsClicked} />
-      </div>
-   )
+   return <div>App</div>
 }
