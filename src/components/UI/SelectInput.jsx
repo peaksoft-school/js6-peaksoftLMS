@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
    OutlinedInput,
    MenuItem,
@@ -9,39 +9,27 @@ import {
 
 const staticData = ['Видеоурок', 'Презентация', 'Задание', 'Ссылка', 'Тест']
 
-export const SelectInput = (props) => {
-   const { defaultPlaceholder } = props
-   const [personName, setPersonName] = useState('')
-   const clickHandler = (itemName) => {
-      setPersonName(itemName)
+export const SelectInput = ({ setSelectedItem }) => {
+   const clickHandler = (item) => {
+      setSelectedItem(item)
    }
    return (
       <div>
          <FormControl sx={{ m: 1, width: 300, mt: 3, borderRadius: 40 }}>
             <SelectContainer
                displayEmpty
-               value={personName}
+               value=""
                input={<OutlinedInput />}
                sx={{ marginLeft: 2 }}
-               renderValue={(selected) => {
-                  if (selected.length === 0) {
-                     return defaultPlaceholder ? (
-                        <p>{defaultPlaceholder}</p>
-                     ) : (
-                        'Добавить'
-                     )
-                  }
-                  return <p>{personName}</p>
-               }}
+               renderValue={() => <p>Добавить</p>}
             >
-               {staticData.map((name) => (
+               {staticData.map((item) => (
                   <MenuContainer
-                     onClick={() => clickHandler(name)}
-                     selected
-                     key={name}
-                     value={name}
+                     onClick={() => clickHandler(item)}
+                     key={item}
+                     value={item}
                   >
-                     {name}
+                     {item}
                   </MenuContainer>
                ))}
             </SelectContainer>
