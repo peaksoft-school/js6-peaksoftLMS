@@ -2,7 +2,7 @@
 import { FormControlLabel, Switch } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-export const Switcher = ({ clickHandler }) => {
+const Switcher = ({ clickHandler }) => {
    return (
       <FormControlLabel
          onClick={clickHandler}
@@ -10,6 +10,7 @@ export const Switcher = ({ clickHandler }) => {
       />
    )
 }
+export default Switcher
 
 const CustomSwitch = styled((props) => (
    <Switch size="medium" focusVisibleClassName=".Mui-focusVisible" {...props} />
