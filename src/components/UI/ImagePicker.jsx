@@ -30,15 +30,7 @@ function ImagePicker({ GetImg }) {
          <MainPicker>
             {files ? (
                <ImageWrapper>
-                  <img
-                     src={files[0].preview}
-                     style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                     }}
-                     alt="preview"
-                  />
+                  <ImgContent alt="preview" src={files[0].preview} />
                </ImageWrapper>
             ) : (
                <DropContainer {...getRootProps()}>
@@ -96,4 +88,9 @@ const Text = styled.span`
    text-align: center;
    letter-spacing: 0.03em;
    color: #8d949e;
+`
+const ImgContent = styled.img`
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
 `
