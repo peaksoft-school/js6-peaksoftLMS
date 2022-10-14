@@ -10,21 +10,31 @@ import {
 } from '@mui/material'
 
 const UiTable = (props) => {
-   const { data, password, actions } = props
+   const { headData, data, actions } = props
    return (
       <div>
          <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                <HeadTable>
                   <StyledTableRow>
-                     <TableCell align="left">ID</TableCell>
-                     <TableCell align="left">Имя Фамилия</TableCell>
-                     <TableCell align="left">Группа</TableCell>
-                     <TableCell align="left">Формат</TableCell>
-                     <TableCell align="left">Номер телефона</TableCell>
-                     <TableCell align="left">E-mail</TableCell>
-                     {password && <TableCell align="left">Пароль</TableCell>}
-                     {actions && <TableCell align="left">Действия</TableCell>}
+                     {headData.map((item) => (
+                        <>
+                           <TableCell align="left">{item.idName}</TableCell>
+                           <TableCell align="left">{item.firstName}</TableCell>
+                           <TableCell align="left">{item.groupName}</TableCell>
+                           <TableCell align="left">
+                              {item.phoryatLearning}
+                           </TableCell>
+                           <TableCell align="left">{item.phoneName}</TableCell>
+                           <TableCell align="left">{item.emailName}</TableCell>
+                           <TableCell align="left">{item.password}</TableCell>
+                           {actions && (
+                              <TableCell align="left">
+                                 {item.actionsName}
+                              </TableCell>
+                           )}
+                        </>
+                     ))}
                   </StyledTableRow>
                </HeadTable>
                <TableBody>
@@ -53,11 +63,9 @@ const UiTable = (props) => {
                         <TableCell align="left">
                            <span>{el.email}</span>
                         </TableCell>
-                        {password && (
-                           <TableCell align="left">
-                              <span>{el.pasword}</span>
-                           </TableCell>
-                        )}
+                        <TableCell align="left">
+                           <span>{el.password}</span>
+                        </TableCell>
 
                         {actions && (
                            <div>
