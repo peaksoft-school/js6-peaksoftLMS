@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-   userData: [],
    status: null,
    error: null,
 }
@@ -11,5 +10,6 @@ export const userSlice = createSlice({
    reducers: {},
    extraReducers: {},
 })
+
 // export const {} = userSlice.actions
 export default userSlice
