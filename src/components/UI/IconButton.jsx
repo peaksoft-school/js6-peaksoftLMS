@@ -7,8 +7,8 @@ const IconButton = ({ hover, disabled, clicked, onclick, background }) => {
    return (
       <ButtonIcon
          hover={hover}
-         variant="contained"
          disabled={disabled}
+         variant="contained"
          onClick={onclick}
          clicked={clicked}
          background={background}
