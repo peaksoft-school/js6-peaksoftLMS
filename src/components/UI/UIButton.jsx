@@ -17,7 +17,7 @@ const UIButton = ({
          hover={hover}
          checked={checked}
          startIcon={startIcon}
-         // {...other}
+         {...other}
       >
          {title}
       </ButtonWrap>
