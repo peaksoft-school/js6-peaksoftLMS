@@ -1,10 +1,25 @@
 import * as React from 'react'
 import Radio from '@mui/material/Radio'
 import { styled } from '@mui/material'
+import { ReactComponent as SuccessIcon } from '../../assets/checkedRadio.svg'
+import { ReactComponent as ErrorIcon } from '../../assets/crossRadio.svg'
 
-const RadioButton = ({ IconSvg, onChange, value }) => {
+const RadioButton = ({ onChange, value, changeRadio }) => {
    return (
-      <StyledRadio checkedIcon={IconSvg} onChange={onChange} value={value} />
+      <div>
+         {!changeRadio ? (
+            <StyledRadio onChange={onChange} value={value} />
+         ) : (
+            <StyledRadio
+               onChange={onChange}
+               value={value}
+               checkedIcon={
+                  (changeRadio === 'error' && <ErrorIcon />) ||
+                  (changeRadio === 'success' && <SuccessIcon />)
+               }
+            />
+         )}
+      </div>
    )
 }
 
