@@ -2,22 +2,20 @@ import { Button } from '@mui/material'
 import styled from 'styled-components'
 
 const UIButton = ({
+   hover,
    title,
    variant,
-   backgroundColor,
-   hover,
    checked,
    startIcon,
-   ...other
+   backgroundColor,
 }) => {
    return (
       <ButtonWrap
-         variant={variant}
-         backgroundColor={backgroundColor}
          hover={hover}
+         variant={variant}
          checked={checked}
          startIcon={startIcon}
-         {...other}
+         backgroundColor={backgroundColor}
       >
          {title}
       </ButtonWrap>
