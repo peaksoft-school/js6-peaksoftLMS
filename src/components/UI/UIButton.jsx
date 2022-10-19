@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 import styled from 'styled-components'
 
 const UIButton = ({
-   title,
+   children,
    variant,
    backgroundColor,
    hover,
@@ -19,7 +19,7 @@ const UIButton = ({
          startIcon={startIcon}
          {...other}
       >
-         {title}
+         {children}
       </ButtonWrap>
    )
 }
