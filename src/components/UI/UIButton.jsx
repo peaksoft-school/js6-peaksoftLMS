@@ -10,9 +10,10 @@ const UIButton = ({
    width,
    height,
    children,
+   colour,
    fontSize,
-   borderRadius,
-   backgroundColor,
+   borderradius,
+   background,
    ...other
 }) => {
    return (
@@ -24,9 +25,10 @@ const UIButton = ({
          startIcon={startIcon}
          width={width}
          height={height}
+         colour={colour}
          fontSize={fontSize}
-         borderRadius={borderRadius}
-         backgroundColor={backgroundColor}
+         borderradius={borderradius}
+         background={background}
          {...other}
       >
          {children}
@@ -40,9 +42,10 @@ const ButtonWrap = styled(Button)`
    width: ${(props) => props.width};
    height: ${(props) => props.height};
    &.MuiButtonBase-root {
-      background-color: ${(props) => props.backgroundColor};
-      border-radius: ${(props) => props.borderRadius};
+      background-color: ${(props) => props.background};
+      border-radius: ${(props) => props.borderradius};
       font-size: ${(props) => props.fontSize};
+      color: ${(props) => props.colour};
       font-family: 'Open Sans';
       font-weight: 600;
       text-transform: none;
