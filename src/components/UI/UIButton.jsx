@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 const UIButton = ({
    hover,
+   title,
    variant,
    checked,
    startIcon,
    backgroundColor,
-   children,
 }) => {
    return (
       <ButtonWrap
@@ -17,7 +17,7 @@ const UIButton = ({
          startIcon={startIcon}
          backgroundColor={backgroundColor}
       >
-         {children}
+         {title}
       </ButtonWrap>
    )
 }
