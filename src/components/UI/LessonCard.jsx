@@ -6,7 +6,8 @@ import iconTask from '../../assets/IconTask.svg'
 import linkIcon from '../../assets/LinkIcon.svg'
 import testIcon from '../../assets/TestIcon.svg'
 
-const LessonCard = (title, headerIcon, actionIcon, actionButton) => {
+const LessonCard = (props) => {
+   const { title, headerIcon, actionIcon, actionButton } = props
    return (
       <CardBody>
          <CardHeader>
