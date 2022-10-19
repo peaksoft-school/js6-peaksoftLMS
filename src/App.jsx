@@ -1,10 +1,6 @@
 import React from 'react'
-import SignIn from './components/signIn/SignIn'
+import RadioButton from './components/UI/RadioButtton'
 
 export const App = () => {
-   return (
-      <div>
-         <SignIn />
-      </div>
-   )
+   return <RadioButton changeRadio="success" />
 }
