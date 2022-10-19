@@ -8,6 +8,8 @@ const UIButton = ({
    hover,
    checked,
    startIcon,
+   width,
+   height,
    ...other
 }) => {
    return (
@@ -17,6 +19,8 @@ const UIButton = ({
          hover={hover}
          checked={checked}
          startIcon={startIcon}
+         width={width}
+         height={height}
          {...other}
       >
          {children}
@@ -27,6 +31,8 @@ const UIButton = ({
 export default UIButton
 
 const ButtonWrap = styled(Button)`
+   width: ${(props) => props.width};
+   height: ${(props) => props.height};
    &.MuiButtonBase-root {
       background-color: ${(props) => props.backgroundColor};
    }
