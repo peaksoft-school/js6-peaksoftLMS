@@ -14,11 +14,11 @@ function SignIn() {
                Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
             </PeaksoftParagraph>
             <WrapperLogin>
-               <LabelLogin>
+               <LabelLogin htmlFor="login">
                   Логин:
                   <UiInput placeholder="Введите логин" type="text" />
                </LabelLogin>
-               <LabelPassword>
+               <LabelPassword htmlFor="password">
                   Пароль:
                   <UiIsPassword placeholder="Введите логин" />
                </LabelPassword>
