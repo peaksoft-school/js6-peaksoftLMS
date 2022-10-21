@@ -1,32 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 import UiIsPassword from '../UI/UiIsPasswod'
-import UiInput from '../UI/UiInput'
 import UIButton from '../UI/UIButton'
 
-function SignIn() {
+function NewPass() {
    return (
       <Wrapper>
-         <PeaksoftParagraph>
-            Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
-         </PeaksoftParagraph>
+         <PeaksoftParagraph>Создать пароль</PeaksoftParagraph>
          <WrapperLogin>
             <LabelLogin>
-               Логин:
-               <UiInput placeholder="Введите логин" type="text" />
+               Новый пароль:
+               <UiIsPassword placeholder="Введите новый пароль" />
             </LabelLogin>
             <LabelPassword>
-               Пароль:
-               <UiIsPassword placeholder="Введите логин" />
+               Подтверждение:
+               <UiIsPassword placeholder="Подтвердите  пароль" />
             </LabelPassword>
-            <ForgotPass>
-               <Paragraph>Забыли пароль?</Paragraph>
-            </ForgotPass>
          </WrapperLogin>
          <UIButton
             width="214px"
             height="51px"
-            title="войти"
+            title="Создать"
             variant="contained"
             background-color="#3772FF"
          />
@@ -34,7 +28,7 @@ function SignIn() {
    )
 }
 
-export default SignIn
+export default NewPass
 const Wrapper = styled.div`
    display: flex;
    flex-direction: column;
@@ -51,22 +45,16 @@ const PeaksoftParagraph = styled.h1`
    width: 262px;
    height: 66px;
    margin-bottom: 54px;
-`
-const RedLms = styled.span`
-   color: red;
-   font-family: 'Open Sans';
-   font-style: normal;
-   font-weight: 600;
-   font-size: 24px;
-   line-height: 33px;
-   margin-left: 6px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 `
 const WrapperLogin = styled.div`
    display: flex;
    flex-direction: column;
    width: 440px;
    height: 166px;
-   margin-bottom: 28px;
+   margin-bottom: 53px;
 `
 const LabelLogin = styled.label`
    font-family: 'Open Sans';
@@ -88,19 +76,4 @@ const LabelPassword = styled.label`
    color: #6a6a6a;
    display: flex;
    flex-direction: column;
-`
-const ForgotPass = styled.div`
-   width: 100%;
-   height: 100%;
-   margin-top: 9px;
-   display: flex;
-   justify-content: end;
-`
-const Paragraph = styled.p`
-   font-family: 'Open Sans';
-   font-style: normal;
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 16px;
-   color: #3772ff;
 `

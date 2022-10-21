@@ -1,19 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 import LogoSignIn from '../assets/LogoSignIn.svg'
+import SignIn from '../components/signIn/SignIn'
 
-function LayoutSignIn() {
+function SignInPage() {
    return (
       <Wrapper>
          <WrapperLogo>
             <Logo src={LogoSignIn} />
          </WrapperLogo>
+         <WrapperSignIn>
+            <SignIn />
+         </WrapperSignIn>
       </Wrapper>
    )
 }
 
-export default LayoutSignIn
+export default SignInPage
 
+const WrapperSignIn = styled.div`
+   margin: 260px 0 0 167px;
+`
 const Wrapper = styled.div`
    width: 1440px;
    background: #ffffff;

@@ -1,19 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
 import LogoSignIn from '../assets/LogoSignIn.svg'
+import NewPass from '../components/signIn/NewPass'
 
-function LayoutSignIn() {
+function NewPassword() {
    return (
       <Wrapper>
          <WrapperLogo>
             <Logo src={LogoSignIn} />
          </WrapperLogo>
+         <WrapperSignIn>
+            <NewPass />
+         </WrapperSignIn>
       </Wrapper>
    )
 }
 
-export default LayoutSignIn
+export default NewPassword
 
+const WrapperSignIn = styled.div`
+   margin: 200px 0 0 110px;
+`
 const Wrapper = styled.div`
    width: 1440px;
    background: #ffffff;
