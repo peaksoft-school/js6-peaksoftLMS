@@ -1,5 +1,32 @@
 import React from 'react'
 
+import HeaderSidebarLayouts from './components/UI/HeaderSidebarLayouts'
+
 export const App = () => {
-   return <div>App </div>
+   const DUMMY_DATA = [
+      {
+         title: 'Группы',
+         id: 1,
+      },
+      {
+         title: 'Курсы ',
+         id: 2,
+      },
+      {
+         title: 'Учителя',
+         id: 3,
+      },
+      {
+         title: 'Студенты',
+         id: 4,
+      },
+      // {
+      //    title: 'Мои курсы',
+      // },
+   ]
+   return (
+      <div style={{ marginLeft: '200px' }}>
+         <HeaderSidebarLayouts data={DUMMY_DATA} />
+      </div>
+   )
 }
