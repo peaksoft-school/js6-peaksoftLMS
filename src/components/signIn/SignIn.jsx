@@ -1,36 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UiInput from '../UI/UiInput'
 import UIButton from '../UI/UIButton'
+import { ForgotPasswordModal } from './ForgotPasswordModal'
 
 function SignIn() {
+   const [value, setOpen] = useState(false)
    return (
-      <Wrapper>
-         <PeaksoftParagraph>
-            Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
-         </PeaksoftParagraph>
-         <WrapperLogin>
-            <LabelLogin>
-               Логин:
-               <UiInput placeholder="Введите логин" type="text" />
-            </LabelLogin>
-            <LabelPassword>
-               Пароль:
-               <UiIsPassword placeholder="Введите логин" />
-            </LabelPassword>
-            <ForgotPass>
-               <Paragraph>Забыли пароль?</Paragraph>
-            </ForgotPass>
-         </WrapperLogin>
-         <UIButton
-            width="214px"
-            height="51px"
-            title="войти"
-            variant="contained"
-            background-color="#3772FF"
-         />
-      </Wrapper>
+      <>
+         <Wrapper>
+            <PeaksoftParagraph>
+               Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
+            </PeaksoftParagraph>
+            <WrapperLogin>
+               <LabelLogin>
+                  Логин:
+                  <UiInput placeholder="Введите логин" type="text" />
+               </LabelLogin>
+               <LabelPassword>
+                  Пароль:
+                  <UiIsPassword placeholder="Введите логин" />
+               </LabelPassword>
+               <ForgotPass>
+                  <Paragraph onClick={() => setOpen(true)}>
+                     Забыли пароль?
+                  </Paragraph>
+               </ForgotPass>
+            </WrapperLogin>
+            <UIButton
+               width="214px"
+               height="51px"
+               title="войти"
+               variant="contained"
+               background-color="#3772FF"
+            />
+         </Wrapper>
+         {value && <ForgotPasswordModal open={value} />}
+      </>
    )
 }
 
@@ -103,4 +110,5 @@ const Paragraph = styled.p`
    font-size: 16px;
    line-height: 16px;
    color: #3772ff;
+   cursor: pointer;
 `
