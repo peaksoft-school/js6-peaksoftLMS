@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import GroupSvg from '../../assets/GroupsVector.svg'
-import GroupActive from '../../assets/GroupsActive.svg'
+import GeneragotSideBarIcons from './GeneragotSideBarIcons'
 
 const HeaderSidebarLayouts = (props) => {
-   const [activeIndex, setActiveIndex] = useState(null)
+   const [activeIndex, setActiveIndex] = useState(0)
    const { data } = props
 
    const activeItems = (i) => {
@@ -24,10 +23,10 @@ const HeaderSidebarLayouts = (props) => {
                   onClick={() => activeItems(i)}
                   key={el.id}
                >
-                  <ItemsImg
+                  <ItemsBorder active={activeIndex === i} />
+                  <GeneragotSideBarIcons
+                     id={el.id}
                      active={activeIndex === i}
-                     src={(props) => (props.active ? GroupActive : GroupSvg)}
-                     alt=""
                   />
                   {el.title}
                </BlockItemsEl>
@@ -47,7 +46,7 @@ const BlockSide = styled.div`
    display: flex;
    align-items: center;
    flex-direction: column;
-   gap: 50px;
+   gap: 40px;
 `
 const BlockHeader = styled.div`
    position: relative;
@@ -78,17 +77,17 @@ const BlockItems = styled.div`
    display: flex;
    flex-direction: column;
    gap: 10px;
+   cursor: pointer;
 `
 
 const BlockItemsEl = styled.div`
    position: relative;
-   display: grid;
-   grid-template-columns: repeat(3, 1fr);
-   grid-template-rows: 2fr 2fr 1fr;
-   gap: 30px 20px;
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   gap: 20px;
    width: 235px;
    height: 50px;
-   border-left: ${(props) => props.active && '8px solid #1f6ed4'};
    background: ${(props) => props.active && '#dde9f9'};
    border-radius: 0px 10px 10px 0px;
    list-style: none;
@@ -96,8 +95,12 @@ const BlockItemsEl = styled.div`
    font-size: 16px;
    color: ${(props) => (props.active ? '#1F6ED4' : '#292929')};
    margin-right: 5px;
-   padding-top: 15px;
+   img {
+      padding-left: 23px;
+   }
 `
-const ItemsImg = styled.img`
-   margin-left: 55px;
+const ItemsBorder = styled.div`
+   border-left: ${(props) => props.active && '8px solid #1f6ed4'};
+   width: 8px;
+   height: 50px;
 `
