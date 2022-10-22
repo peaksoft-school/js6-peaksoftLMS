@@ -2,22 +2,36 @@ import { Button } from '@mui/material'
 import styled from 'styled-components'
 
 const UIButton = ({
+   onClick,
    hover,
-   title,
    variant,
-   checked,
+   active,
    startIcon,
-   backgroundColor,
+   width,
+   height,
+   children,
+   colour,
+   fontSize,
+   borderradius,
+   background,
+   ...other
 }) => {
    return (
       <ButtonWrap
+         onClick={onClick}
          hover={hover}
          variant={variant}
-         checked={checked}
+         active={active}
          startIcon={startIcon}
-         backgroundColor={backgroundColor}
+         width={width}
+         height={height}
+         colour={colour}
+         fontSize={fontSize}
+         borderradius={borderradius}
+         background={background}
+         {...other}
       >
-         {title}
+         {children}
       </ButtonWrap>
    )
 }
@@ -25,13 +39,21 @@ const UIButton = ({
 export default UIButton
 
 const ButtonWrap = styled(Button)`
+   width: ${(props) => props.width};
+   height: ${(props) => props.height};
    &.MuiButtonBase-root {
-      background-color: ${(props) => props.backgroundColor};
+      background-color: ${(props) => props.background};
+      border-radius: ${(props) => props.borderradius};
+      font-size: ${(props) => props.fontSize};
+      color: ${(props) => props.colour};
+      font-family: 'Open Sans';
+      font-weight: 600;
+      text-transform: none;
    }
    &.MuiButtonBase-root:hover {
       background-color: ${(props) => props.hover};
    }
-   &.MuiButtonBase-root:checked {
-      background-color: ${(props) => props.checked};
+   &.MuiButtonBase-root:active {
+      background-color: ${(props) => props.active};
    }
 `
