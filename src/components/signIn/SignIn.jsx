@@ -16,15 +16,11 @@ function SignIn() {
             <WrapperLogin>
                <LabelLogin htmlFor="login">
                   Логин:
-                  <DivBtn>
-                     <UiInput placeholder="Введите логин" type="text" />
-                  </DivBtn>
+                  <UiInput placeholder="Введите логин" type="text" />
                </LabelLogin>
                <LabelPassword htmlFor="password">
                   Пароль:
-                  <PassDivBtn>
-                     <UiIsPassword placeholder="Введите логин" />
-                  </PassDivBtn>
+                  <UiIsPassword placeholder="Введите логин" />
                </LabelPassword>
                <ForgotPass>
                   <Paragraph onClick={() => setOpen(true)}>
@@ -42,20 +38,6 @@ function SignIn() {
 }
 
 export default SignIn
-const DivBtn = styled.div`
-   margin-top: 10px;
-   & .MuiInputBase-input {
-      width: 410px;
-      height: 42px;
-   }
-`
-const PassDivBtn = styled.div`
-   margin-top: 10px;
-   & .MuiInputBase-input {
-      width: 370px;
-      height: 42px;
-   }
-`
 const Wrapper = styled.div`
    display: flex;
    flex-direction: column;
@@ -98,6 +80,9 @@ const LabelLogin = styled.label`
    display: flex;
    flex-direction: column;
    margin-bottom: 18px;
+   div {
+      margin-top: 9px;
+   }
 `
 const LabelPassword = styled.label`
    font-family: 'Open Sans';
@@ -108,6 +93,9 @@ const LabelPassword = styled.label`
    color: #6a6a6a;
    display: flex;
    flex-direction: column;
+   div {
+      margin-top: 9px;
+   }
 `
 const ForgotPass = styled.div`
    width: 100%;

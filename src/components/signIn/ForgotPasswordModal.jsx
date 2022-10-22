@@ -16,7 +16,7 @@ export const ForgotPasswordModal = ({ open }) => {
          }
          bodyContent={
             <DivContainer>
-               <InputForgot type="email" />
+               <UiInput type="email" />
             </DivContainer>
          }
          footerContent={
@@ -40,7 +40,6 @@ const DivContainer = styled.div`
 const DivBtn = styled.div`
    margin-bottom: 25px;
 `
-
 const LabelModal = styled.div`
    text-align: left;
    font-family: 'Inter';
@@ -54,13 +53,4 @@ const LabelModal = styled.div`
 const ButtonPass = styled(UIButton)`
    width: 483px;
    height: 42px;
-`
-const InputForgot = styled(UiInput)`
-   & .MuiInputBase-root {
-      margin-bottom: 30px;
-
-      & .MuiInputBase-input {
-         margin-bottom: 30px;
-      }
-   }
 `
