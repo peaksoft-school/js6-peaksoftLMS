@@ -16,11 +16,15 @@ function SignIn() {
             <WrapperLogin>
                <LabelLogin htmlFor="login">
                   Логин:
-                  <UiInput placeholder="Введите логин" type="text" />
+                  <DivBtn>
+                     <UiInput placeholder="Введите логин" type="text" />
+                  </DivBtn>
                </LabelLogin>
                <LabelPassword htmlFor="password">
                   Пароль:
-                  <UiIsPassword placeholder="Введите логин" />
+                  <PassDivBtn>
+                     <UiIsPassword placeholder="Введите логин" />
+                  </PassDivBtn>
                </LabelPassword>
                <ForgotPass>
                   <Paragraph onClick={() => setOpen(true)}>
@@ -28,13 +32,9 @@ function SignIn() {
                   </Paragraph>
                </ForgotPass>
             </WrapperLogin>
-            <UIButton
-               width="214px"
-               height="51px"
-               title="войти"
-               variant="contained"
-               background-color="#3772FF"
-            />
+            <SignInBtn variant="contained" background="#3772FF">
+               Войти
+            </SignInBtn>
          </Wrapper>
          {value && <ForgotPasswordModal open={value} />}
       </>
@@ -42,6 +42,20 @@ function SignIn() {
 }
 
 export default SignIn
+const DivBtn = styled.div`
+   margin-top: 10px;
+   & .MuiInputBase-input {
+      width: 410px;
+      height: 42px;
+   }
+`
+const PassDivBtn = styled.div`
+   margin-top: 10px;
+   & .MuiInputBase-input {
+      width: 370px;
+      height: 42px;
+   }
+`
 const Wrapper = styled.div`
    display: flex;
    flex-direction: column;
@@ -72,7 +86,6 @@ const WrapperLogin = styled.div`
    display: flex;
    flex-direction: column;
    width: 440px;
-   height: 166px;
    margin-bottom: 28px;
 `
 const LabelLogin = styled.label`
@@ -111,4 +124,8 @@ const Paragraph = styled.p`
    line-height: 16px;
    color: #3772ff;
    cursor: pointer;
+`
+const SignInBtn = styled(UIButton)`
+   width: 214px;
+   height: 51px;
 `

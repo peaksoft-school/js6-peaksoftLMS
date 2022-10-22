@@ -10,25 +10,32 @@ function NewPass() {
          <WrapperLogin>
             <LabelLogin>
                Новый пароль:
-               <UiIsPassword placeholder="Введите новый пароль" />
+               <PassDivBtn>
+                  <UiIsPassword placeholder="Введите новый пароль" />
+               </PassDivBtn>
             </LabelLogin>
             <LabelPassword>
                Подтверждение:
-               <UiIsPassword placeholder="Подтвердите  пароль" />
+               <PassDivBtn>
+                  <UiIsPassword placeholder="Подтвердите  пароль" />
+               </PassDivBtn>
             </LabelPassword>
          </WrapperLogin>
-         <UIButton
-            width="214px"
-            height="51px"
-            title="Создать"
-            variant="contained"
-            background-color="#3772FF"
-         />
+         <NewPassBtn variant="contained" background="#3772ff">
+            Создать
+         </NewPassBtn>
       </Wrapper>
    )
 }
 
 export default NewPass
+const PassDivBtn = styled.div`
+   margin-top: 10px;
+   & .MuiInputBase-input {
+      width: 372px;
+      height: 42px;
+   }
+`
 const Wrapper = styled.div`
    display: flex;
    flex-direction: column;
@@ -52,6 +59,7 @@ const PeaksoftParagraph = styled.h1`
 const WrapperLogin = styled.div`
    display: flex;
    flex-direction: column;
+   justify-content: space-between;
    width: 440px;
    height: 166px;
    margin-bottom: 53px;
@@ -65,7 +73,6 @@ const LabelLogin = styled.label`
    color: #6a6a6a;
    display: flex;
    flex-direction: column;
-   margin-bottom: 18px;
 `
 const LabelPassword = styled.label`
    font-family: 'Open Sans';
@@ -76,4 +83,9 @@ const LabelPassword = styled.label`
    color: #6a6a6a;
    display: flex;
    flex-direction: column;
+`
+const NewPassBtn = styled(UIButton)`
+   width: 214px;
+   height: 51px;
+   border-radius: 8px;
 `
