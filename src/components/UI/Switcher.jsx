@@ -1,16 +1,45 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import { FormControlLabel, Switch } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { useState } from 'react'
 
-const Switcher = ({ clickHandler }) => {
+const Switcher = (value) => {
+   const [isEnabled, setIsEnabled] = useState(true)
+   const clickHandler = () => {
+      setIsEnabled((previousState) => {
+         return !previousState
+      })
+   }
    return (
-      <FormControlLabel
-         onClick={clickHandler}
+      <FormControl
+         value={value}
+         sx={{
+            color: isEnabled ? 'green' : 'red',
+            bgcolor: isEnabled
+               ? 'rgba(54, 172, 12, 0.1)'
+               : 'rgba(201, 30, 30, 0.1)',
+         }}
+         label={isEnabled ? 'Ответы принимаются' : 'Ответы не принимаются'}
+         labelPlacement="start"
+         onChange={clickHandler}
          control={<CustomSwitch sx={{ m: 1 }} defaultChecked />}
       />
    )
 }
 export default Switcher
+const FormControl = styled(FormControlLabel)({
+   padding: '20px',
+   width: '1140px',
+   height: '68px',
+   left: '0px',
+   top: '142px',
+   border: '1px solid #d4d4d4',
+   borderRadius: '10px',
+
+   '&    .Mui-disabled  ': {
+      background: 'red',
+      height: '100px',
+   },
+})
 
 const CustomSwitch = styled((props) => (
    <Switch size="medium" focusVisibleClassName=".Mui-focusVisible" {...props} />
@@ -35,7 +64,7 @@ const CustomSwitch = styled((props) => (
    },
    '& .MuiSwitch-track': {
       borderRadius: 26 / 2,
-      backgroundColor: '#fff',
+      backgroundColor: '#fff  ',
       opacity: 1,
    },
 }))
