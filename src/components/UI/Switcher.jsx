@@ -1,49 +1,47 @@
-import { FormControlLabel, Switch } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { useState } from 'react'
+import FormGroup from '@mui/material/FormGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch from '@mui/material/Switch'
+import Stack from '@mui/material/Stack'
 
-const Switcher = (value) => {
-   const [isEnabled, setIsEnabled] = useState(true)
-   const clickHandler = () => {
-      setIsEnabled((previousState) => {
-         return !previousState
-      })
-   }
+const Switcher = (props) => {
+   const { value, AmountAnswer, color, bgcolor, label, clickHandler } = props
    return (
-      <FormControl
-         value={value}
+      <FormGroup
          sx={{
-            color: isEnabled ? 'green' : 'red',
-            bgcolor: isEnabled
-               ? 'rgba(54, 172, 12, 0.1)'
-               : 'rgba(201, 30, 30, 0.1)',
+            padding: '20px',
+            justifyContent: 'center',
+            border: '1px solid #D4D4D4',
+            borderRadius: '10px',
+            color: { color },
+            bgcolor: { bgcolor },
+            width: '1140px',
+            height: '68px',
          }}
-         label={isEnabled ? 'Ответы принимаются' : 'Ответы не принимаются'}
-         labelPlacement="start"
-         onChange={clickHandler}
-         control={<CustomSwitch sx={{ m: 1 }} defaultChecked />}
-      />
+      >
+         <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+         >
+            <p>{AmountAnswer} ответов</p>
+            <FormControlLabel
+               labelPlacement="start"
+               label={label}
+               onChange={clickHandler}
+               value={value}
+               control={<CustomSwitch sx={{ m: 1 }} defaultChecked />}
+            />
+         </Stack>
+      </FormGroup>
    )
 }
 export default Switcher
-const FormControl = styled(FormControlLabel)({
-   padding: '20px',
-   width: '1140px',
-   height: '68px',
-   left: '0px',
-   top: '142px',
-   border: '1px solid #d4d4d4',
-   borderRadius: '10px',
-
-   '&    .Mui-disabled  ': {
-      background: 'red',
-      height: '100px',
-   },
-})
 
 const CustomSwitch = styled((props) => (
    <Switch size="medium" focusVisibleClassName=".Mui-focusVisible" {...props} />
 ))(() => ({
+   float: 'right',
    width: 51,
    height: 30,
    padding: 0,
