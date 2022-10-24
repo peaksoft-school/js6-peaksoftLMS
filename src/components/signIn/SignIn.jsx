@@ -1,26 +1,84 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useForm, Controller, useFormState } from 'react-hook-form'
 import UiIsPassword from '../UI/UiIsPasswod'
-import UiInput from '../UI/UiInput'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
+import UiInput from '../UI/UiInput'
 
 function SignIn() {
    const [value, setOpen] = useState(false)
+   const { control, handleSubmit, reset } = useForm({
+      mode: 'onblur',
+      defaultValues: {
+         login: '',
+         password: '',
+      },
+   })
+   const { errors } = useFormState({
+      control,
+   })
+   const onSubmit = (data) => {
+      console.log(data)
+      reset()
+   }
    return (
       <>
-         <Wrapper>
+         <Wrapper onSubmit={handleSubmit(onSubmit)}>
             <PeaksoftParagraph>
                Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
             </PeaksoftParagraph>
             <WrapperLogin>
                <LabelLogin htmlFor="login">
                   Логин:
-                  <UiInput placeholder="Введите логин" type="text" />
+                  <Controller
+                     control={control}
+                     name="login"
+                     rules={{
+                        required: 'Поле обязательно к заполнению',
+                        minLength: { value: 6, message: 'Минимум 6 символов' },
+                     }}
+                     render={({ field }) => (
+                        <UiInput
+                           onChange={(e) => field.onChange(e)}
+                           onBlur={(e) => field.onBlur(e)}
+                           value={field.value}
+                           placeholder="Введите логин"
+                           type="text"
+                           error={!!errors.login?.message}
+                        />
+                     )}
+                  />
+                  {errors?.login && (
+                     <ErrorMessage>
+                        {errors?.login?.message || 'Error'}
+                     </ErrorMessage>
+                  )}
                </LabelLogin>
                <LabelPassword htmlFor="password">
                   Пароль:
-                  <UiIsPassword placeholder="Введите логин" />
+                  <Controller
+                     control={control}
+                     name="password"
+                     rules={{
+                        required: 'Поле обязательно к заполнению',
+                        minLength: { value: 6, message: 'Минимум 6 символов' },
+                     }}
+                     render={({ field }) => (
+                        <UiIsPassword
+                           onChange={(e) => field.onChange(e)}
+                           onBlur={(e) => field.onBlur(e)}
+                           value={field.value}
+                           error={!!errors.password?.message}
+                           placeholder="Введите пароль "
+                        />
+                     )}
+                  />
+                  {errors?.password && (
+                     <ErrorMessage>
+                        {errors?.password?.message || 'Error'}
+                     </ErrorMessage>
+                  )}
                </LabelPassword>
                <ForgotPass>
                   <Paragraph onClick={() => setOpen(true)}>
@@ -28,7 +86,7 @@ function SignIn() {
                   </Paragraph>
                </ForgotPass>
             </WrapperLogin>
-            <SignInBtn variant="contained" background="#3772FF">
+            <SignInBtn type="submit" variant="contained" background="#3772FF">
                Войти
             </SignInBtn>
          </Wrapper>
@@ -38,7 +96,7 @@ function SignIn() {
 }
 
 export default SignIn
-const Wrapper = styled.div`
+const Wrapper = styled.form`
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -81,7 +139,7 @@ const LabelLogin = styled.label`
    flex-direction: column;
    margin-bottom: 18px;
    div {
-      margin-top: 9px;
+      margin-top: 5px;
    }
 `
 const LabelPassword = styled.label`
@@ -94,7 +152,7 @@ const LabelPassword = styled.label`
    display: flex;
    flex-direction: column;
    div {
-      margin-top: 9px;
+      margin-top: 5px;
    }
 `
 const ForgotPass = styled.div`
@@ -116,4 +174,13 @@ const Paragraph = styled.p`
 const SignInBtn = styled(UIButton)`
    width: 214px;
    height: 51px;
+`
+const ErrorMessage = styled.p`
+   color: red;
+   font-family: 'Open Sans';
+   font-style: normal;
+   font-weight: 400;
+   margin-top: 5px;
+   font-size: 16px;
+   line-height: 16px;
 `
