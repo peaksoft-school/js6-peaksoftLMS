@@ -8,19 +8,15 @@ import TeachersActive from '../../assets/teachersActive.svg'
 import Students from '../../assets/studentsVector.svg'
 import StudentsActive from '../../assets/studentsActive.svg'
 
-const GeneragotSideBarIcons = ({ id, active }) => {
+const GeneragotSideBarIcons = ({ active, index }) => {
    let iconsLink
-
-   if (id === 1) {
+   if (index === 0) {
       iconsLink = active ? GroupActive : GroupSvg
-   }
-   if (id === 2) {
+   } else if (index === 1) {
       iconsLink = active ? MyCoursesActive : Courses
-   }
-   if (id === 3) {
+   } else if (index === 2) {
       iconsLink = active ? TeachersActive : Teachers
-   }
-   if (id === 4) {
+   } else if (index === 3) {
       iconsLink = active ? StudentsActive : Students
    }
 

@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import GeneragotSideBarIcons from './GeneragotSideBarIcons'
+import Courses from '../../assets/coursesVector.svg'
+import MyCoursesActive from '../../assets/MyCoursesActive.svg'
 
 const HeaderSidebarLayouts = (props) => {
    const [activeIndex, setActiveIndex] = useState(0)
    const { data } = props
+
+   const iconsFunc = (activeIndex, i) => {
+      const active = activeIndex === i
+      let iconsLink
+
+      if (i === 0) {
+         iconsLink = active ? MyCoursesActive : Courses
+      }
+
+      return <img src={iconsLink} alt="icon" />
+   }
 
    const activeItems = (i) => {
       setActiveIndex(i)
@@ -24,10 +37,15 @@ const HeaderSidebarLayouts = (props) => {
                   key={el.id}
                >
                   <ItemsBorder active={activeIndex === i} />
-                  <GeneragotSideBarIcons
-                     id={el.id}
-                     active={activeIndex === i}
-                  />
+                  {data.length === 4 ? (
+                     <GeneragotSideBarIcons
+                        index={i}
+                        active={activeIndex === i}
+                     />
+                  ) : (
+                     iconsFunc(activeIndex, i)
+                  )}
+
                   {el.title}
                </BlockItemsEl>
             ))}
@@ -41,7 +59,7 @@ export default HeaderSidebarLayouts
 const BlockSide = styled.div`
    position: relative;
    width: 240px;
-   height: 875px;
+   height: 100vh;
    background: #fff;
    display: flex;
    align-items: center;
