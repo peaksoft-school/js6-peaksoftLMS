@@ -46,7 +46,7 @@ const HeaderSidebarLayouts = (props) => {
                      iconsFunc(activeIndex, i)
                   )}
 
-                  {el.title}
+                  <p>{el.title}</p>
                </BlockItemsEl>
             ))}
          </BlockItems>
