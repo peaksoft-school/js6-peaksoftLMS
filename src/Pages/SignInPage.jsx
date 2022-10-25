@@ -19,7 +19,7 @@ function SignInPage() {
 export default SignInPage
 
 const WrapperSignIn = styled.div`
-   margin: 200px 0 0 167px;
+   margin: 150px 0 0 167px;
 `
 const Wrapper = styled.div`
    width: 1440px;

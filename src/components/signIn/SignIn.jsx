@@ -111,7 +111,7 @@ const PeaksoftParagraph = styled.h1`
    line-height: 33px;
    width: 262px;
    height: 66px;
-   margin-bottom: 54px;
+   /* margin-bottom: 54px; */
 `
 const RedLms = styled.span`
    color: red;
@@ -126,7 +126,7 @@ const WrapperLogin = styled.div`
    display: flex;
    flex-direction: column;
    width: 440px;
-   margin-bottom: 28px;
+   /* margin-bottom: 28px; */
 `
 const LabelLogin = styled.label`
    font-family: 'Open Sans';
@@ -137,7 +137,7 @@ const LabelLogin = styled.label`
    color: #6a6a6a;
    display: flex;
    flex-direction: column;
-   margin-bottom: 18px;
+   /* margin-bottom: 18px; */
    div {
       margin-top: 5px;
    }
