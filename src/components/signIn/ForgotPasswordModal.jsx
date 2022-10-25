@@ -1,10 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useForm, Controller, useFormState } from 'react-hook-form'
 import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
 
 export const ForgotPasswordModal = ({ open }) => {
+   const { control, handleSubmit, reset } = useForm({
+      mode: 'onblur',
+      defaultValues: {
+         email: '',
+      },
+   })
+   const { errors } = useFormState({
+      control,
+   })
+   const onSubmit = (data) => {
+      console.log(data)
+      reset()
+   }
    return (
       <ModalWindow
          open={open}
@@ -16,12 +30,37 @@ export const ForgotPasswordModal = ({ open }) => {
          }
          bodyContent={
             <DivContainer>
-               <UiInput type="email" />
+               <Controller
+                  control={control}
+                  name="email"
+                  rules={{
+                     required: 'Поле обязательно к заполнению',
+                     minLength: { value: 6, message: 'Минимум 6 символов' },
+                  }}
+                  render={({ field }) => (
+                     <UiInput
+                        onChange={(e) => field.onChange(e)}
+                        onBlur={(e) => field.onBlur(e)}
+                        value={field.value}
+                        type="email"
+                        error={!!errors.email?.message}
+                     />
+                  )}
+               />
+               {errors?.email && (
+                  <ErrorMessage>
+                     {errors?.email?.message || 'Error'}
+                  </ErrorMessage>
+               )}
             </DivContainer>
          }
          footerContent={
             <DivBtn>
-               <ButtonPass variant="contained" background="#3772FF">
+               <ButtonPass
+                  onClick={handleSubmit(onSubmit)}
+                  variant="contained"
+                  background="#3772FF"
+               >
                   Создать
                </ButtonPass>
             </DivBtn>
@@ -31,6 +70,8 @@ export const ForgotPasswordModal = ({ open }) => {
 }
 
 const DivContainer = styled.div`
+   width: 100%;
+   /* height: 100%; */
    margin-bottom: 20px;
    & .MuiInputBase-input {
       width: 491px;
@@ -53,4 +94,13 @@ const LabelModal = styled.div`
 const ButtonPass = styled(UIButton)`
    width: 483px;
    height: 42px;
+`
+const ErrorMessage = styled.p`
+   color: red;
+   font-family: 'Open Sans';
+   font-style: normal;
+   font-weight: 400;
+   margin-top: 5px;
+   font-size: 16px;
+   line-height: 16px;
 `

@@ -19,10 +19,10 @@ function NewPassword() {
 export default NewPassword
 
 const WrapperSignIn = styled.div`
-   margin: 200px 0 0 110px;
+   margin: 120px 0 0 110px;
 `
 const Wrapper = styled.div`
-   width: 1440px;
+   /* width: 1440px; */
    background: #ffffff;
    display: flex;
 `

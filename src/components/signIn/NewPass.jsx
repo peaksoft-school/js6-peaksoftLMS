@@ -1,23 +1,80 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useForm, Controller, useFormState } from 'react-hook-form'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 
 function NewPass() {
+   const { control, handleSubmit, reset } = useForm({
+      mode: 'onblur',
+      defaultValues: {
+         newpass: '',
+         renewpass: '',
+      },
+   })
+   const { errors } = useFormState({
+      control,
+   })
+   const onSubmit = (data) => {
+      console.log(data)
+      reset()
+   }
    return (
-      <Wrapper>
+      <Wrapper onSubmit={handleSubmit(onSubmit)}>
          <PeaksoftParagraph>Создать пароль</PeaksoftParagraph>
          <WrapperLogin>
             <LabelLogin>
                Новый пароль:
-               <UiIsPassword placeholder="Введите новый пароль" />
+               <Controller
+                  control={control}
+                  name="newpass"
+                  rules={{
+                     required: 'Поле обязательно к заполнению',
+                     minLength: { value: 6, message: 'Минимум 6 символов' },
+                  }}
+                  render={({ field }) => (
+                     <UiIsPassword
+                        onChange={(e) => field.onChange(e)}
+                        onBlur={(e) => field.onBlur(e)}
+                        value={field.value}
+                        placeholder="Введите новый пароль"
+                        error={!!errors.newpass?.message}
+                     />
+                  )}
+               />
+               {errors?.newpass && (
+                  <ErrorMessage>
+                     {errors?.newpass?.message || 'Error'}
+                  </ErrorMessage>
+               )}
             </LabelLogin>
             <LabelPassword>
                Подтверждение:
-               <UiIsPassword placeholder="Подтвердите  пароль" />
+               <Controller
+                  control={control}
+                  name="renewpass"
+                  rules={{
+                     required: 'Поле обязательно к заполнению',
+                     minLength: { value: 6, message: 'Минимум 6 символов' },
+                  }}
+                  render={({ field }) => (
+                     <UiIsPassword
+                        onChange={(e) => field.onChange(e)}
+                        onBlur={(e) => field.onBlur(e)}
+                        value={field.value}
+                        placeholder="Подтвердите  пароль"
+                        error={!!errors.renewpass?.message}
+                     />
+                  )}
+               />
+               {errors?.renewpass && (
+                  <ErrorMessage>
+                     {errors?.renewpass?.message || 'Error'}
+                  </ErrorMessage>
+               )}
             </LabelPassword>
          </WrapperLogin>
-         <NewPassBtn variant="contained" background="#3772ff">
+         <NewPassBtn type="submit" variant="contained" background="#3772ff">
             Создать
          </NewPassBtn>
       </Wrapper>
@@ -26,7 +83,7 @@ function NewPass() {
 
 export default NewPass
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -84,4 +141,14 @@ const NewPassBtn = styled(UIButton)`
    width: 214px;
    height: 51px;
    border-radius: 8px;
+`
+const ErrorMessage = styled.p`
+   color: red;
+   font-family: 'Open Sans';
+   font-style: normal;
+   font-weight: 400;
+   margin-top: 5px;
+   font-size: 16px;
+   line-height: 16px;
+   margin-bottom: 3px;
 `
