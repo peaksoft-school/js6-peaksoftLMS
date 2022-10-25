@@ -1,7 +1,16 @@
 import { TextField } from '@mui/material'
 import styled from 'styled-components'
 
-const UiInput = ({ value, placeholder, type, error, onChange }) => {
+const UiInput = ({
+   value,
+   placeholder,
+   type,
+   error,
+   id,
+   width,
+   margin,
+   onChange,
+}) => {
    return (
       <Input
          onChange={onChange}
@@ -9,6 +18,9 @@ const UiInput = ({ value, placeholder, type, error, onChange }) => {
          error={error}
          placeholder={placeholder}
          type={type}
+         id={id}
+         width={width}
+         margin={margin}
       />
    )
 }
@@ -22,6 +34,8 @@ const Input = styled(TextField)`
       border-radius: 10px;
       background: #ffffff;
       caret-color: #258aff;
+      width: ${(props) => props.width};
+      margin: ${(props) => props.margin};
    }
 
    &.MuiOutlinedInput-notchedOutline {
