@@ -5,3 +5,8 @@ export const ROUTES = {
    INSTRUCTOR: 'Instructor/*',
    // other routes under
 }
+
+
+export ICONS = {
+   
+}
