@@ -1,25 +1,14 @@
-// import { useState } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import GeneragotSideBarIcons from '../components/UI/GeneratorSideBar'
-import CoursesSvg from '../assets/coursesVector.svg'
-import MyCoursesActive from '../assets/MyCoursesActive.svg'
+import { ICONS_IMG } from '../utils/constants/constants'
 
-const HeaderSidebarLayouts = (props) => {
+const HeaderSidebarLayouts = () => {
    const [activeIndex, setActiveIndex] = useState(0)
-   const { data } = props
+
    const activeItems = (i) => {
       setActiveIndex(i)
-   }
-
-   const examinationIconsArray = (activeIndex, i) => {
-      const active = activeIndex === i
-      let iconsLink
-      if (i === 0) {
-         iconsLink = active ? MyCoursesActive : CoursesSvg
-      }
-      return <img src={iconsLink} alt="icon" />
    }
 
    return (
@@ -29,7 +18,9 @@ const HeaderSidebarLayouts = (props) => {
             <BlockTheme>PEAKSOFT</BlockTheme>
          </BlockHeader>
          <BlockItems>
-            {data.map((el, i, arr) => (
+            {{
+               /* DUMMY_DATA */
+            }.map((el, i) => (
                <BlockItemsEl
                   active={activeIndex === i}
                   key={el.id}
@@ -37,16 +28,22 @@ const HeaderSidebarLayouts = (props) => {
                   onClick={() => activeItems(i)}
                >
                   <ItemsBorder active={activeIndex === i} />
-                  {arr.length === 4 ? (
-                     <GeneragotSideBarIcons
-                        active={activeIndex === i}
-                        index={i}
-                     />
+                  {{
+                     /* ROLE */
+                  } === 'admin' ? (
+                     <>
+                        <GeneragotSideBarIcons
+                           active={activeIndex === i}
+                           index={i}
+                        />
+                        <p>{el.title}</p>
+                     </>
                   ) : (
-                     examinationIconsArray(activeIndex, i)
+                     <>
+                        <img src={ICONS_IMG.CoursesActive} alt="icon" />
+                        <p>{el.title}</p>
+                     </>
                   )}
-
-                  <p>{el.title}</p>
                </BlockItemsEl>
             ))}
          </BlockItems>
