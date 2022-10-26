@@ -22,7 +22,6 @@ const WrapperSignIn = styled.div`
    margin: 150px 0 0 167px;
 `
 const Wrapper = styled.div`
-   /* width: 1440px; */
    background: #ffffff;
    display: flex;
 `

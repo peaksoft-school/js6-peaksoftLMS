@@ -23,7 +23,7 @@ function NewPass() {
       <Wrapper onSubmit={handleSubmit(onSubmit)}>
          <PeaksoftParagraph>Создать пароль</PeaksoftParagraph>
          <WrapperLogin>
-            <LabelLogin>
+            <LabelLogin style={{ color: errors.newpass && 'red' }}>
                Новый пароль:
                <Controller
                   control={control}
@@ -48,7 +48,7 @@ function NewPass() {
                   </ErrorMessage>
                )}
             </LabelLogin>
-            <LabelPassword>
+            <LabelPassword style={{ color: errors.renewpass && 'red' }}>
                Подтверждение:
                <Controller
                   control={control}
@@ -147,8 +147,9 @@ const ErrorMessage = styled.p`
    font-family: 'Open Sans';
    font-style: normal;
    font-weight: 400;
-   margin-top: 5px;
-   font-size: 16px;
+   margin-top: 3px;
+   margin-bottom: 5px;
+   font-size: 13px;
    line-height: 16px;
    margin-bottom: 3px;
 `

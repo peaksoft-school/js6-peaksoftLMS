@@ -5,7 +5,7 @@ import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
 
-export const ForgotPasswordModal = ({ open }) => {
+export const ForgotPasswordModal = ({ open, handleClose }) => {
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
       defaultValues: {
@@ -22,6 +22,7 @@ export const ForgotPasswordModal = ({ open }) => {
    return (
       <ModalWindow
          open={open}
+         handleClose={handleClose}
          modalTitle="Забыли пароль?"
          headerContent={
             <LabelModal>
@@ -35,7 +36,14 @@ export const ForgotPasswordModal = ({ open }) => {
                   name="email"
                   rules={{
                      required: 'Поле обязательно к заполнению',
-                     minLength: { value: 6, message: 'Минимум 6 символов' },
+                     pattern: {
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: 'Адрес электронной почты введен не верно',
+                     },
+                     minLength: {
+                        value: 6,
+                        message: 'Минимум 6 и символов',
+                     },
                   }}
                   render={({ field }) => (
                      <UiInput
@@ -71,7 +79,6 @@ export const ForgotPasswordModal = ({ open }) => {
 
 const DivContainer = styled.div`
    width: 100%;
-   /* height: 100%; */
    margin-bottom: 20px;
    & .MuiInputBase-input {
       width: 491px;
@@ -83,7 +90,6 @@ const DivBtn = styled.div`
 `
 const LabelModal = styled.div`
    text-align: left;
-   font-family: 'Inter';
    font-style: normal;
    font-weight: 400;
    font-size: 14px;
@@ -101,6 +107,6 @@ const ErrorMessage = styled.p`
    font-style: normal;
    font-weight: 400;
    margin-top: 5px;
-   font-size: 16px;
+   font-size: 13px;
    line-height: 16px;
 `

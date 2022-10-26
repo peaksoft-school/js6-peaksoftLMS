@@ -7,9 +7,12 @@ import { ForgotPasswordModal } from './ForgotPasswordModal'
 import UiInput from '../UI/UiInput'
 
 function SignIn() {
-   const [value, setOpen] = useState(false)
+   const [open, setOpen] = useState(false)
+   const onCloseHandler = () => {
+      setOpen(false)
+   }
    const { control, handleSubmit, reset } = useForm({
-      mode: 'onblur',
+      mode: 'onBlur',
       defaultValues: {
          login: '',
          password: '',
@@ -29,7 +32,10 @@ function SignIn() {
                Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
             </PeaksoftParagraph>
             <WrapperLogin>
-               <LabelLogin htmlFor="login">
+               <LabelLogin
+                  style={{ color: errors.login && 'red' }}
+                  htmlFor="login"
+               >
                   Логин:
                   <Controller
                      control={control}
@@ -37,15 +43,18 @@ function SignIn() {
                      rules={{
                         required: 'Поле обязательно к заполнению',
                         minLength: { value: 6, message: 'Минимум 6 символов' },
+                        pattern: {
+                           value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                           message: 'Адрес электронной почты введен не верно',
+                        },
                      }}
                      render={({ field }) => (
                         <UiInput
                            id="login"
                            onChange={(e) => field.onChange(e)}
-                           onBlur={(e) => field.onBlur(e)}
                            value={field.value}
                            placeholder="Введите логин"
-                           type="text"
+                           type="email"
                            error={!!errors.login?.message}
                         />
                      )}
@@ -56,7 +65,10 @@ function SignIn() {
                      </ErrorMessage>
                   )}
                </LabelLogin>
-               <LabelPassword htmlFor="password">
+               <LabelPassword
+                  htmlFor="password"
+                  style={{ color: errors.password && 'red' }}
+               >
                   Пароль:
                   <Controller
                      control={control}
@@ -68,7 +80,6 @@ function SignIn() {
                      render={({ field }) => (
                         <UiIsPassword
                            onChange={(e) => field.onChange(e)}
-                           onBlur={(e) => field.onBlur(e)}
                            value={field.value}
                            error={!!errors.password?.message}
                            placeholder="Введите пароль "
@@ -92,7 +103,9 @@ function SignIn() {
                Войти
             </SignInBtn>
          </Wrapper>
-         {value && <ForgotPasswordModal open={value} />}
+         {open && (
+            <ForgotPasswordModal handleClose={onCloseHandler} open={open} />
+         )}
       </>
    )
 }
@@ -157,6 +170,7 @@ const LabelPassword = styled.label`
       margin-top: 5px;
    }
 `
+
 const ForgotPass = styled.div`
    width: 100%;
    height: 100%;
@@ -183,6 +197,6 @@ const ErrorMessage = styled.p`
    font-style: normal;
    font-weight: 400;
    margin-top: 5px;
-   font-size: 16px;
+   font-size: 13px;
    line-height: 16px;
 `
