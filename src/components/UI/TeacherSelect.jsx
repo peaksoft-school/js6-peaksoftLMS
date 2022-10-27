@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { MenuItem, FormControl, Checkbox, styled, Select } from '@mui/material'
 
-export const TeacherSelect = ({ names }) => {
-   const [personName, setPersonName] = useState([])
+export const TeacherSelect = (props) => {
+   const { personName, setPersonName, data } = props
 
    const handleChange = (event) => {
       const { value } = event.target
@@ -12,8 +12,8 @@ export const TeacherSelect = ({ names }) => {
 
    return (
       <div>
-         <FormControl sx={{ m: 1, width: 300, mt: 3 }}>
-            <Select
+         <FormControl>
+            <CustomSelect
                multiple
                displayEmpty
                value={personName}
@@ -21,13 +21,13 @@ export const TeacherSelect = ({ names }) => {
                input={<OutlinedInput />}
                renderValue={(selected) => {
                   if (selected.length === 0) {
-                     return <em>Выбрать исполнителя</em>
+                     return <em>Выбрать учителя</em>
                   }
 
                   return selected.join(', ')
                }}
             >
-               {names.map((name) => (
+               {data.map((name) => (
                   <CustomMenuItem key={name} value={name}>
                      {name}{' '}
                      <Checkbox
@@ -35,7 +35,7 @@ export const TeacherSelect = ({ names }) => {
                      />
                   </CustomMenuItem>
                ))}
-            </Select>
+            </CustomSelect>
          </FormControl>
       </div>
    )
@@ -44,4 +44,12 @@ export const TeacherSelect = ({ names }) => {
 const CustomMenuItem = styled(MenuItem)`
    display: flex;
    justify-content: space-between;
+`
+
+const CustomSelect = styled(Select)`
+   border: 1px solid #d4d4d4;
+   height: 48px;
+   padding: 0 !important;
+   width: 491px;
+   border-radius: 10px;
 `
