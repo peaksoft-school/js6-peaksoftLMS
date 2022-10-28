@@ -10,9 +10,10 @@ export const AdminRoutes = () => {
    return (
       <Routes>
          <Route path="/" index element={<GroupsPage />} />
-         <Route path="/courses" element={<CoursesPage />} />
-         <Route path="/teachers" element={<TeachersPage />} />
-         <Route path="/students" element={<StudentsPage />} />
+         <Route path="/courses/*" element={<CoursesPage />}>
+            <Route path="/teachers" element={<TeachersPage />} />
+            <Route path="/students" element={<StudentsPage />} />
+         </Route>
          <Route path="*" index element={<NotFoundPage />} />
       </Routes>
    )
