@@ -14,7 +14,7 @@ function SignIn() {
    const { control, handleSubmit, reset } = useForm({
       mode: 'onBlur',
       defaultValues: {
-         login: '',
+         email: '',
          password: '',
       },
    })
@@ -33,13 +33,13 @@ function SignIn() {
             </PeaksoftParagraph>
             <WrapperLogin>
                <LabelLogin
-                  style={{ color: errors.login && 'red' }}
-                  htmlFor="login"
+                  style={{ color: errors.email && 'red' }}
+                  htmlFor="email"
                >
                   Логин:
                   <Controller
                      control={control}
-                     name="login"
+                     name="email"
                      rules={{
                         required: 'Поле обязательно к заполнению',
                         minLength: { value: 6, message: 'Минимум 6 символов' },
@@ -59,9 +59,9 @@ function SignIn() {
                         />
                      )}
                   />
-                  {errors?.login && (
+                  {errors?.email && (
                      <ErrorMessage>
-                        {errors?.login?.message || 'Error'}
+                        {errors?.email?.message || 'Error'}
                      </ErrorMessage>
                   )}
                </LabelLogin>

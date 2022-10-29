@@ -87,7 +87,7 @@ const Wrapper = styled.form`
    display: flex;
    flex-direction: column;
    align-items: center;
-   width: 440px;
+   width: 720px;
    height: 100%;
 `
 const PeaksoftParagraph = styled.h1`

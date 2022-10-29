@@ -18,9 +18,7 @@ function NewPassword() {
 
 export default NewPassword
 
-const WrapperSignIn = styled.div`
-   margin: 190px 0 0 167px;
-`
+const WrapperSignIn = styled.div``
 const Wrapper = styled.div`
    background: #ffffff;
    display: flex;
@@ -28,7 +26,7 @@ const Wrapper = styled.div`
    justify-content: center;
 `
 const WrapperLogo = styled.div`
-   width: 665px;
+   width: 720px;
    height: 100vh;
    background: #3772ff;
    display: flex;
@@ -38,5 +36,4 @@ const WrapperLogo = styled.div`
 const Logo = styled.img`
    width: 264px;
    height: 462px;
-   /* margin: 273px 201px 285px 200px; */
 `

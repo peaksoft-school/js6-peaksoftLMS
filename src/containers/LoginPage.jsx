@@ -18,9 +18,7 @@ function LoginPage() {
 
 export default LoginPage
 
-const WrapperSignIn = styled.div`
-   /* margin: 0 0 0 110px; */
-`
+const WrapperSignIn = styled.div``
 const Wrapper = styled.div`
    background: #ffffff;
    display: flex;
