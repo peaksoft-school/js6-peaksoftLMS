@@ -25,3 +25,43 @@ export const ICONS_IMG = {
    StudentsSvg,
    StudentsActive,
 }
+
+export const SIDELAYOUT_DATA = [
+   {
+      title: 'Группы',
+      id: 1,
+      path: '/groups',
+      photo: GroupSvg,
+      activePhoto: GroupActive,
+   },
+   {
+      title: 'Курсы ',
+      id: 2,
+      path: '/courses',
+      photo: CoursesSvg,
+      activePhoto: CoursesActive,
+   },
+   {
+      title: 'Учителя',
+      path: '/teachers',
+      id: 3,
+      photo: TeachersSvg,
+      activePhoto: TeachersActive,
+   },
+   {
+      title: 'Студенты',
+      path: '/students',
+      id: 4,
+      photo: StudentsSvg,
+      activePhoto: StudentsActive,
+   },
+]
+
+export const SideData = [
+   {
+      title: 'Мои курсы',
+      id: 1,
+      path: '/courses',
+      photo: CoursesActive,
+   },
+]

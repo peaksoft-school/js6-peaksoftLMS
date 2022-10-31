@@ -1,6 +1,5 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import SidebarLayout from './layout/Sidebar-layout'
 import { AppRoutes } from './routes/AppRoutes'
 
 export const App = () => {
@@ -10,7 +9,6 @@ export const App = () => {
    return (
       <div>
          <AppRoutes />
-         <SidebarLayout />
       </div>
    )
 }
