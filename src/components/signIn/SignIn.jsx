@@ -55,7 +55,7 @@ function SignIn() {
                            value={field.value}
                            placeholder="Введите логин"
                            type="email"
-                           error={!!errors.login?.message}
+                           error={!!errors.email?.message}
                         />
                      )}
                   />
