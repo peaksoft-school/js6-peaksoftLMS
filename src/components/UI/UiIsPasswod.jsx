@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { IconButton, OutlinedInput, FormControl } from '@mui/material'
 
-const UiIsPassword = ({ error, placeholder, onChange }) => {
+const UiIsPassword = ({ error, placeholder, onChange, value }) => {
    const [values, setValues] = useState(false)
 
    function handleViewOnOff() {
@@ -15,6 +15,7 @@ const UiIsPassword = ({ error, placeholder, onChange }) => {
             onChange={onChange}
             placeholder={placeholder}
             error={error}
+            value={value}
             type={values ? 'text' : 'password'}
             endAdornment={
                <IconButton onClick={() => handleViewOnOff()}>

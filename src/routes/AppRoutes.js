@@ -1,11 +1,11 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { LoginPage } from '../containers/LoginPage'
 import { AdminRoutes } from './AdminRoutes'
 import { StudentRoutes } from './StudentRoutes'
 import { InstructorRoutes } from './InstructorRoutes'
 import { PrivateRoute } from './PrivateRoute'
 import { ROUTES } from '../utils/constants/constants'
+import LoginPage from '../containers/LoginPage'
 
 export const AppRoutes = () => {
    return (

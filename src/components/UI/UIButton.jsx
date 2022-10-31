@@ -45,7 +45,7 @@ const ButtonWrap = styled(Button)`
       background-color: ${(props) => props.background};
       border-radius: ${(props) => props.borderradius};
       font-size: ${(props) => props.fontSize};
-      color: ${(props) => props.colour};
+      color: ${(props) => props.color};
       font-family: 'Open Sans';
       font-weight: 600;
       text-transform: none;
