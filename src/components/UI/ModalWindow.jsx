@@ -1,6 +1,6 @@
 import { Grid, Modal, styled, Typography } from '@mui/material/'
 
-export const ModalWindow = ({
+const ModalWindow = ({
    modalTitle,
    bodyContent,
    headerContent,
@@ -19,7 +19,7 @@ export const ModalWindow = ({
       </ModalMain>
    )
 }
-
+export default ModalWindow
 const ModalMain = styled(Modal)`
    height: 100vh;
    width: 100vw;
