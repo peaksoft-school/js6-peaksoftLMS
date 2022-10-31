@@ -63,5 +63,6 @@ export const SideData = [
       id: 1,
       path: '/courses',
       photo: CoursesActive,
+      activePhoto: CoursesActive,
    },
 ]
