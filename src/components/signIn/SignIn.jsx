@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
 import UiInput from '../UI/UiInput'
+import { signIn } from '../../store/slices/userSlice'
 
 function SignIn() {
+   const dispatch = useDispatch()
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
@@ -21,8 +24,10 @@ function SignIn() {
    const { errors } = useFormState({
       control,
    })
+
    const onSubmit = (data) => {
       console.log(data)
+      dispatch(signIn(data))
       reset()
    }
    return (
@@ -75,7 +80,7 @@ function SignIn() {
                      name="password"
                      rules={{
                         required: 'Поле обязательно к заполнению',
-                        minLength: { value: 6, message: 'Минимум 6 символов' },
+                        minLength: { value: 5, message: 'Минимум 6 символов' },
                      }}
                      render={({ field }) => (
                         <UiIsPassword
