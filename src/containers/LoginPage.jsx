@@ -18,15 +18,19 @@ function LoginPage() {
 
 export default LoginPage
 
-const WrapperSignIn = styled.div``
+const WrapperSignIn = styled.div`
+   width: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+`
 const Wrapper = styled.div`
-   background: #ffffff;
    display: flex;
    align-items: center;
    justify-content: center;
 `
 const WrapperLogo = styled.div`
-   width: 720px;
+   width: 50%;
    height: 100vh;
    background: #3772ff;
    display: flex;
