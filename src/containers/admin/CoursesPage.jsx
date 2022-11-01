@@ -1,5 +1,11 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 export const CoursesPage = () => {
-   return <div>CoursesPage</div>
+   return (
+      <div>
+         CoursesPage
+         <Outlet />
+      </div>
+   )
 }
