@@ -10,6 +10,7 @@ export const signIn = createAsyncThunk('user/sign', async (data) => {
    } catch (err) {
       console.error(err)
    }
+
    return null
 })
 
