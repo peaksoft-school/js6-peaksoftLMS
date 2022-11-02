@@ -61,7 +61,7 @@ export const SideData = [
    {
       title: 'Мои курсы',
       id: 1,
-      path: '/courses',
+      path: '/coures',
       photo: CoursesActive,
       activePhoto: CoursesActive,
    },
