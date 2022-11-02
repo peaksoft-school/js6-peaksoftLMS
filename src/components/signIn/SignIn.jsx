@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
@@ -9,6 +10,8 @@ import UiInput from '../UI/UiInput'
 import { signIn } from '../../store/slices/userSlice'
 
 function SignIn() {
+   const { role } = useSelector((state) => state.user)
+   const navigate = useNavigate()
    const dispatch = useDispatch()
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
@@ -26,9 +29,19 @@ function SignIn() {
    })
 
    const onSubmit = (data) => {
+      reset()
       console.log(data)
       dispatch(signIn(data))
-      reset()
+      if (role === 'ADMIN') {
+         console.log(role, 'role')
+         navigate('/admin')
+      } else if (role === 'INSTRUCTOR') {
+         navigate('/instructor')
+      } else if (role === 'STUDENT') {
+         navigate('/student')
+      } else {
+         navigate('/')
+      }
    }
    return (
       <>

@@ -6,7 +6,6 @@ const POST_URL =
 export const signIn = createAsyncThunk('user/sign', async (data) => {
    try {
       const response = await axios.post(POST_URL, data)
-      console.log(response)
       return response.data
    } catch (err) {
       console.error(err)
@@ -16,7 +15,7 @@ export const signIn = createAsyncThunk('user/sign', async (data) => {
 
 const initialState = {
    status: null,
-   error: null,
+   token: null,
    role: null,
 }
 export const userSlice = createSlice({
@@ -29,8 +28,8 @@ export const userSlice = createSlice({
       },
       [signIn.fulfilled]: (state, action) => {
          state.status = 'succes'
-         state.signIn = action.payload
-         localStorage.setItem('signIn', JSON.stringify(state.signIn))
+         localStorage.setItem('token', JSON.stringify(action.payload.token))
+         state.token = action.payload.token
          state.role = action.payload.role
       },
       [signIn.rejected]: (state) => {
@@ -39,4 +38,4 @@ export const userSlice = createSlice({
    },
 })
 
-// export const {} = userSlice.actions
+export const userAction = userSlice.actions
