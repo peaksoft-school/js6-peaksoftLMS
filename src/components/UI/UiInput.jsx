@@ -1,9 +1,19 @@
 import { TextField } from '@mui/material'
 import styled from 'styled-components'
 
-const UiInput = ({ value, placeholder, type, error, id, width, margin }) => {
+const UiInput = ({
+   value,
+   placeholder,
+   type,
+   error,
+   id,
+   width,
+   margin,
+   onChange,
+}) => {
    return (
       <Input
+         onChange={onChange}
          value={value}
          error={error}
          placeholder={placeholder}

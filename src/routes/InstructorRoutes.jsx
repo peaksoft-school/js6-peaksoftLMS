@@ -1,10 +1,11 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { NotFoundPage } from '../containers/NotFoundPage'
 
 export const InstructorRoutes = () => {
    return (
       <Routes>
+         <Route element={<Navigate to="/courses" />} />
          <Route
             path="/some-admin"
             index

@@ -1,36 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
 import LogoSignIn from '../assets/LogoSignIn.svg'
-import SignIn from '../components/signIn/SignIn'
+import NewPass from '../components/signIn/NewPass'
 
-function LoginPage() {
+function NewPassword() {
    return (
       <Wrapper>
          <WrapperLogo>
             <Logo src={LogoSignIn} />
          </WrapperLogo>
          <WrapperSignIn>
-            <SignIn />
+            <NewPass />
          </WrapperSignIn>
       </Wrapper>
    )
 }
 
-export default LoginPage
+export default NewPassword
 
-const WrapperSignIn = styled.div`
-   width: 50%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-`
+const WrapperSignIn = styled.div``
 const Wrapper = styled.div`
+   background: #ffffff;
    display: flex;
    align-items: center;
    justify-content: center;
 `
 const WrapperLogo = styled.div`
-   width: 50%;
+   width: 720px;
    height: 100vh;
    background: #3772ff;
    display: flex;

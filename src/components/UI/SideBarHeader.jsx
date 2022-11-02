@@ -1,24 +1,13 @@
-import { useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { SIDELAYOUT_DATA, SideData } from '../../utils/constants/constants'
 import PathIcons from './PathIcons'
 
 const SideBarHeader = () => {
-   const navigate = useNavigate()
-
    const { pathname: pathName } = useLocation()
 
    const ROLE = 'admin'
    const check = ROLE === 'admin' ? SIDELAYOUT_DATA : SideData
-
-   useEffect(() => {
-      if (ROLE === 'admin') {
-         navigate('/groups')
-      } else {
-         navigate('/courses')
-      }
-   }, [])
 
    return (
       <>
