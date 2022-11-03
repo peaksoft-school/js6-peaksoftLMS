@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
+// import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { unwrapResult } from '@reduxjs/toolkit'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
@@ -14,7 +17,7 @@ function SignIn() {
    const onCloseHandler = () => {
       setOpen(false)
    }
-
+   const navigate = useNavigate()
    const { control, handleSubmit, reset } = useForm({
       mode: 'onBlur',
       defaultValues: {
@@ -25,11 +28,12 @@ function SignIn() {
    const { errors } = useFormState({
       control,
    })
-
    const onSubmit = (data) => {
-      console.log(data)
-      dispatch(signIn(data))
-      reset()
+      dispatch(signIn({ data, navigate }))
+         .then(unwrapResult)
+         .then(() => {
+            reset()
+         })
    }
 
    return (
