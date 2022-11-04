@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { AppRoutes } from './routes/AppRoutes'
+import CreateTask from './components/UI/createTask/CreateTask'
+// import { AppRoutes } from './routes/AppRoutes'
 
 export const App = () => {
    const location = useLocation()
@@ -8,7 +9,7 @@ export const App = () => {
 
    return (
       <div>
-         <AppRoutes />
+         <CreateTask />
       </div>
    )
 }
