@@ -1,20 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import UiInput from './UiInput'
-import TextImage from '../../assets/Text.svg'
-import ListImage from '../../assets/List.svg'
-import GalleryImage from '../../assets/Gallery.svg'
-import ExportImage from '../../assets/Export.svg'
-import Export2Image from '../../assets/Export2.svg'
-import AaImage from '../../assets/Aa.svg'
-import IImage from '../../assets/I.svg'
-import UImage from '../../assets/U.svg'
-import BImage from '../../assets/B.svg'
-import MenuImage from '../../assets/Menu.svg'
-import ChoiceImage from '../../assets/Choice.svg'
-import DeleteImage from '../../assets/Delete.svg'
-import BackgroundImage from '../../assets/BackgroundImage.svg'
-import UIButton from './UIButton'
+import UiInput from '../UiInput'
+import TextImage from '../../../assets/Text.svg'
+import ListImage from '../../../assets/List.svg'
+import GalleryImage from '../../../assets/Gallery.svg'
+import ExportImage from '../../../assets/Export.svg'
+import Export2Image from '../../../assets/Export2.svg'
+import DeleteImage from '../../../assets/Delete.svg'
+import BackgroundImage from '../../../assets/BackgroundImage.svg'
+import UIButton from '../UIButton'
+import TextEditor from './TextEditor'
 
 const CreateTask = () => {
    return (
@@ -31,18 +26,7 @@ const CreateTask = () => {
             </ImgTopBox>
          </TopBox>
          <BottomBox>
-            <ImgBottomBox>
-               <AaImg src={AaImage} alt="AaImage" />
-               <IImg src={IImage} alt="Image" />
-               <UImg src={UImage} alt="UImage" />
-               <BImg src={BImage} alt="BImage" />
-               <MenuImg src={MenuImage} alt="MenuImage" />
-               <ChoiceImg src={ChoiceImage} alt="ChoiceImage" />
-            </ImgBottomBox>
-            <InputNameBox>
-               <TextImg src={TextImage} alt="TextImage" />
-               <UiInput placeholder="Имя" />
-            </InputNameBox>
+            <TextEditor />
             <ListBox>
                <ListImg src={ListImage} alt="ListImage" />
                <p>Название файла.формат</p>
@@ -113,7 +97,6 @@ const Deleteimage = styled.div`
       height: 28.74px;
    }
 `
-
 const TopBox = styled.div`
    display: flex;
    margin-left: 20px;
@@ -135,22 +118,6 @@ const BottomBox = styled.div`
    margin: 23px 20px 17px 20px;
    background: #ffffff;
    border: 1px solid #d4d4d4;
-`
-const ImgBottomBox = styled.div`
-   display: flex;
-   gap: 33px;
-   width: 253px;
-   margin: 28px 0 15px 70px;
-`
-const InputNameBox = styled.div`
-   display: flex;
-   align-items: center;
-   input {
-      width: 1000px;
-   }
-   img {
-      margin: 0 15px 0 23px;
-   }
 `
 const InputBox = styled.div`
    display: flex;
@@ -234,28 +201,4 @@ const ExportImg = styled.img`
 const Export2Img = styled.img`
    width: 24px;
    height: 18px;
-`
-const AaImg = styled.img`
-   width: 22px;
-   height: 16px;
-`
-const IImg = styled.img`
-   width: 10px;
-   height: 16px;
-`
-const UImg = styled.img`
-   width: 16px;
-   height: 19px;
-`
-const BImg = styled.img`
-   width: 12px;
-   height: 16px;
-`
-const MenuImg = styled.img`
-   width: 18px;
-   height: 16.9px;
-`
-const ChoiceImg = styled.img`
-   width: 18px;
-   height: 16.9px;
 `
