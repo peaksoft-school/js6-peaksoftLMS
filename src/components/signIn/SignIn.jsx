@@ -13,11 +13,11 @@ import { signIn } from '../../store/slices/userSlice'
 
 function SignIn() {
    const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
    }
-   const navigate = useNavigate()
    const { control, handleSubmit, reset } = useForm({
       mode: 'onBlur',
       defaultValues: {
@@ -86,7 +86,7 @@ function SignIn() {
                      name="password"
                      rules={{
                         required: 'Поле обязательно к заполнению',
-                        minLength: { value: 5, message: 'Минимум 6 символов' },
+                        minLength: { value: 6, message: 'Минимум 6 символов' },
                      }}
                      render={({ field }) => (
                         <UiIsPassword

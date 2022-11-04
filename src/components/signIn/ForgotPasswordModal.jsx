@@ -1,23 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { unwrapResult } from '@reduxjs/toolkit'
 import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
+import { forgotPassword } from '../../store/slices/forgotPassSlice'
 
 export const ForgotPasswordModal = ({ open, handleClose }) => {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
       defaultValues: {
          email: '',
+         link: 'http://localhost:3000/forgot-password',
       },
    })
    const { errors } = useFormState({
       control,
    })
    const onSubmit = (data) => {
-      console.log(data)
-      reset()
+      // console.log(data)
+      dispatch(forgotPassword({ data, navigate }))
+         .then(unwrapResult)
+         .then(() => {
+            reset()
+         })
    }
    return (
       <ModalWindow

@@ -11,7 +11,7 @@ export const ROUTES = {
    LOGIN: '/login',
    ADMIN: 'admin/*',
    STUDENT: 'student/*',
-   INSTRUCTOR: 'Instructor/*',
+   INSTRUCTOR: 'instructor/*',
    // other routes under
 }
 

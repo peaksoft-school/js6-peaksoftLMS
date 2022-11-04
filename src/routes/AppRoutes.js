@@ -6,11 +6,13 @@ import { InstructorRoutes } from './InstructorRoutes'
 import { PrivateRoute } from './PrivateRoute'
 import { ROUTES } from '../utils/constants/constants'
 import LoginPage from '../containers/LoginPage'
+import NewPassword from '../containers/NewPassword'
 
 export const AppRoutes = () => {
    return (
       <Routes>
          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+         <Route path="/forgot-password" element={<NewPassword />} />
          <Route
             path={ROUTES.ADMIN}
             element={<PrivateRoute roles="ADMIN" Component={<AdminRoutes />} />}

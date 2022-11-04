@@ -12,7 +12,7 @@ export const signIn = createAsyncThunk(
          if (result?.role === 'ADMIN') {
             navigate('/admin')
          } else if (result?.role === 'INSTRUCTOR') {
-            navigate('/Instructor')
+            navigate('/instructor')
          } else if (result?.role === 'STUDENT') {
             navigate('/student')
          } else {
