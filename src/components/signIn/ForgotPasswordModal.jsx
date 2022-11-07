@@ -7,12 +7,12 @@ import { unwrapResult } from '@reduxjs/toolkit'
 import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
-import { forgotPassword } from '../../store/slices/forgotPassSlice'
+import { forgotPassword } from '../../api/services/forgotPasswordService'
 
 export const ForgotPasswordModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { control, handleSubmit, reset } = useForm({
+   const { control, handleSubmit, reset, setError } = useForm({
       mode: 'onblur',
       defaultValues: {
          email: '',
@@ -24,7 +24,7 @@ export const ForgotPasswordModal = ({ open, handleClose }) => {
    })
    const onSubmit = (data) => {
       // console.log(data)
-      dispatch(forgotPassword({ data, navigate }))
+      dispatch(forgotPassword({ data, navigate, setError }))
          .then(unwrapResult)
          .then(() => {
             reset()

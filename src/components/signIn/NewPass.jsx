@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
-import { resetPassword } from '../../store/slices/resetPasswordSlice'
+import { resetPassword } from '../../api/services/resetPasswordService'
 
 function NewPass() {
    const dispatch = useDispatch()
