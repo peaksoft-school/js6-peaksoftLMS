@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { ReactComponent as ErrorIcon } from '../../assets/error.svg'
 import { ReactComponent as SuccesIcon } from '../../assets/success.svg'
 
-export const PopUp = ({ message, messageType }) => {
+const PopUp = ({ message, messageType }) => {
    const [open, setOpen] = useState(true)
    const handleClose = (reason) => {
       if (reason === 'clickaway') {
@@ -43,7 +43,7 @@ export const PopUp = ({ message, messageType }) => {
       message: [],
    }
 }
-
+export default PopUp
 const AlertBlock = styled(Alert)`
    display: flex;
    flex-direction: row-reverse;

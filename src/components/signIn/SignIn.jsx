@@ -1,21 +1,30 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
 import UiInput from '../UI/UiInput'
+import { signIn } from '../../api/services/userAuthService'
 
 function SignIn() {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
    }
-   const { control, handleSubmit, reset } = useForm({
+   const { control, handleSubmit, reset, setError } = useForm({
       mode: 'onBlur',
       defaultValues: {
          email: '',
          password: '',
+         error: '',
       },
    })
    const { errors } = useFormState({
@@ -23,10 +32,16 @@ function SignIn() {
    })
    const onSubmit = (data) => {
       console.log(data)
-      reset()
+      dispatch(signIn({ data, navigate, setError }))
+         .then(unwrapResult)
+         .then(() => {
+            reset()
+         })
    }
+
    return (
       <>
+         <ToastContainer theme="colored" />
          <Wrapper onSubmit={handleSubmit(onSubmit)}>
             <PeaksoftParagraph>
                Добро пожаловать в<RedLms>PEAKSOFT LMS !</RedLms>
@@ -55,7 +70,7 @@ function SignIn() {
                            value={field.value}
                            placeholder="Введите логин"
                            type="email"
-                           error={!!errors.login?.message}
+                           error={!!errors.email?.message}
                         />
                      )}
                   />

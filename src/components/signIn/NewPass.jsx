@@ -1,10 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
+import { unwrapResult } from '@reduxjs/toolkit'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
+import { resetPassword } from '../../api/services/resetPasswordService'
 
 function NewPass() {
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
       defaultValues: {
@@ -16,8 +22,11 @@ function NewPass() {
       control,
    })
    const onSubmit = (data) => {
-      console.log(data)
-      reset()
+      dispatch(resetPassword({ data, navigate }))
+         .then(unwrapResult)
+         .then(() => {
+            reset()
+         })
    }
    return (
       <Wrapper onSubmit={handleSubmit(onSubmit)}>
