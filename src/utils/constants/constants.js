@@ -66,5 +66,8 @@ export const SideData = [
       activePhoto: CoursesActive,
    },
 ]
+
 export const BASE_URL =
    'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
+
+export const JWT_TOKEN_KEY = JSON.parse(localStorage.getItem('token'))
