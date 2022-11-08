@@ -31,7 +31,6 @@ function SignIn() {
       control,
    })
    const onSubmit = (data) => {
-      console.log(data)
       dispatch(signIn({ data, navigate, setError }))
          .then(unwrapResult)
          .then(() => {

@@ -4,10 +4,15 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import styled from 'styled-components'
 
-function GroupCard({ someImage, someName, someYear, someParagraph }) {
+function GroupCard({
+   someImage,
+   someName,
+   someYear,
+   someParagraph,
+   someButton,
+}) {
    return (
       <CardGroup>
          <CardAction>
@@ -22,9 +27,7 @@ function GroupCard({ someImage, someName, someYear, someParagraph }) {
                <TypographyParagraph variant="body2" color="text.secondary">
                   {someParagraph}
                </TypographyParagraph>
-               <HorizonIcon>
-                  <MoreHorizIcon />
-               </HorizonIcon>
+               <HorizonIcon>{someButton}</HorizonIcon>
             </CardContent>
          </CardAction>
       </CardGroup>
@@ -62,21 +65,13 @@ const TypographyYear = styled.div`
    justify-content: space-between;
    align-items: center;
 `
-const Year = styled.h4`
+const Year = styled.h3`
    width: 74px;
    height: 12px;
-   font-family: 'Open Sans';
    font-style: normal;
    font-weight: 400;
    font-size: 12px;
-   line-height: 140.1%;
    color: #1d293f;
-   white-space: wrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   -webkit-line-clamp: 1;
-   display: -webkit-box;
-   -webkit-box-orient: vertical;
 `
 const TypographyName = styled(Typography)`
    &.MuiTypography-root {
