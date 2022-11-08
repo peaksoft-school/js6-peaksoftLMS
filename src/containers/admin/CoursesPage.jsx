@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 export const CoursesPage = () => {
    return (
       <div>
-         CoursesPage
+         <p>Hello Courses</p>
          <Outlet />
       </div>
    )

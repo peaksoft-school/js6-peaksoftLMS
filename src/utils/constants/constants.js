@@ -66,5 +66,6 @@ export const SideData = [
       activePhoto: CoursesActive,
    },
 ]
+
 export const BASE_URL =
    'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'

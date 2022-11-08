@@ -15,11 +15,11 @@ const SideBarHeader = () => {
             <BlockItemsEl
                to={el.path}
                key={el.id}
-               active={pathName === `${el.path}`}
+               active={pathName === el.path}
             >
-               <ItemsBorder active={pathName === `${el.path}`} />
+               <ItemsBorder active={pathName === el.path} />
                <PathIcons
-                  pathname={pathName === `${el.path}`}
+                  pathname={pathName === el.path}
                   array={check}
                   title={el.title}
                />

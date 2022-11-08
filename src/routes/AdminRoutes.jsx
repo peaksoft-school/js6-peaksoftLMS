@@ -8,20 +8,23 @@ import { GroupsPage } from '../containers/admin/GroupsPage'
 import { StudentsPage } from '../containers/admin/StudentsPage'
 import { TeachersPage } from '../containers/admin/TeachersPage'
 import { NotFoundPage } from '../containers/NotFoundPage'
+import SidebarLayout from '../layout/SidebarLayout'
 
 export const AdminRoutes = () => {
    return (
-      <Routes>
-         <Route path="/" element={<GroupsPage />}>
-            <Route path="group-students" element={<GroupsInnerPage />} />
-         </Route>
-         <Route path="/courses/*" element={<CoursesPage />}>
-            <Route index path="teachers" element={<CourseTeachersPage />} />
-            <Route path="students" element={<CourseStudentsPage />} />
-         </Route>
-         <Route path="/teachers" element={<TeachersPage />} />
-         <Route path="/students" element={<StudentsPage />} />
-         <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <SidebarLayout>
+         <Routes>
+            <Route path="/" element={<GroupsPage />}>
+               <Route path="group-students" element={<GroupsInnerPage />} />
+            </Route>
+            <Route path="/courses/*" element={<CoursesPage />}>
+               <Route index path="teachers" element={<CourseTeachersPage />} />
+               <Route path="students" element={<CourseStudentsPage />} />
+            </Route>
+            <Route path="/teachers" element={<TeachersPage />} />
+            <Route path="/students" element={<StudentsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+         </Routes>
+      </SidebarLayout>
    )
 }

@@ -3,8 +3,7 @@ import SideBarHeader from '../components/UI/SideBarHeader'
 
 const SidebarLayout = ({ children }) => {
    return (
-      <>
-         {/* <MainSidebar> */}
+      <MainSidebar>
          <BlockSide>
             <BlockHeader>
                <BlockLinear />
@@ -14,17 +13,16 @@ const SidebarLayout = ({ children }) => {
                <SideBarHeader />
             </BlockItems>
          </BlockSide>
-         <h1>{children}</h1>
-         {/* </MainSidebar> */}
-      </>
+         {children}
+      </MainSidebar>
    )
 }
 
 export default SidebarLayout
 
-// const MainSidebar = styled.div`
-//    display: flex;
-// `
+const MainSidebar = styled.div`
+   display: flex;
+`
 const BlockSide = styled.div`
    position: relative;
    width: 240px;
