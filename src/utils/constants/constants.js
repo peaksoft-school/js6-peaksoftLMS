@@ -11,7 +11,7 @@ export const ROUTES = {
    LOGIN: '/login',
    ADMIN: 'admin/*',
    STUDENT: 'student/*',
-   INSTRUCTOR: 'Instructor/*',
+   INSTRUCTOR: 'instructor/*',
    // other routes under
 }
 
@@ -66,3 +66,5 @@ export const SideData = [
       activePhoto: CoursesActive,
    },
 ]
+export const BASE_URL =
+   'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
