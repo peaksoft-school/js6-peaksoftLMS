@@ -30,7 +30,7 @@ export const SIDELAYOUT_DATA = [
    {
       title: 'Группы',
       id: 1,
-      path: '/admin',
+      path: '/admin/groups',
       photo: GroupSvg,
       activePhoto: GroupActive,
    },

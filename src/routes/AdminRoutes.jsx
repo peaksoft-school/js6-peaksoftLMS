@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { CoursesPage } from '../containers/admin/CoursesPage'
 import { CourseStudentsPage } from '../containers/admin/CourseStudentsPage'
 import { CourseTeachersPage } from '../containers/admin/CourseTeachersPage'
@@ -14,7 +14,8 @@ export const AdminRoutes = () => {
    return (
       <SidebarLayout>
          <Routes>
-            <Route path="/" element={<GroupsPage />}>
+            <Route path="/" element={<Navigate to="groups" />} />
+            <Route path="/groups" element={<GroupsPage />}>
                <Route path="group-students" element={<GroupsInnerPage />} />
             </Route>
             <Route path="/courses/*" element={<CoursesPage />}>
