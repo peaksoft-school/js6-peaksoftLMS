@@ -1,23 +1,39 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { useState } from 'react'
 // import UiTable from '../../components/UI/UiTable'
 import Wrapper from '../../components/UI/Wrapper'
 import UIButton from '../../components/UI/UIButton'
+import AddInstructorModal from './AddInstructorModal'
+import { ReactComponent as PlusIcon } from '../../assets/buttonPlusIcon.svg'
 
 export const TeachersPage = () => {
+   const [open, setOpen] = useState(false)
+   const onCloseHandler = () => {
+      setOpen(false)
+   }
    return (
-      <Div>
-         <Header>header</Header>
-         <ButtonWrapper>
-            <UIButton variant="contained" background="#3772FF">
-               + Добавить учителя
-            </UIButton>
-         </ButtonWrapper>
-         <Wrapper width="1140px">
-            asdadfgdfgdfd fdhfghfghfghfg gdfgfdgdfgdfgfsg
-            {/* <UiTable actions /> */}
-         </Wrapper>
-      </Div>
+      <>
+         <Div>
+            <Header>header</Header>
+            <ButtonWrapper>
+               <UIButton
+                  startIcon={<PlusIcon />}
+                  onClick={() => setOpen(true)}
+                  variant="contained"
+                  background="#3772FF"
+               >
+                  Добавить учителя
+               </UIButton>
+            </ButtonWrapper>
+            <Wrapper width="1140px">
+               asdadfgdfgdfd fdhfghfghfghfg gdfgfdgdfgdfgfsg
+               {/* <UiTable actions /> */}
+            </Wrapper>
+         </Div>
+         {open && (
+            <AddInstructorModal handleClose={onCloseHandler} open={open} />
+         )}
+      </>
    )
 }
 const ButtonWrapper = styled.div`
