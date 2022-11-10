@@ -46,9 +46,15 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   name="name"
                   rules={{
                      required: 'Поле обязательно к заполнению',
+                     minLength: {
+                        value: 3,
+                        message: 'Минимум 3 символов и не должень быть число',
+                     },
                   }}
                   render={({ field }) => (
                      <UiInput
+                        margin="16px 0 0 0"
+                        placeholder="Имя"
                         onChange={(e) => field.onChange(e)}
                         onBlur={(e) => field.onBlur(e)}
                         value={field.value}
@@ -67,9 +73,15 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   name="surname"
                   rules={{
                      required: 'Поле обязательно к заполнению',
+                     minLength: {
+                        value: 3,
+                        message: 'Минимум 3 символов и не должень быть число',
+                     },
                   }}
                   render={({ field }) => (
                      <UiInput
+                        margin="12px 0 0 0"
+                        placeholder="Фамилия"
                         onChange={(e) => field.onChange(e)}
                         onBlur={(e) => field.onBlur(e)}
                         value={field.value}
@@ -91,7 +103,8 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        autocomplete="off"
+                        margin="12px 0 0 0"
+                        placeholder="+996 ___ __ __ __"
                         onChange={(e) => field.onChange(e)}
                         onBlur={(e) => field.onBlur(e)}
                         value={field.value}
@@ -121,6 +134,8 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
+                        margin="12px 0 0 0"
+                        placeholder="Email"
                         onChange={(e) => field.onChange(e)}
                         onBlur={(e) => field.onBlur(e)}
                         value={field.value}
@@ -134,17 +149,76 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      {errors?.email?.message || 'Error'}
                   </ErrorMessage>
                )}
+               <Controller
+                  control={control}
+                  name="password"
+                  rules={{
+                     required: 'Поле обязательно к заполнению',
+                     pattern: {
+                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,
+                     },
+                     minLength: {
+                        value: 6,
+                        message:
+                           'Минимум 6 символов и должен содержать хотя бы одно число ',
+                     },
+                  }}
+                  render={({ field }) => (
+                     <UiInput
+                        margin="12px 0 0 0"
+                        placeholder="Пароль"
+                        onChange={(e) => field.onChange(e)}
+                        onBlur={(e) => field.onBlur(e)}
+                        value={field.value}
+                        type="password"
+                        error={!!errors.password?.message}
+                     />
+                  )}
+               />
+               {errors?.password && (
+                  <ErrorMessage>{errors?.password?.message}</ErrorMessage>
+               )}
+               <Controller
+                  control={control}
+                  name="work"
+                  rules={{
+                     required: 'Поле обязательно к заполнению',
+                     minLength: {
+                        value: 3,
+                        message: 'Минимум 3 символов',
+                     },
+                  }}
+                  render={({ field }) => (
+                     <UiInput
+                        margin="12px 0 0 0"
+                        placeholder="Специализация"
+                        onChange={(e) => field.onChange(e)}
+                        onBlur={(e) => field.onBlur(e)}
+                        value={field.value}
+                        type="text"
+                        error={!!errors.work?.message}
+                     />
+                  )}
+               />
+               {errors?.work && (
+                  <ErrorMessage>
+                     {errors?.work?.message || 'Error'}
+                  </ErrorMessage>
+               )}
             </DivContainer>
          }
          footerContent={
             <DivBtn>
-               <ButtonPass
+               <ButtonAddTeacher onClick={handleClose} variant="outlined">
+                  Отмена
+               </ButtonAddTeacher>
+               <ButtonAddTeacher
                   onClick={handleSubmit(onSubmit)}
                   variant="contained"
                   background="#3772FF"
                >
                   Создать
-               </ButtonPass>
+               </ButtonAddTeacher>
             </DivBtn>
          }
       />
@@ -154,17 +228,26 @@ export default AddInstructorModal
 const DivContainer = styled.div`
    width: 100%;
    margin-bottom: 20px;
+   /* &.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+      margin-top: 15px;
+   } */
    & .MuiInputBase-input {
       width: 491px;
       height: 42px;
    }
 `
 const DivBtn = styled.div`
-   margin-bottom: 25px;
+   margin-bottom: 15px;
+   width: 491px;
+   display: flex;
+   justify-content: end;
+   margin-left: 35px;
 `
-const ButtonPass = styled(UIButton)`
-   width: 483px;
-   height: 42px;
+const ButtonAddTeacher = styled(UIButton)`
+   width: 117px;
+   &.gPSgfD.MuiButtonBase-root {
+      margin-left: 10px;
+   }
 `
 const ErrorMessage = styled.p`
    color: red;
