@@ -5,6 +5,7 @@ import Wrapper from '../../components/UI/Wrapper'
 import UIButton from '../../components/UI/UIButton'
 import AddInstructorModal from './AddInstructorModal'
 import { ReactComponent as PlusIcon } from '../../assets/buttonPlusIcon.svg'
+// import IconButton from '../../components/UI/IconButton'
 
 export const TeachersPage = () => {
    const [open, setOpen] = useState(false)
@@ -25,9 +26,9 @@ export const TeachersPage = () => {
                   Добавить учителя
                </UIButton>
             </ButtonWrapper>
-            <Wrapper width="1140px">
+            <Wrapper height="633px" width="1140px">
                asdadfgdfgdfd fdhfghfghfghfg gdfgfdgdfgdfgfsg
-               {/* <UiTable actions /> */}
+               {/* <UiTable actions={<IconButton />} /> */}
             </Wrapper>
          </Div>
          {open && (
@@ -47,15 +48,9 @@ const Header = styled.div`
    text-align: center;
    background-color: aqua;
 `
-// const Button = styled(UIButton)`
-//    &.MuiButtonBase-root {
-//       display: flex;
-//       align-items: flex-end;
-//    }
-// `
 const Div = styled.div`
    background: #eff0f4;
    width: 1140px;
    /* height: 175px; */
-   margin: 0 40px 0 260px;
+   margin: 0 0 0 20px;
 `
