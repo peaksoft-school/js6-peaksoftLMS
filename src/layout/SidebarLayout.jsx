@@ -1,22 +1,28 @@
 import styled from 'styled-components'
 import SideBarHeader from '../components/UI/SideBarHeader'
 
-const SidebarLayout = () => {
+const SidebarLayout = ({ children }) => {
    return (
-      <BlockSide>
-         <BlockHeader>
-            <BlockLinear />
-            <BlockTheme>PEAKSOFT</BlockTheme>
-         </BlockHeader>
-         <BlockItems>
-            <SideBarHeader />
-         </BlockItems>
-      </BlockSide>
+      <MainSidebar>
+         <BlockSide>
+            <BlockHeader>
+               <BlockLinear />
+               <BlockTheme>PEAKSOFT</BlockTheme>
+            </BlockHeader>
+            <BlockItems>
+               <SideBarHeader />
+            </BlockItems>
+         </BlockSide>
+         {children}
+      </MainSidebar>
    )
 }
 
 export default SidebarLayout
 
+const MainSidebar = styled.div`
+   display: flex;
+`
 const BlockSide = styled.div`
    position: relative;
    width: 240px;
