@@ -9,7 +9,7 @@ const initialState = {
 
 export const addTeacher = createAsyncThunk('addTeacher', async () => {
    try {
-      const response = await axiosInstace.post('')
+      const response = await axiosInstace.post('instructor')
       const { data } = response
       return data
    } catch (err) {

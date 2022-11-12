@@ -2,16 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { unwrapResult } from '@reduxjs/toolkit'
+import { addTeacher } from '../../store/slices/admin-slices/teacher-slices/addTeacherSlice'
 import UIButton from '../../components/UI/UIButton'
 import UiInput from '../../components/UI/UiInput'
 import ModalWindow from '../../components/UI/ModalWindow'
-import { forgotPassword } from '../../api/services/forgotPasswordService'
 
 const AddInstructorModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
-   const navigate = useNavigate()
+   // const navigate = useNavigate()
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
       defaultValues: {
@@ -27,8 +27,8 @@ const AddInstructorModal = ({ open, handleClose }) => {
       control,
    })
    const onSubmit = (data) => {
-      // console.log(data)
-      dispatch(forgotPassword({ data, navigate }))
+      console.log(data)
+      dispatch(addTeacher(data))
          .then(unwrapResult)
          .then(() => {
             reset()
@@ -134,7 +134,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="12px 0 0 0"
+                        margin="12px"
                         placeholder="Email"
                         onChange={(e) => field.onChange(e)}
                         onBlur={(e) => field.onBlur(e)}

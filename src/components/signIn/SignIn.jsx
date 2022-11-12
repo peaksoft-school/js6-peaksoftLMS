@@ -10,7 +10,7 @@ import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
 import UiInput from '../UI/UiInput'
-import { signIn } from '../../api/services/userAuthService'
+import { signIn } from '../../api/loginServices/userAuthService'
 
 function SignIn() {
    const dispatch = useDispatch()
