@@ -9,7 +9,7 @@ const initialState = {
 
 export const addTeacher = createAsyncThunk('addTeacher', async () => {
    try {
-      const response = await axiosInstace.post('instructor')
+      const response = await axiosInstace.post('instructor', data)
       const { data } = response
       return data
    } catch (err) {
@@ -18,7 +18,7 @@ export const addTeacher = createAsyncThunk('addTeacher', async () => {
    return null
 })
 export const teacherAdminSlice = createSlice({
-   name: 'teacherAdminSlice',
+   name: 'teacherAdmin',
    initialState,
    reducers: {},
    extraReducers: {
@@ -34,4 +34,4 @@ export const teacherAdminSlice = createSlice({
    },
 })
 
-export const adminTeacherAction = teacherAdminSlice.actions
+export const userAction = teacherAdminSlice.actions

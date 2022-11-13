@@ -26,7 +26,7 @@ export const TeachersPage = () => {
                   Добавить учителя
                </UIButton>
             </ButtonWrapper>
-            <Wrapper height="633px" width="1140px">
+            <Wrapper height="500px">
                asdadfgdfgdfd fdhfghfghfghfg gdfgfdgdfgdfgfsg
                {/* <UiTable actions={<IconButton />} /> */}
             </Wrapper>
@@ -41,6 +41,7 @@ const ButtonWrapper = styled.div`
    display: flex;
    justify-content: end;
    margin-bottom: 20px;
+   /* width: 1140px; */
 `
 const Header = styled.div`
    height: 75px;
@@ -50,7 +51,5 @@ const Header = styled.div`
 `
 const Div = styled.div`
    background: #eff0f4;
-   width: 1140px;
-   /* height: 175px; */
-   margin: 0 0 0 20px;
+   margin: 0 40px 0 20px;
 `

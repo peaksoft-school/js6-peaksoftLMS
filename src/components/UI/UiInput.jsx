@@ -9,6 +9,10 @@ const UiInput = ({
    id,
    width,
    margin,
+   marginleft,
+   marginright,
+   margintop,
+   marginbottom,
    onChange,
 }) => {
    return (
@@ -21,6 +25,10 @@ const UiInput = ({
          id={id}
          width={width}
          margin={margin}
+         marginleft={marginleft}
+         marginright={marginright}
+         margintop={margintop}
+         marginbottom={marginbottom}
       />
    )
 }
@@ -36,6 +44,10 @@ const Input = styled(TextField)`
       caret-color: #258aff;
       width: ${(props) => props.width};
       margin: ${(props) => props.margin};
+      margin-top: ${(props) => props.margintop};
+      margin-left: ${(props) => props.marginleft};
+      margin-right: ${(props) => props.marginright};
+      margin-bottom: ${(props) => props.marginbottom};
    }
 
    &.MuiOutlinedInput-notchedOutline {

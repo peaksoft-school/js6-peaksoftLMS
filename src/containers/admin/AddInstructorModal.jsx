@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
-import { unwrapResult } from '@reduxjs/toolkit'
+// import { unwrapResult } from '@reduxjs/toolkit'
 import { addTeacher } from '../../store/slices/admin-slices/teacher-slices/addTeacherSlice'
 import UIButton from '../../components/UI/UIButton'
 import UiInput from '../../components/UI/UiInput'
@@ -27,12 +27,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
       control,
    })
    const onSubmit = (data) => {
-      console.log(data)
       dispatch(addTeacher(data))
-         .then(unwrapResult)
-         .then(() => {
-            reset()
-         })
+      console.log(data)
+      reset()
    }
    return (
       <ModalWindow
@@ -40,7 +37,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
          handleClose={handleClose}
          modalTitle="Забыли пароль?"
          bodyContent={
-            <DivContainer>
+            <DivContainer onSubmit={handleSubmit(onSubmit)}>
                <Controller
                   control={control}
                   name="name"
@@ -53,10 +50,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="16px 0 0 0"
+                        margintop="16px"
                         placeholder="Имя"
                         onChange={(e) => field.onChange(e)}
-                        onBlur={(e) => field.onBlur(e)}
                         value={field.value}
                         type="text"
                         error={!!errors.name?.message}
@@ -80,10 +76,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="12px 0 0 0"
+                        margintop="12px"
                         placeholder="Фамилия"
                         onChange={(e) => field.onChange(e)}
-                        onBlur={(e) => field.onBlur(e)}
                         value={field.value}
                         type="text"
                         error={!!errors.surname?.message}
@@ -103,10 +98,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="12px 0 0 0"
+                        margintop="12px"
                         placeholder="+996 ___ __ __ __"
                         onChange={(e) => field.onChange(e)}
-                        onBlur={(e) => field.onBlur(e)}
                         value={field.value}
                         type="number"
                         error={!!errors.phone?.message}
@@ -134,10 +128,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="12px"
+                        margintop="12px"
                         placeholder="Email"
                         onChange={(e) => field.onChange(e)}
-                        onBlur={(e) => field.onBlur(e)}
                         value={field.value}
                         type="email"
                         error={!!errors.email?.message}
@@ -154,9 +147,6 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   name="password"
                   rules={{
                      required: 'Поле обязательно к заполнению',
-                     pattern: {
-                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$/,
-                     },
                      minLength: {
                         value: 6,
                         message:
@@ -165,10 +155,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="12px 0 0 0"
+                        margintop="12px"
                         placeholder="Пароль"
                         onChange={(e) => field.onChange(e)}
-                        onBlur={(e) => field.onBlur(e)}
                         value={field.value}
                         type="password"
                         error={!!errors.password?.message}
@@ -190,10 +179,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   }}
                   render={({ field }) => (
                      <UiInput
-                        margin="12px 0 0 0"
+                        margintop="12px"
                         placeholder="Специализация"
                         onChange={(e) => field.onChange(e)}
-                        onBlur={(e) => field.onBlur(e)}
                         value={field.value}
                         type="text"
                         error={!!errors.work?.message}
@@ -205,32 +193,27 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      {errors?.work?.message || 'Error'}
                   </ErrorMessage>
                )}
+               <DivBtn>
+                  <ButtonCloseTeacher onClick={handleClose} variant="outlined">
+                     Отмена
+                  </ButtonCloseTeacher>
+                  <ButtonAddTeacher
+                     type="submit"
+                     variant="contained"
+                     background="#3772FF"
+                  >
+                     Создать
+                  </ButtonAddTeacher>
+               </DivBtn>
             </DivContainer>
-         }
-         footerContent={
-            <DivBtn>
-               <ButtonAddTeacher onClick={handleClose} variant="outlined">
-                  Отмена
-               </ButtonAddTeacher>
-               <ButtonAddTeacher
-                  onClick={handleSubmit(onSubmit)}
-                  variant="contained"
-                  background="#3772FF"
-               >
-                  Создать
-               </ButtonAddTeacher>
-            </DivBtn>
          }
       />
    )
 }
 export default AddInstructorModal
-const DivContainer = styled.div`
+const DivContainer = styled.form`
    width: 100%;
    margin-bottom: 20px;
-   /* &.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
-      margin-top: 15px;
-   } */
    & .MuiInputBase-input {
       width: 491px;
       height: 42px;
@@ -244,6 +227,12 @@ const DivBtn = styled.div`
    margin-left: 35px;
 `
 const ButtonAddTeacher = styled(UIButton)`
+   width: 117px;
+   &.gPSgfD.MuiButtonBase-root {
+      margin-left: 10px;
+   }
+`
+const ButtonCloseTeacher = styled(UIButton)`
    width: 117px;
    &.gPSgfD.MuiButtonBase-root {
       margin-left: 10px;
