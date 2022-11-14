@@ -11,23 +11,23 @@ import ModalWindow from '../../components/UI/ModalWindow'
 
 const AddInstructorModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
-   // const navigate = useNavigate()
+   // const {addTeacher} = useSelector((state)=>state.)
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
       defaultValues: {
-         name: '',
-         surname: '',
-         phone: '',
+         firstName: '',
+         lastName: '',
+         phoneNumber: '',
          email: '',
          password: '',
-         work: '',
+         specialization: '',
       },
    })
    const { errors } = useFormState({
       control,
    })
    const onSubmit = (data) => {
-      dispatch(addTeacher(data))
+      dispatch(addTeacher({ data }))
       console.log(data)
       reset()
    }
@@ -35,12 +35,12 @@ const AddInstructorModal = ({ open, handleClose }) => {
       <ModalWindow
          open={open}
          handleClose={handleClose}
-         modalTitle="Забыли пароль?"
+         modalTitle="Добавление учителя"
          bodyContent={
             <DivContainer onSubmit={handleSubmit(onSubmit)}>
                <Controller
                   control={control}
-                  name="name"
+                  name="firstName"
                   rules={{
                      required: 'Поле обязательно к заполнению',
                      minLength: {
@@ -55,18 +55,18 @@ const AddInstructorModal = ({ open, handleClose }) => {
                         onChange={(e) => field.onChange(e)}
                         value={field.value}
                         type="text"
-                        error={!!errors.name?.message}
+                        error={!!errors.firstName?.message}
                      />
                   )}
                />
-               {errors?.name && (
+               {errors?.firstName && (
                   <ErrorMessage>
-                     {errors?.name?.message || 'Error'}
+                     {errors?.firstName?.message || 'Error'}
                   </ErrorMessage>
                )}
                <Controller
                   control={control}
-                  name="surname"
+                  name="lastName"
                   rules={{
                      required: 'Поле обязательно к заполнению',
                      minLength: {
@@ -81,18 +81,18 @@ const AddInstructorModal = ({ open, handleClose }) => {
                         onChange={(e) => field.onChange(e)}
                         value={field.value}
                         type="text"
-                        error={!!errors.surname?.message}
+                        error={!!errors.lastName?.message}
                      />
                   )}
                />
-               {errors?.surname && (
+               {errors?.lastName && (
                   <ErrorMessage>
-                     {errors?.surname?.message || 'Error'}
+                     {errors?.lastName?.message || 'Error'}
                   </ErrorMessage>
                )}
                <Controller
                   control={control}
-                  name="phone"
+                  name="phoneNumber"
                   rules={{
                      required: 'Поле обязательно к заполнению',
                   }}
@@ -103,13 +103,13 @@ const AddInstructorModal = ({ open, handleClose }) => {
                         onChange={(e) => field.onChange(e)}
                         value={field.value}
                         type="number"
-                        error={!!errors.phone?.message}
+                        error={!!errors.phoneNumber?.message}
                      />
                   )}
                />
-               {errors?.phone && (
+               {errors?.phoneNumber && (
                   <ErrorMessage>
-                     {errors?.phone?.message || 'Error'}
+                     {errors?.phoneNumber?.message || 'Error'}
                   </ErrorMessage>
                )}
                <Controller
@@ -169,7 +169,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                )}
                <Controller
                   control={control}
-                  name="work"
+                  name="specialization"
                   rules={{
                      required: 'Поле обязательно к заполнению',
                      minLength: {
@@ -184,13 +184,13 @@ const AddInstructorModal = ({ open, handleClose }) => {
                         onChange={(e) => field.onChange(e)}
                         value={field.value}
                         type="text"
-                        error={!!errors.work?.message}
+                        error={!!errors.specialization?.message}
                      />
                   )}
                />
-               {errors?.work && (
+               {errors?.specialization && (
                   <ErrorMessage>
-                     {errors?.work?.message || 'Error'}
+                     {errors?.specialization?.message || 'Error'}
                   </ErrorMessage>
                )}
                <DivBtn>
@@ -225,6 +225,7 @@ const DivBtn = styled.div`
    display: flex;
    justify-content: end;
    margin-left: 35px;
+   margin-top: 20px;
 `
 const ButtonAddTeacher = styled(UIButton)`
    width: 117px;

@@ -5,7 +5,7 @@ import store from '../store/index'
 import { BASE_URL, JWT_TOKEN_KEY } from '../utils/constants/constants'
 
 const headers = {
-   'Content-type': 'application/json',
+   'Content-Type': 'application/json',
 }
 
 const axiosInstace = axios.create({ baseURL: BASE_URL, headers })

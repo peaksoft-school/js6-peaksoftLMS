@@ -3,20 +3,26 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstace from '../../../../api/axiosConfig'
 
 const initialState = {
+   teachers: [],
    status: null,
    error: null,
 }
 
-export const addTeacher = createAsyncThunk('addTeacher', async () => {
-   try {
-      const response = await axiosInstace.post('instructor', data)
-      const { data } = response
-      return data
-   } catch (err) {
-      console.log(err)
+export const addTeacher = createAsyncThunk(
+   'addTeacher',
+   async ({ data }, { rejectWithValue }) => {
+      // console.log(data)
+      try {
+         const response = await axiosInstace.post('instructor', data)
+         const result = response.data
+         console.log(data)
+         return result
+         // showSuccess()
+      } catch (err) {
+         return rejectWithValue(err.message)
+      }
    }
-   return null
-})
+)
 export const teacherAdminSlice = createSlice({
    name: 'teacherAdmin',
    initialState,
@@ -25,11 +31,13 @@ export const teacherAdminSlice = createSlice({
       [addTeacher.pending]: (state) => {
          state.status = 'loading'
       },
-      [addTeacher.fulfilled]: (state) => {
-         state.status = 'succes'
+      [addTeacher.fulfilled]: (state, { payload }) => {
+         state.status = 'Учитель успешно добавлень'
+         state.teachers = payload
       },
-      [addTeacher.rejected]: (state) => {
+      [addTeacher.rejected]: (state, { payload }) => {
          state.status = 'error'
+         state.error = payload
       },
    },
 })
