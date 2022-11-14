@@ -85,7 +85,8 @@ const TextEditor = () => {
       <div>
          <MenuBar editor={editor} />
          <ContainerDiv>
-            <img src={TextImage} alt="TextImage" /> <Text editor={editor} />
+            <img src={TextImage} alt="TextImage" />
+            <Text editor={editor} />
          </ContainerDiv>
       </div>
    )
