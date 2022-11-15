@@ -4,9 +4,21 @@ import axiosInstace from '../../../../api/axiosConfig'
 
 const initialState = {
    teachers: [],
+   getTeacher: [],
    status: null,
    error: null,
 }
+export const getAllTeacher = createAsyncThunk(
+   'teacherAdmin/getAllTeacher',
+   async (_, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstace.get('instructor')
+         return response.data
+      } catch (err) {
+         return rejectWithValue(err.message)
+      }
+   }
+)
 
 export const addTeacher = createAsyncThunk(
    'addTeacher',
@@ -34,8 +46,20 @@ export const teacherAdminSlice = createSlice({
       [addTeacher.fulfilled]: (state, { payload }) => {
          state.status = 'Учитель успешно добавлень'
          state.teachers = payload
+         console.log('payload', payload)
       },
       [addTeacher.rejected]: (state, { payload }) => {
+         state.status = 'error'
+         state.error = payload
+      },
+      [getAllTeacher.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [getAllTeacher.fulfilled]: (state, action) => {
+         state.status = 'success'
+         state.getTeacher = action.payload
+      },
+      [getAllTeacher.rejected]: (state, { payload }) => {
          state.status = 'error'
          state.error = payload
       },
