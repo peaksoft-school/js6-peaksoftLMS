@@ -32,6 +32,7 @@ const InputPassword = styled(OutlinedInput)`
    &:hover {
       border: none;
    }
+
    &.MuiInputBase-root {
       height: 42px;
       border-radius: 8px;
