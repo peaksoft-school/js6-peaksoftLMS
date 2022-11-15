@@ -6,9 +6,5 @@ export const App = () => {
    const location = useLocation()
    if (location.pathname === '/') return <Navigate to="/login" replace />
 
-   return (
-      <div>
-         <AppRoutes />
-      </div>
-   )
+   return <AppRoutes />
 }

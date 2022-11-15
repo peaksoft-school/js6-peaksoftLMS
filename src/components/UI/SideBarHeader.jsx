@@ -5,18 +5,24 @@ import PathIcons from './PathIcons'
 
 const SideBarHeader = () => {
    const { pathname } = useLocation()
+
    const ROLE = 'admin'
    const check = ROLE === 'admin' ? SIDELAYOUT_DATA : SideData
+
    return (
       <>
          {check.map((el) => (
             <BlockItemsEl
-               active={pathname === el.path}
-               key={el.id}
                to={el.path}
+               key={el.id}
+               active={pathname.includes(el.path)}
             >
-               <ItemsBorder active={pathname === el.path} />
-               <PathIcons pathname={pathname} array={check} title={el.title} />
+               <ItemsBorder active={pathname.includes(el.path)} />
+               <PathIcons
+                  pathname={pathname.includes(el.path)}
+                  array={check}
+                  title={el.title}
+               />
                <p>{el.title}</p>
             </BlockItemsEl>
          ))}

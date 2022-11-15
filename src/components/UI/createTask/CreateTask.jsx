@@ -287,7 +287,7 @@ const CreateTask = () => {
                                  onClick={closeModalLinkDelete}
                                  variant="outlined"
                               >
-                                 Отменаlink
+                                 Отмена
                               </UIButton>
                               <UIButton
                                  onClick={() => deleteModalLink(item.text)}

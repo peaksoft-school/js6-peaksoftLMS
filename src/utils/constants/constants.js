@@ -11,7 +11,7 @@ export const ROUTES = {
    LOGIN: '/login',
    ADMIN: 'admin/*',
    STUDENT: 'student/*',
-   INSTRUCTOR: 'Instructor/*',
+   INSTRUCTOR: 'instructor/*',
    // other routes under
 }
 
@@ -30,27 +30,27 @@ export const SIDELAYOUT_DATA = [
    {
       title: 'Группы',
       id: 1,
-      path: '/groups',
+      path: '/admin/groups',
       photo: GroupSvg,
       activePhoto: GroupActive,
    },
    {
       title: 'Курсы ',
       id: 2,
-      path: '/courses',
+      path: '/admin/courses',
       photo: CoursesSvg,
       activePhoto: CoursesActive,
    },
    {
       title: 'Учителя',
-      path: '/teachers',
+      path: '/admin/teachers',
       id: 3,
       photo: TeachersSvg,
       activePhoto: TeachersActive,
    },
    {
       title: 'Студенты',
-      path: '/students',
+      path: '/admin/students',
       id: 4,
       photo: StudentsSvg,
       activePhoto: StudentsActive,
@@ -66,3 +66,8 @@ export const SideData = [
       activePhoto: CoursesActive,
    },
 ]
+
+export const BASE_URL =
+   'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
+
+export const JWT_TOKEN_KEY = JSON.parse(localStorage.getItem('token'))
