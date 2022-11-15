@@ -32,6 +32,14 @@ const InputPassword = styled(OutlinedInput)`
    &:hover {
       border: none;
    }
+
+   & .MuiInputBase-input {
+      padding: 9px 14px;
+      :-webkit-autofill {
+         transition-delay: 9999s;
+      }
+   }
+
    &.MuiInputBase-root {
       height: 42px;
       border-radius: 8px;
