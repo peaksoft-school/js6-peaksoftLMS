@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-// eslint-disable-next-line import/no-cycle
-import axiosInstace from '../../../../api/axiosConfig'
+/* eslint-disable import/no-cycle */
+import { createSlice } from '@reduxjs/toolkit'
+import { addTeacher, getAllTeacher } from './teacherActions'
 
 const initialState = {
    teachers: [],
@@ -8,33 +8,6 @@ const initialState = {
    status: null,
    error: null,
 }
-export const getAllTeacher = createAsyncThunk(
-   'teacherAdmin/getAllTeacher',
-   async (_, { rejectWithValue }) => {
-      try {
-         const response = await axiosInstace.get('instructor')
-         return response.data
-      } catch (err) {
-         return rejectWithValue(err.message)
-      }
-   }
-)
-
-export const addTeacher = createAsyncThunk(
-   'addTeacher',
-   async ({ data }, { rejectWithValue }) => {
-      // console.log(data)
-      try {
-         const response = await axiosInstace.post('instructor', data)
-         const result = response.data
-         console.log(data)
-         return result
-         // showSuccess()
-      } catch (err) {
-         return rejectWithValue(err.message)
-      }
-   }
-)
 export const teacherAdminSlice = createSlice({
    name: 'teacherAdmin',
    initialState,

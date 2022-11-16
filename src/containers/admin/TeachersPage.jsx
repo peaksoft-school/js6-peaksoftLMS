@@ -4,16 +4,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import UiTable from '../../components/UI/UiTable'
 import Wrapper from '../../components/UI/Wrapper'
 import UIButton from '../../components/UI/UIButton'
+import { ReactComponent as RenameIcon } from '../../assets/renameIcon.svg'
+import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg'
 import AddInstructorModal from './AddInstructorModal'
 import { ReactComponent as PlusIcon } from '../../assets/buttonPlusIcon.svg'
 // import IconButton from '../../components/UI/IconButton'
-import { getAllTeacher } from '../../store/slices/admin-slices/teacher-slices/addTeacherSlice'
 import { HEAD_DATA } from '../../utils/constants/constants'
+import {
+   deleteTeacher,
+   getAllTeacher,
+} from '../../store/slices/admin-slices/teacher-slices/teacherActions'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
    const counter = useSelector((state) => state.addTeacher.getTeacher)
-   console.log(counter)
+   // console.log(counter)
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
@@ -21,7 +26,9 @@ export const TeachersPage = () => {
    useEffect(() => {
       dispatch(getAllTeacher())
    }, [])
-
+   const deleteHandler = (id) => {
+      dispatch(deleteTeacher(id))
+   }
    return (
       <>
          <Div>
@@ -37,20 +44,12 @@ export const TeachersPage = () => {
                </UIButton>
             </ButtonWrapper>
             <Wrapper height="500px">
-               {/* {counter.map((el) => {
-                  return (
-                     <>
-                        <p>{el.fullName}</p>
-                        <p>{el.email}</p>
-                     </>
-                  )
-               })} */}
                <UiTable
                   headData={HEAD_DATA}
                   data={counter}
                   actions
-                  secondIcon="x"
-                  thirdIcon="x"
+                  secondIcon={<RenameIcon />}
+                  thirdIcon={<DeleteIcon onClick={deleteHandler} />}
                />
             </Wrapper>
          </Div>
