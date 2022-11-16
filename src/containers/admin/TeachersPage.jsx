@@ -1,17 +1,27 @@
 import styled from 'styled-components'
-import React, { useState } from 'react'
-// import UiTable from '../../components/UI/UiTable'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import UiTable from '../../components/UI/UiTable'
 import Wrapper from '../../components/UI/Wrapper'
 import UIButton from '../../components/UI/UIButton'
 import AddInstructorModal from './AddInstructorModal'
 import { ReactComponent as PlusIcon } from '../../assets/buttonPlusIcon.svg'
 // import IconButton from '../../components/UI/IconButton'
+import { getAllTeacher } from '../../store/slices/admin-slices/teacher-slices/addTeacherSlice'
+import { HEAD_DATA } from '../../utils/constants/constants'
 
 export const TeachersPage = () => {
+   const dispatch = useDispatch()
+   const counter = useSelector((state) => state.addTeacher.getTeacher)
+   console.log(counter)
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
    }
+   useEffect(() => {
+      dispatch(getAllTeacher())
+   }, [])
+
    return (
       <>
          <Div>
@@ -27,8 +37,21 @@ export const TeachersPage = () => {
                </UIButton>
             </ButtonWrapper>
             <Wrapper height="500px">
-               asdadfgdfgdfd fdhfghfghfghfg gdfgfdgdfgdfgfsg
-               {/* <UiTable actions={<IconButton />} /> */}
+               {/* {counter.map((el) => {
+                  return (
+                     <>
+                        <p>{el.fullName}</p>
+                        <p>{el.email}</p>
+                     </>
+                  )
+               })} */}
+               <UiTable
+                  headData={HEAD_DATA}
+                  data={counter}
+                  actions
+                  secondIcon="x"
+                  thirdIcon="x"
+               />
             </Wrapper>
          </Div>
          {open && (

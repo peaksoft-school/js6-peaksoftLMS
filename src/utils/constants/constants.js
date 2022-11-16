@@ -67,6 +67,17 @@ export const SideData = [
    },
 ]
 
+export const HEAD_DATA = [
+   {
+      idName: 'ID',
+      firstName: 'Имя Фамилия',
+      phoryatLearning: 'Специализация',
+      phoneName: 'Номер телефона',
+      emailName: 'E-mail',
+      actionsName: 'Действия',
+   },
+]
+
 export const BASE_URL =
    'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
 

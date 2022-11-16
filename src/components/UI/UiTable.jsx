@@ -49,16 +49,16 @@ const UiTable = (props) => {
                            <span>{el.id}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.name}</span>
+                           <span>{el.fullName}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.group}</span>
+                           <span>{el.groupName}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.format}</span>
+                           <span>{el.specialization}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.phone}</span>
+                           <span>{el.phoneNumber}</span>
                         </TableCell>
                         <TableCell align="left">
                            <span>{el.email}</span>

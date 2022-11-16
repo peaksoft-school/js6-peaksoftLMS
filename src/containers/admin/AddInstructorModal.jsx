@@ -1,12 +1,12 @@
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 // import { unwrapResult } from '@reduxjs/toolkit'
 import {
    addTeacher,
-   getAllTeacher,
+   // getAllTeacher,
 } from '../../store/slices/admin-slices/teacher-slices/addTeacherSlice'
 import UIButton from '../../components/UI/UIButton'
 import UiInput from '../../components/UI/UiInput'
@@ -14,9 +14,8 @@ import ModalWindow from '../../components/UI/ModalWindow'
 
 const AddInstructorModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
-   const counter = useSelector((state) => state.addTeacher.getTeacher)
-   console.log('counter', counter)
-   // const {addTeacher} = useSelector((state)=>state.)
+   // const counter = useSelector((state) => state.addTeacher.getTeacher)
+   // console.log('counter', counter)
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
       defaultValues: {
@@ -33,12 +32,12 @@ const AddInstructorModal = ({ open, handleClose }) => {
    })
    const onSubmit = (data) => {
       dispatch(addTeacher({ data }))
-      console.log(data)
+      // console.log(data)
       reset()
    }
-   useEffect(() => {
-      dispatch(getAllTeacher())
-   }, [])
+   // useEffect(() => {
+   //    dispatch(getAllTeacher())
+   // }, [])
 
    return (
       <ModalWindow
