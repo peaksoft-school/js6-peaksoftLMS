@@ -37,7 +37,7 @@ function GroupCard({
 export default GroupCard
 const CardGroup = styled(Card)`
    &:hover {
-      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+      box-shadow: 0px 4px 9px rgba(0, 0, 0, 0.5);
    }
    &.MuiPaper-root {
       box-sizing: border-box;
@@ -55,8 +55,8 @@ const CardAction = styled(CardActionArea)`
 `
 const CardImg = styled(CardMedia)`
    &.MuiCardMedia-root {
-      width: 270px;
       height: 171px;
+      text-align: center;
    }
 `
 const TypographyYear = styled.div`
@@ -97,11 +97,9 @@ const HorizonIcon = styled.div`
 `
 const TypographyParagraph = styled(Typography)`
    &.MuiTypography-root {
-      font-family: 'Open Sans';
-      font-style: normal;
       font-weight: 400;
       font-size: 16px;
-      line-height: 22px;
+      line-height: 21px;
       color: #1d293f;
    }
    height: 66px;

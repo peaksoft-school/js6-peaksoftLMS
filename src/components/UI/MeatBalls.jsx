@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { styled as style, Menu, Button, MenuItem } from '@mui/material/'
+import styled from 'styled-components'
 
-export const MeatBalls = ({ menuContent, icon, itemValue }) => {
+export const MeatBalls = ({ options }) => {
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
-
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget)
    }
-   const handleClose = (element) => {
+   const handleClose = () => {
       setAnchorEl(null)
-      itemValue(element) // Для передачи выбранных данных на верх
    }
    return (
       <div>
@@ -24,6 +23,7 @@ export const MeatBalls = ({ menuContent, icon, itemValue }) => {
          >
             <MoreHorizIcon />
          </MeatBallsButton>
+
          <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -33,10 +33,12 @@ export const MeatBalls = ({ menuContent, icon, itemValue }) => {
                'aria-labelledby': 'basic-button',
             }}
          >
-            <MenuItems onClick={() => handleClose()}>
-               {icon}
-               {menuContent}
-            </MenuItems>
+            {options.map((element) => (
+               <MenuItems key={element.id} onClick={() => element.click()}>
+                  <MenuItemIcon>{element.icon}</MenuItemIcon>
+                  <p>{element.name}</p>
+               </MenuItems>
+            ))}
          </Menu>
       </div>
    )
@@ -52,4 +54,8 @@ const MenuItems = style(MenuItem)`
    :hover {
       background: rgba(26, 35, 126, 0.07);
    }
+`
+
+const MenuItemIcon = styled.p`
+   padding-right: 10px;
 `
