@@ -10,7 +10,17 @@ import {
 } from '@mui/material'
 
 const UiTable = (props) => {
-   const { headData, data, actions, firstIcon, secondIcon, thirdIcon } = props
+   const {
+      headData,
+      data,
+      actions,
+      firstIcon,
+      secondIcon,
+      thirdIcon,
+      firstOnClick,
+      secondOnClick,
+      thirdOnClick,
+   } = props
    return (
       <div>
          <TableContainer component={Paper}>
@@ -69,9 +79,18 @@ const UiTable = (props) => {
 
                         {actions && (
                            <div>
-                              <TableCell align="left">{firstIcon}</TableCell>
-                              <TableCell align="left">{secondIcon}</TableCell>
-                              <TableCell align="left">{thirdIcon}</TableCell>
+                              <TableCell onClick={firstOnClick} align="left">
+                                 {firstIcon}
+                              </TableCell>
+                              <TableCell onClick={secondOnClick} align="left">
+                                 {secondIcon}
+                              </TableCell>
+                              <TableCell
+                                 onClick={() => thirdOnClick(el.id)}
+                                 align="left"
+                              >
+                                 {thirdIcon}
+                              </TableCell>
                            </div>
                         )}
                      </RowTable>

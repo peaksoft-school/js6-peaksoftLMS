@@ -18,7 +18,6 @@ import {
 export const TeachersPage = () => {
    const dispatch = useDispatch()
    const counter = useSelector((state) => state.addTeacher.getTeacher)
-   // console.log(counter)
    const [open, setOpen] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
@@ -28,6 +27,7 @@ export const TeachersPage = () => {
    }, [])
    const deleteHandler = (id) => {
       dispatch(deleteTeacher(id))
+      // console.log(id, 'safns')
    }
    return (
       <>
@@ -48,8 +48,10 @@ export const TeachersPage = () => {
                   headData={HEAD_DATA}
                   data={counter}
                   actions
-                  secondIcon={<RenameIcon />}
-                  thirdIcon={<DeleteIcon onClick={deleteHandler} />}
+                  secondIcon={<RenameIconTeacher />}
+                  secondOnClick={() => setOpen(true)}
+                  thirdIcon={<DeleteIconTeacher />}
+                  thirdOnClick={deleteHandler}
                />
             </Wrapper>
          </Div>
@@ -74,4 +76,10 @@ const Header = styled.div`
 const Div = styled.div`
    background: #eff0f4;
    margin: 0 40px 0 20px;
+`
+const DeleteIconTeacher = styled(DeleteIcon)`
+   cursor: pointer;
+`
+const RenameIconTeacher = styled(RenameIcon)`
+   cursor: pointer;
 `

@@ -9,19 +9,33 @@ export const getAllTeacher = createAsyncThunk(
          const response = await axiosInstace.get('instructor')
          return response.data
       } catch (err) {
-         return rejectWithValue(err)
+         return rejectWithValue(err.message)
       }
    }
 )
 export const deleteTeacher = createAsyncThunk(
    'teacherAdmin/deleteTeacher',
-   async (id, { rejectWithValue }) => {
-      console.log(id)
+   async (id, { rejectWithValue, dispatch }) => {
+      // console.log(id)
       try {
          const response = await axiosInstace.delete(`instructor/${id}`)
-         return response.id
+         // console.log(response)
+         return dispatch(getAllTeacher(response))
       } catch (err) {
-         return rejectWithValue(err)
+         return rejectWithValue(err.message)
+      }
+   }
+)
+export const getTeacherById = createAsyncThunk(
+   'teacherAdmin/deleteTeacher',
+   async (id, { rejectWithValue, dispatch }) => {
+      // console.log(id)
+      try {
+         const response = await axiosInstace.delete(`instructor/${id}`)
+         // console.log(response)
+         return dispatch(getAllTeacher(response))
+      } catch (err) {
+         return rejectWithValue(err.message)
       }
    }
 )
@@ -35,7 +49,7 @@ export const addTeacher = createAsyncThunk(
          //  console.log(data)
          return dispatch(getAllTeacher(result))
       } catch (err) {
-         return rejectWithValue(err)
+         return rejectWithValue(err.message)
       }
    }
 )

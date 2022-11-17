@@ -67,6 +67,11 @@ export const SideData = [
    },
 ]
 
+export const BASE_URL =
+   'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
+
+export const JWT_TOKEN_KEY = JSON.parse(localStorage.getItem('token'))
+
 export const HEAD_DATA = [
    {
       idName: 'ID',
@@ -77,8 +82,3 @@ export const HEAD_DATA = [
       actionsName: 'Действия',
    },
 ]
-
-export const BASE_URL =
-   'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
-
-export const JWT_TOKEN_KEY = JSON.parse(localStorage.getItem('token'))
