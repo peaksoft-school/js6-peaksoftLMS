@@ -1,5 +1,8 @@
 import React, { useCallback, useState, useRef } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Underline from '@tiptap/extension-underline'
 import styled from 'styled-components'
 import { Tooltip } from '@mui/material'
 import UiInput from '../UiInput'
@@ -13,8 +16,20 @@ import TextEditor from './TextEditor'
 import { ReactComponent as Gallery } from '../../../assets/Gallery.svg'
 import ModalWindow from '../ModalWindow'
 
-const CreateTask = () => {
+const CreateTask = ({ getDataHandler }) => {
+   const editor = useEditor({
+      extensions: [StarterKit, Underline],
+      content: ` `,
+   })
+   const textEditorVakue = editor?.getText()
+
    const [images, setImages] = useState([])
+
+   const [values, setValue] = useState({
+      text: '',
+      link: '',
+   })
+
    const [stateItems, setStateItems] = useState({
       showTextEditor: false,
       showImage: false,
@@ -24,12 +39,22 @@ const CreateTask = () => {
       showModalLink: false,
       showModalLinkDelete: false,
       selectedFile: null,
+      valueNameTask: '',
+      valueCode: '',
    })
-   const [values, setValue] = useState({
-      text: '',
-      link: '',
-   })
+
+   const onSendingData = () => {
+      getDataHandler({
+         nameTask: stateItems.valueNameTask,
+         textEditor: textEditorVakue,
+         file: stateItems.selectedFile,
+         link: data,
+         image: images,
+         code: stateItems.valueCode,
+      })
+   }
    const [data, setData] = useState([])
+
    const filePicker = useRef(null)
 
    const handleChange = (event) => {
@@ -105,6 +130,21 @@ const CreateTask = () => {
       })
       setImages([])
    }, [])
+
+   const getValueNameTask = (e) => {
+      setStateItems({
+         ...stateItems,
+         valueNameTask: e.target.value,
+      })
+   }
+
+   const getValueCode = (e) => {
+      setStateItems({
+         ...stateItems,
+         valueCode: e.target.value,
+      })
+   }
+
    const getValueText = (e) => {
       setValue({ ...values, text: e.target.value })
    }
@@ -130,7 +170,11 @@ const CreateTask = () => {
          <h1>Создать задание</h1>
 
          <TopBox>
-            <UiInput width="842px" placeholder="название задания" />
+            <UiInput
+               onChange={getValueNameTask}
+               width="842px"
+               placeholder="название задания"
+            />
             <ImgTopBox>
                <Tooltip title="Текстовое поле" placement="top">
                   <ImageBackground>
@@ -168,21 +212,20 @@ const CreateTask = () => {
 
                {stateItems.showModalLink && (
                   <ModalWindow
-                     open={open}
+                     open={stateItems.showModalLink}
+                     handleClose={closeModalLink}
                      modalTitle="Добавить ссылку"
                      footerContent={
                         <>
                            <InputContainer>
                               <UiInput
                                  width="491px"
-                                 margin="16px 25px"
                                  placeholder="отображаемый текст"
                                  onChange={getValueText}
                                  value={values.text}
                               />
                               <UiInput
                                  width="491px"
-                                 margin="0 25px"
                                  placeholder="вставьте ссылку"
                                  onChange={getValueLink}
                                  value={values.link}
@@ -224,7 +267,7 @@ const CreateTask = () => {
          </TopBox>
 
          <BottomBox>
-            {stateItems.showTextEditor && <TextEditor />}
+            {stateItems.showTextEditor && <TextEditor editor={editor} />}
             <input
                className="hidden"
                type="file"
@@ -247,7 +290,8 @@ const CreateTask = () => {
 
             {stateItems.showModal && (
                <ModalWindow
-                  open={open}
+                  open={stateItems.showModal}
+                  handleClose={closeModalImage}
                   modalTitle="Вы уверены что хотите удалить этот элемент?"
                   footerContent={
                      <ModalButton>
@@ -280,6 +324,7 @@ const CreateTask = () => {
                   {stateItems.showModalLinkDelete && (
                      <ModalWindow
                         open={open}
+                        handleClose={closeModalLinkDelete}
                         modalTitle="Вы уверены что хотите удалить этот элемент?"
                         footerContent={
                            <ModalButton>
@@ -325,6 +370,7 @@ const CreateTask = () => {
             {stateItems.showModalImage && (
                <ModalWindow
                   open={open}
+                  handleClose={closeModal}
                   modalTitle="Вы уверены что хотите удалить этот элемент?"
                   footerContent={
                      <ModalButton>
@@ -348,7 +394,7 @@ const CreateTask = () => {
             {stateItems.showCode && (
                <InputBox>
                   <CodeImg src={CodeImage} alt="CodeImage" />
-                  <UiInput placeholder="Вставьте код" />
+                  <UiInput onChange={getValueCode} placeholder="Вставьте код" />
                </InputBox>
             )}
          </BottomBox>
@@ -363,7 +409,12 @@ const CreateTask = () => {
             >
                Отмена
             </UIButton>
-            <UIButton borderradius="8px" fontSize="14px" variant="contained">
+            <UIButton
+               borderradius="8px"
+               fontSize="14px"
+               variant="contained"
+               onClick={onSendingData}
+            >
                Сохранить
             </UIButton>
          </ButtonBox>
@@ -553,6 +604,9 @@ const ModalButton = styled.div`
 const InputContainer = styled.div`
    display: flex;
    flex-direction: column;
+   div {
+      margin: 6px 13px;
+   }
 `
 const BoxButton = styled.div`
    display: flex;

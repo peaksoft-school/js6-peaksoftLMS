@@ -1,7 +1,5 @@
 import React from 'react'
-import { EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
+import { EditorContent } from '@tiptap/react'
 import { BsTypeUnderline } from 'react-icons/bs'
 import { RiItalic, RiBold } from 'react-icons/ri'
 import { AiOutlineUnorderedList, AiOutlineOrderedList } from 'react-icons/ai'
@@ -75,12 +73,8 @@ const MenuBar = ({ editor }) => {
    )
 }
 
-const TextEditor = () => {
-   const editor = useEditor({
-      extensions: [StarterKit, Underline],
-      content: ` `,
-   })
-
+const TextEditor = ({ editor }) => {
+   // console.log(text, 'texxxt')
    return (
       <div>
          <MenuBar editor={editor} />
