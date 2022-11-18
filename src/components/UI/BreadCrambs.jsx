@@ -9,11 +9,11 @@ const BreadCrumbs = ({ paths }) => {
          {paths.map((path, index) => {
             const lastIndex = index === paths.length - 1
             return lastIndex ? (
-               <Typography color="#000000" key={path.to}>
+               <Typography color="#000000" key={path.path}>
                   {path.name}
                </Typography>
             ) : (
-               <Link key={path.to} to={path.to}>
+               <Link key={path.path} to={path.to}>
                   {path.name}
                </Link>
             )
