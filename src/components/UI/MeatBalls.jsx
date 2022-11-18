@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import { styled as style, Menu, Button, MenuItem } from '@mui/material/'
+import { styled as style, Menu, MenuItem } from '@mui/material/'
 import styled from 'styled-components'
 
 export const MeatBalls = ({ options }) => {
@@ -44,7 +44,7 @@ export const MeatBalls = ({ options }) => {
    )
 }
 
-const MeatBallsButton = style(Button)`
+const MeatBallsButton = styled.p`
    color: #343a40;
    padding: 0;
    margin: 0;

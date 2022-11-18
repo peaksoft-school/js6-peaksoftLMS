@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Outlet, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import GroupCard from '../../components/UI/GroupCard'
 import UIButton from '../../components/UI/UIButton'
@@ -21,8 +21,7 @@ export const GroupsPage = () => {
    const dispatch = useDispatch()
    const { error } = useSelector((state) => state.groups)
    const groups = useSelector((state) => state.groups)
-   console.log(groups)
-
+   const navigate = useNavigate()
    useEffect(() => {
       dispatch(getGroups())
    }, [])
@@ -37,11 +36,12 @@ export const GroupsPage = () => {
    const openEdditModal = (id) => {
       setParams({ modalOpen: 'EDDIT-GROUP', id })
    }
-   console.log(modalOpen, 'modalOPpppen ')
    const onCloseModal = () => {
       setParams({})
    }
-
+   const navigateHanlder = (id) => {
+      navigate(`/admin/groups/${id}`)
+   }
    return (
       <>
          {error && <PopUp message={error} messageType="error" />}
@@ -64,6 +64,7 @@ export const GroupsPage = () => {
                      someName={element.groupName}
                      someParagraph={element.description}
                      someYear={element.dateOfStart}
+                     onClick={() => navigateHanlder(element.id)}
                      someButton={
                         <GroupsMeatBalls
                            openDeleteModal={openDeleteModal}
@@ -86,8 +87,6 @@ export const GroupsPage = () => {
                   onClose={onCloseModal}
                />
             )}
-
-            <Outlet />
          </GroupsMain>
       </>
    )

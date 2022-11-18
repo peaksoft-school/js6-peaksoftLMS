@@ -29,6 +29,19 @@ export const getGroupsById = createAsyncThunk(
    }
 )
 
+export const getGroupStudentById = createAsyncThunk(
+   'admin-groups/getStudentById',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`group/students/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.message)
+      }
+   }
+)
+
 export const postGroups = createAsyncThunk(
    'admin-groups/post',
    async (newGroup, { rejectWithValue, dispatch }) => {

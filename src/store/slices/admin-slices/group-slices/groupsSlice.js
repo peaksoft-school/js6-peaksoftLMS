@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 // eslint-disable-next-line import/no-cycle
-import { getGroups, postGroups, getGroupsById } from './group-actions'
+import {
+   getGroups,
+   postGroups,
+   getGroupsById,
+   getGroupStudentById,
+} from './group-actions'
 import { setError, setLoading } from '../../../../utils/helpers/helper'
 
 const initialState = {
@@ -8,6 +13,7 @@ const initialState = {
    status: null,
    error: null,
    singleGroup: [],
+   groupStudents: [],
 }
 
 export const groupsSlice = createSlice({
@@ -15,7 +21,7 @@ export const groupsSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: {
-      // get gruoups redusers
+      // * geting all gruoups redusers
       [getGroups.pending]: setLoading,
       [getGroups.fulfilled]: (state, { payload }) => {
          state.status = 'succes'
@@ -23,10 +29,17 @@ export const groupsSlice = createSlice({
       },
       [getGroups.rejected]: setError,
 
-      [getGroupsById.fulfilled]: (state, action) => {
-         state.singleGroup = action.payload
+      // * get single group by id
+      [getGroupsById.fulfilled]: (state, { payload }) => {
+         state.singleGroup = payload
       },
-      // post groups redusers
+
+      // * get students particular group by id
+      [getGroupStudentById.fulfilled]: (state, { payload }) => {
+         state.groupStudents = payload
+      },
+
+      // * creating groups redusers
       [postGroups.pending]: setLoading,
       [postGroups.fulfilled]: (state) => {
          state.status = 'Группа создана успешно'

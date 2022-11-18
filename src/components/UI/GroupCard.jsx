@@ -12,19 +12,34 @@ function GroupCard({
    someYear,
    someParagraph,
    someButton,
+   onClick,
 }) {
    return (
       <CardGroup>
          <CardAction>
-            <CardImg component="img" image={someImage} alt="img" />
+            <CardImg
+               onClick={onClick}
+               component="img"
+               image={someImage}
+               alt="img"
+            />
             <CardContent>
                <TypographyYear>
-                  <TypographyName gutterBottom variant="h5" component="div">
+                  <TypographyName
+                     onClick={onClick}
+                     gutterBottom
+                     variant="h5"
+                     component="div"
+                  >
                      {someName}
                   </TypographyName>
-                  <Year>{someYear}</Year>
+                  <Year onClick={onClick}>{someYear}</Year>
                </TypographyYear>
-               <TypographyParagraph variant="body2" color="text.secondary">
+               <TypographyParagraph
+                  onClick={onClick}
+                  variant="body2"
+                  color="text.secondary"
+               >
                   {someParagraph}
                </TypographyParagraph>
                <HorizonIcon>{someButton}</HorizonIcon>
