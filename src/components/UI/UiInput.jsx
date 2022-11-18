@@ -28,6 +28,13 @@ const UiInput = ({
 export default UiInput
 
 const Input = styled(TextField)`
+   & .MuiInputBase-input {
+      padding: 10px 14px;
+      :-webkit-autofill {
+         transition-delay: 9999s;
+      }
+   }
+
    & .MuiOutlinedInput-root {
       color: #292929;
       height: 42px;
