@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 const BreadCrumbs = ({ paths }) => {
    return (
-      <StyledBreadcrumbs aria-label="breadcrumbs" separator="\">
+      <StyledBreadcrumb aria-label="breadcrumbs" separator="\">
          {paths.map((path, index) => {
             const lastIndex = index === paths.length - 1
             return lastIndex ? (
@@ -18,13 +18,13 @@ const BreadCrumbs = ({ paths }) => {
                </Link>
             )
          })}
-      </StyledBreadcrumbs>
+      </StyledBreadcrumb>
    )
 }
 
 export default BreadCrumbs
 
-const StyledBreadcrumbs = styled(Breadcrumbs)`
+const StyledBreadcrumb = styled(Breadcrumbs)`
    width: 100%;
 `
 const Link = styled(NavLink)`
