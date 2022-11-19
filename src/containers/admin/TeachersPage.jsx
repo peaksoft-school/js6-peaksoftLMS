@@ -13,14 +13,22 @@ import { HEAD_DATA } from '../../utils/constants/constants'
 import {
    deleteTeacher,
    getAllTeacher,
+   renameTeacher,
 } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
+import RenameInstructorModal from './RenameInstructorModal'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
    const counter = useSelector((state) => state.addTeacher.getTeacher)
+   // const renameSelect = useSelector((state) => state.addTeacher.rename)
+   // console.log(renameSelect)
    const [open, setOpen] = useState(false)
+   const [rename, setRename] = useState(false)
    const onCloseHandler = () => {
       setOpen(false)
+   }
+   const onCloseRenameHandler = () => {
+      setRename(false)
    }
    useEffect(() => {
       dispatch(getAllTeacher())
@@ -28,6 +36,10 @@ export const TeachersPage = () => {
    const deleteHandler = (id) => {
       dispatch(deleteTeacher(id))
       // console.log(id, 'safns')
+   }
+   const renameHandler = (id) => {
+      setRename(true)
+      dispatch(renameTeacher(id))
    }
    return (
       <>
@@ -49,12 +61,18 @@ export const TeachersPage = () => {
                   data={counter}
                   actions
                   secondIcon={<RenameIconTeacher />}
-                  secondOnClick={() => setOpen(true)}
+                  secondOnClick={renameHandler}
                   thirdIcon={<DeleteIconTeacher />}
                   thirdOnClick={deleteHandler}
                />
             </Wrapper>
          </Div>
+         {rename && (
+            <RenameInstructorModal
+               handleClose={onCloseRenameHandler}
+               open={rename}
+            />
+         )}
          {open && (
             <AddInstructorModal handleClose={onCloseHandler} open={open} />
          )}

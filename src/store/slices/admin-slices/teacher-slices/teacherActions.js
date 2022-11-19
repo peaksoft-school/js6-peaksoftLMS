@@ -39,6 +39,19 @@ export const getTeacherById = createAsyncThunk(
       }
    }
 )
+export const renameTeacher = createAsyncThunk(
+   'teacherAdmin/deleteTeacher',
+   async (id, { rejectWithValue, dispatch }) => {
+      // console.log(id)
+      try {
+         const response = await axiosInstace.get(`instructor/${id}`)
+         // console.log(response)
+         return dispatch(getAllTeacher(response))
+      } catch (err) {
+         return rejectWithValue(err.message)
+      }
+   }
+)
 
 export const addTeacher = createAsyncThunk(
    'addTeacher',

@@ -82,7 +82,10 @@ const UiTable = (props) => {
                               <TableCell onClick={firstOnClick} align="left">
                                  {firstIcon}
                               </TableCell>
-                              <TableCell onClick={secondOnClick} align="left">
+                              <TableCell
+                                 onClick={() => secondOnClick(el.id)}
+                                 align="left"
+                              >
                                  {secondIcon}
                               </TableCell>
                               <TableCell

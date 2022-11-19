@@ -1,10 +1,16 @@
 /* eslint-disable import/no-cycle */
 import { createSlice } from '@reduxjs/toolkit'
-import { addTeacher, deleteTeacher, getAllTeacher } from './teacherActions'
+import {
+   addTeacher,
+   deleteTeacher,
+   getAllTeacher,
+   renameTeacher,
+} from './teacherActions'
 
 const initialState = {
    teachers: [],
    getTeacher: [],
+   rename: [],
    status: null,
    error: null,
 }
@@ -44,6 +50,18 @@ export const teacherAdminSlice = createSlice({
          // state.getTeacher = action.payload
       },
       [deleteTeacher.rejected]: (state, { payload }) => {
+         state.status = 'error'
+         state.error = payload
+      },
+      [renameTeacher.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [renameTeacher.fulfilled]: (state, action) => {
+         state.status = 'success'
+         state.rename = action.payload
+         console.log(state.rename)
+      },
+      [renameTeacher.rejected]: (state, { payload }) => {
          state.status = 'error'
          state.error = payload
       },
