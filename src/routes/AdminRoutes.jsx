@@ -15,9 +15,8 @@ export const AdminRoutes = () => {
       <SidebarLayout>
          <Routes>
             <Route path="/" element={<Navigate to="groups" />} />
-            <Route path="/groups" element={<GroupsPage />}>
-               <Route path="group-students" element={<GroupsInnerPage />} />
-            </Route>
+            <Route path="/groups" element={<GroupsPage />} />
+            <Route path="/groups/:id" element={<GroupsInnerPage />} />
             <Route path="/courses/*" element={<CoursesPage />}>
                <Route index path="teachers" element={<CourseTeachersPage />} />
                <Route path="students" element={<CourseStudentsPage />} />

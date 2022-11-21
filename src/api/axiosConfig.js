@@ -5,11 +5,11 @@ import store from '../store/index'
 import { BASE_URL, JWT_TOKEN_KEY } from '../utils/constants/constants'
 
 const headers = {
-   'Content-type': 'application/json',
+   'Content-Type': 'application/json',
 }
 
-const axiosInstace = axios.create({ baseURL: BASE_URL, headers })
-axiosInstace.interceptors.request.use((config) => {
+const axiosInstance = axios.create({ baseURL: BASE_URL, headers })
+axiosInstance.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
    const { token } = store.getState().auth.user
 
@@ -19,7 +19,7 @@ axiosInstace.interceptors.request.use((config) => {
    return updatedConfig
 })
 
-axiosInstace.interceptors.response.use(
+axiosInstance.interceptors.response.use(
    (response) => {
       return Promise.resolve(response)
    },
@@ -30,4 +30,4 @@ axiosInstace.interceptors.response.use(
       return Promise.reject(error)
    }
 )
-export default axiosInstace
+export default axiosInstance

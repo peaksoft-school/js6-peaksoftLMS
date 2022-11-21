@@ -1,4 +1,4 @@
-import { Alert, Snackbar, styled } from '@mui/material'
+import { Alert, Snackbar, styled as style } from '@mui/material'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { ReactComponent as ErrorIcon } from '../../assets/error.svg'
@@ -14,22 +14,20 @@ const PopUp = ({ message, messageType }) => {
    }
 
    return (
-      <div>
-         <Snackbar
-            open={open}
-            autoHideDuration={3000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <Snackbar
+         open={open}
+         autoHideDuration={3000}
+         onClose={handleClose}
+         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+         <AlertBlock
+            variant="filled"
+            iconMapping={{ error: <ErrorIcon />, success: <SuccesIcon /> }}
+            severity={messageType}
          >
-            <AlertBlock
-               variant="filled"
-               iconMapping={{ error: <ErrorIcon />, success: <SuccesIcon /> }}
-               severity={messageType}
-            >
-               <p>{message}</p>
-            </AlertBlock>
-         </Snackbar>
-      </div>
+            <p>{message}</p>
+         </AlertBlock>
+      </Snackbar>
    )
 
    // eslint-disable-next-line no-unreachable
@@ -44,7 +42,7 @@ const PopUp = ({ message, messageType }) => {
    }
 }
 export default PopUp
-const AlertBlock = styled(Alert)`
+const AlertBlock = style(Alert)`
    display: flex;
    flex-direction: row-reverse;
    justify-items: center;
