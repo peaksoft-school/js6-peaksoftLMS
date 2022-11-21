@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
+import FadeLoader from 'react-spinners/FadeLoader'
 import GroupCard from '../../components/UI/GroupCard'
 import UIButton from '../../components/UI/UIButton'
 import { ReactComponent as PlusIcon } from '../../assets/plusIcon.svg'
@@ -19,7 +20,7 @@ export const GroupsPage = () => {
    const { modalOpen } = Object.fromEntries(params)
    const [openCreateModal, setCreateModal] = useState(false)
    const dispatch = useDispatch()
-   const { error } = useSelector((state) => state.groups)
+   const { error, status } = useSelector((state) => state.groups)
    const groups = useSelector((state) => state.groups)
    const navigate = useNavigate()
    useEffect(() => {
@@ -56,25 +57,32 @@ export const GroupsPage = () => {
                   Создать курс
                </UIButton>
             </ButtonBlock>
-            <GridGroups>
-               {groups.groups?.map((element) => (
-                  <GroupCard
-                     key={element.id}
-                     someImage={element.image}
-                     someName={element.groupName}
-                     someParagraph={element.description}
-                     someYear={element.dateOfStart}
-                     onClick={() => navigateHanlder(element.id)}
-                     someButton={
-                        <GroupsMeatBalls
-                           openDeleteModal={openDeleteModal}
-                           openEdditModal={openEdditModal}
-                           id={element.id}
-                        />
-                     }
-                  />
-               ))}
-            </GridGroups>
+
+            {status === 'loading' ? (
+               <LoadingBlock>
+                  <FadeLoader size={200} color="#3772FF" />
+               </LoadingBlock>
+            ) : (
+               <GridGroups>
+                  {groups.groups?.map((element) => (
+                     <GroupCard
+                        key={element.id}
+                        someImage={element.image}
+                        someName={element.groupName}
+                        someParagraph={element.description}
+                        someYear={element.dateOfStart}
+                        onClick={() => navigateHanlder(element.id)}
+                        someButton={
+                           <GroupsMeatBalls
+                              openDeleteModal={openDeleteModal}
+                              openEdditModal={openEdditModal}
+                              id={element.id}
+                           />
+                        }
+                     />
+                  ))}
+               </GridGroups>
+            )}
             {openCreateModal && (
                <GroupsModalWindow
                   isOpen={setCreateModal}
@@ -111,4 +119,10 @@ const GridGroups = styled.div`
    grid-template-columns: repeat(4, 1fr);
    column-gap: 20px;
    row-gap: 20px;
+`
+const LoadingBlock = styled.div`
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 `
