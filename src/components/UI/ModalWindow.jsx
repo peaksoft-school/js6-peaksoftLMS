@@ -43,7 +43,7 @@ const TitleBlock = styled(Typography)`
    width: auto;
    font-size: 19px;
    font-weight: 400;
-   padding: 25px 190px;
+   padding: 25px 100px;
    background: #1f6ed4;
    color: #fff;
 `

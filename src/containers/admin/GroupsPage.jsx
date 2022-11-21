@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import FadeLoader from 'react-spinners/FadeLoader'
 import GroupCard from '../../components/UI/GroupCard'
 import UIButton from '../../components/UI/UIButton'
-import { ReactComponent as PlusIcon } from '../../assets/plusIcon.svg'
+import { ReactComponent as PlusIcon } from '../../assets/plusIconAdmin.svg'
 import { GroupsModalWindow } from '../../components/admin-groups/GroupsModalWindow'
 import { GroupsEditModal } from '../../components/admin-groups/GroupsEditModal'
 import PopUp from '../../components/UI/PopUp'
@@ -49,6 +49,8 @@ export const GroupsPage = () => {
          <GroupsMain>
             <ButtonBlock>
                <UIButton
+                  width="177px"
+                  height="40px"
                   startIcon={<PlusIcon />}
                   variant="contained"
                   onClick={showModalHandler}
