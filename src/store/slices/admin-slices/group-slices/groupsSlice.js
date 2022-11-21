@@ -4,7 +4,6 @@ import {
    getGroups,
    postGroups,
    editGroups,
-   getGroupsById,
    getGroupStudentById,
    deleteGroups,
 } from './group-actions'
@@ -13,7 +12,6 @@ const initialState = {
    groups: [],
    status: null,
    error: null,
-   singleGroup: [],
    groupStudents: [],
 }
 
@@ -33,11 +31,6 @@ export const groupsSlice = createSlice({
       [getGroups.rejected]: (state) => {
          state.error = 'Произошла ошибка, не удалось загрузить группы'
          state.status = 'rejected'
-      },
-
-      // * get single group by id
-      [getGroupsById.fulfilled]: (state, { payload }) => {
-         state.singleGroup = payload
       },
 
       // * get students particular group by id
