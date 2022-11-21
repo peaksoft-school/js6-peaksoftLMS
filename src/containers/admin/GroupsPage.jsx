@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -18,7 +18,6 @@ import {
 export const GroupsPage = () => {
    const [params, setParams] = useSearchParams()
    const { modalOpen } = Object.fromEntries(params)
-   const [openCreateModal, setCreateModal] = useState(false)
    const dispatch = useDispatch()
    const { error, status } = useSelector((state) => state.groups)
    const groups = useSelector((state) => state.groups)
@@ -28,7 +27,7 @@ export const GroupsPage = () => {
    }, [])
 
    const showModalHandler = () => {
-      setCreateModal(true)
+      setParams({ modalOpen: 'CREATE-GROUP' })
    }
    const openDeleteModal = (id) => {
       dispatch(deleteGroups(id))
@@ -46,6 +45,18 @@ export const GroupsPage = () => {
    return (
       <>
          {error && <PopUp message={error} messageType="error" />}
+         {status === 'created' && (
+            <PopUp message="Группа успешно создана" messageType="success" />
+         )}
+         {status === 'deleted' && (
+            <PopUp message="Группа удалена" messageType="success" />
+         )}
+         {status === 'edited' && (
+            <PopUp
+               message="Группа отредактирована успешно"
+               messageType="success"
+            />
+         )}
          <GroupsMain>
             <ButtonBlock>
                <UIButton
@@ -85,12 +96,11 @@ export const GroupsPage = () => {
                   ))}
                </GridGroups>
             )}
-            {openCreateModal && (
-               <GroupsModalWindow
-                  isOpen={setCreateModal}
-                  open={openCreateModal}
-               />
-            )}
+
+            <GroupsModalWindow
+               open={modalOpen === 'CREATE-GROUP'}
+               onClose={onCloseModal}
+            />
             {modalOpen === 'EDDIT-GROUP' && (
                <GroupsEditModal
                   open={modalOpen === 'EDDIT-GROUP'}

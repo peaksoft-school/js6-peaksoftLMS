@@ -8,6 +8,8 @@ import UiInput from '../UI/UiInput'
 import DatePicker from '../UI/DatePicker'
 import TextArea from '../UI/TextArea'
 import UIButton from '../UI/UIButton'
+import PopUp from '../UI/PopUp'
+
 import {
    editGroups,
    getGroupsById,
@@ -15,8 +17,8 @@ import {
 
 export const GroupsEditModal = ({ open, onClose, isOpen }) => {
    const dispatch = useDispatch()
-   // const { singleGroup } = useSelector((state) => state.groups)
    const [uploadedImage, setUploadedImage] = useState(null)
+   const [validateError, setValidateError] = useState(false)
 
    const [groupData, setGroupData] = useState({
       groupName: '',
@@ -25,14 +27,17 @@ export const GroupsEditModal = ({ open, onClose, isOpen }) => {
    })
    const [params] = useSearchParams()
    const { id } = Object.fromEntries(params)
-   const createNewGroupHandler = () => {
+
+   // eslint-disable-next-line consistent-return
+   const editGroupHadler = () => {
       if (
          !groupData.groupName &&
          !groupData.description &&
          !groupData.dateOfStart &&
          !uploadedImage
       )
-         return
+         return setValidateError(true)
+
       dispatch(
          editGroups({
             id,
@@ -45,8 +50,8 @@ export const GroupsEditModal = ({ open, onClose, isOpen }) => {
          })
       )
       onClose()
-      // dispatch(editGroups({ ...groupData, image: uploadedImage[0] }))
    }
+
    useEffect(() => {
       dispatch(getGroupsById(id))
          .unwrap()
@@ -60,82 +65,93 @@ export const GroupsEditModal = ({ open, onClose, isOpen }) => {
             setUploadedImage(result.image)
          })
    }, [])
+
    return (
-      <ModalWindow
-         isOpen={isOpen}
-         open={open}
-         handleClose={onClose}
-         modalTitle="Редактирование группы"
-         headerContent={
-            <ImagePickerBlock>
-               <ImagePicker
-                  setUploadedImage={setUploadedImage}
-                  uploadedImage={uploadedImage}
-               />
-            </ImagePickerBlock>
-         }
-         bodyContent={
-            <ModalFormBLock>
-               <FormInputBlock>
-                  <UiInput
-                     width="327px"
-                     placeholder="Название группы"
-                     value={groupData.groupName}
+      <>
+         {validateError && (
+            <PopUp messageType="error" message="Произошла ошибка" />
+         )}
+         <ModalWindow
+            isOpen={isOpen}
+            open={open}
+            handleClose={onClose}
+            modalTitle="Редактирование группы"
+            headerContent={
+               <ImagePickerBlock>
+                  <ImagePicker
+                     setUploadedImage={setUploadedImage}
+                     uploadedImage={uploadedImage}
+                  />
+               </ImagePickerBlock>
+            }
+            bodyContent={
+               <ModalFormBLock>
+                  {validateError && (
+                     <ErrorMessage>
+                        Все поля обязательны к заполнению
+                     </ErrorMessage>
+                  )}
+                  <FormInputBlock>
+                     <UiInput
+                        width="327px"
+                        placeholder="Название группы"
+                        value={groupData.groupName}
+                        onChange={(e) =>
+                           setGroupData({
+                              ...groupData,
+                              groupName: e.target.value,
+                           })
+                        }
+                     />
+                     <DatePicker
+                        value={groupData.dateOfStart}
+                        width="149px"
+                        height="42px"
+                        placeholder="дд.мм.гг"
+                        onChange={(event) =>
+                           setGroupData({
+                              ...groupData,
+                              dateOfStart: event,
+                           })
+                        }
+                     />
+                  </FormInputBlock>
+                  <TextArea
+                     value={groupData.description}
                      onChange={(e) =>
                         setGroupData({
                            ...groupData,
-                           groupName: e.target.value,
+                           description: e.target.value,
                         })
                      }
+                     placeholder="Описание группы"
                   />
-                  <DatePicker
-                     value={groupData.dateOfStart}
-                     width="149px"
-                     height="42px"
-                     placeholder="дд.мм.гг"
-                     onChange={(event) =>
-                        setGroupData({
-                           ...groupData,
-                           dateOfStart: event,
-                        })
-                     }
-                  />
-               </FormInputBlock>
-               <TextArea
-                  value={groupData.description}
-                  onChange={(e) =>
-                     setGroupData({
-                        ...groupData,
-                        description: e.target.value,
-                     })
-                  }
-                  placeholder="Описание группы"
-               />
-            </ModalFormBLock>
-         }
-         footerContent={
-            <FooterBlock>
-               <UIButton
-                  borderradius="8px"
-                  width="117px"
-                  height="40px"
-                  variant="outlined"
-                  onClick={onClose}
-               >
-                  Отмена
-               </UIButton>
-               <UIButton
-                  borderradius="8px"
-                  width="117px"
-                  height="40px"
-                  variant="contained"
-                  onClick={createNewGroupHandler}
-               >
-                  Сохранить
-               </UIButton>
-            </FooterBlock>
-         }
-      />
+               </ModalFormBLock>
+            }
+            footerContent={
+               <FooterBlock>
+                  <UIButton
+                     borderradius="8px"
+                     width="117px"
+                     height="40px"
+                     variant="outlined"
+                     onClick={onClose}
+                  >
+                     Отмена
+                  </UIButton>
+                  <UIButton
+                     borderradius="8px"
+                     width="117px"
+                     height="40px"
+                     variant="contained"
+                     onClick={editGroupHadler}
+                  >
+                     Сохранить
+                  </UIButton>
+               </FooterBlock>
+            }
+         />
+      </>
    )
 }
 
@@ -161,4 +177,7 @@ const FooterBlock = styled.div`
    justify-content: flex-end;
    margin: 20px 25px 15px 0;
    column-gap: 10px;
+`
+const ErrorMessage = styled.p`
+   color: red;
 `

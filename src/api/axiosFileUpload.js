@@ -1,19 +1,10 @@
 import axios from 'axios'
-// eslint-disable-next-line import/no-cycle
-import store from '../store/index'
 
 import { BASE_URL } from '../utils/constants/constants'
 
-const headers = {}
-
-const fileUpload = axios.create({ baseURL: BASE_URL, headers })
+const fileUpload = axios.create({ baseURL: BASE_URL })
 fileUpload.interceptors.request.use((config) => {
    const updatedConfig = { ...config }
-   const { token } = store.getState().auth.user
-
-   if (token) {
-      updatedConfig.headers.Authorization = `Bearer ${token}`
-   }
    return updatedConfig
 })
 

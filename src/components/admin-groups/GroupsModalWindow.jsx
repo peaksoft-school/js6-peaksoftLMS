@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import ModalWindow from '../UI/ModalWindow'
 import ImagePicker from '../UI/ImagePicker'
@@ -8,17 +8,20 @@ import DatePicker from '../UI/DatePicker'
 import TextArea from '../UI/TextArea'
 import UIButton from '../UI/UIButton'
 import { postGroups } from '../../store/slices/admin-slices/group-slices/group-actions'
+import PopUp from '../UI/PopUp'
 
-export const GroupsModalWindow = ({ isOpen, open }) => {
+export const GroupsModalWindow = ({ onClose, open }) => {
    const dispatch = useDispatch()
-   const { error } = useSelector((state) => state.groups)
    const [uploadedImage, setUploadedImage] = useState(null)
+   const [validateError, setValidateError] = useState(false)
+
    const [groupData, setGroupData] = useState({
       groupName: '',
       description: '',
       dateOfStart: '',
    })
 
+   // eslint-disable-next-line consistent-return
    const createNewGroupHandler = () => {
       if (
          !groupData.groupName &&
@@ -26,84 +29,100 @@ export const GroupsModalWindow = ({ isOpen, open }) => {
          !groupData.dateOfStart &&
          !uploadedImage
       )
-         return null
+         return setValidateError(true)
+
       dispatch(postGroups({ ...groupData, image: uploadedImage }))
-      return !error ? isOpen((prev) => !prev) : null
+      onClose()
+   }
+
+   const closeHadler = () => {
+      setValidateError(false)
+      onClose()
    }
 
    return (
-      <ModalWindow
-         open={open}
-         handleClose={() => isOpen(false)}
-         modalTitle="Создание группы"
-         headerContent={
-            <ImagePickerBlock>
-               <ImagePicker
-                  setUploadedImage={setUploadedImage}
-                  uploadedImage={uploadedImage}
-               />
-            </ImagePickerBlock>
-         }
-         bodyContent={
-            <ModalFormBLock>
-               <FormInputBlock>
-                  <UiInput
-                     width="327px"
-                     placeholder="Название группы"
+      <>
+         {validateError && (
+            <PopUp messageType="error" message="Ошибка заполнения" />
+         )}
+         <ModalWindow
+            open={open}
+            handleClose={closeHadler}
+            modalTitle="Создание группы"
+            headerContent={
+               <ImagePickerBlock>
+                  <ImagePicker
+                     setUploadedImage={setUploadedImage}
+                     uploadedImage={uploadedImage}
+                  />
+               </ImagePickerBlock>
+            }
+            bodyContent={
+               <ModalFormBLock>
+                  {validateError && (
+                     <ErrorMessage>
+                        Все поля обязательны к заполнению
+                     </ErrorMessage>
+                  )}
+                  <FormInputBlock>
+                     <UiInput
+                        width="327px"
+                        placeholder="Название группы"
+                        onChange={(e) =>
+                           setGroupData({
+                              ...groupData,
+                              groupName: e.target.value,
+                           })
+                        }
+                     />
+                     <DatePicker
+                        value={groupData.dateOfStart}
+                        width="149px"
+                        height="42px"
+                        placeholder="дд.мм.гг"
+                        onChange={(event) =>
+                           setGroupData({
+                              ...groupData,
+                              dateOfStart: event,
+                           })
+                        }
+                     />
+                  </FormInputBlock>
+                  <TextArea
                      onChange={(e) =>
                         setGroupData({
                            ...groupData,
-                           groupName: e.target.value,
+                           description: e.target.value,
                         })
                      }
+                     placeholder="Описание группы"
                   />
-                  <DatePicker
-                     value={groupData.dateOfStart}
-                     width="149px"
-                     height="42px"
-                     placeholder="дд.мм.гг"
-                     onChange={(event) =>
-                        setGroupData({
-                           ...groupData,
-                           dateOfStart: event,
-                        })
-                     }
-                  />
-               </FormInputBlock>
-               <TextArea
-                  onChange={(e) =>
-                     setGroupData({
-                        ...groupData,
-                        description: e.target.value,
-                     })
-                  }
-                  placeholder="Описание группы"
-               />
-            </ModalFormBLock>
-         }
-         footerContent={
-            <FooterBlock>
-               <UIButton
-                  borderradius="8px"
-                  width="117px"
-                  height="40px"
-                  variant="outlined"
-                  onClick={() => isOpen(false)}
-               >
-                  Отмена
-               </UIButton>
-               <UIButton
-                  borderradius="8px"
-                  width="117px"
-                  height="40px"
-                  variant="contained"
-                  onClick={createNewGroupHandler}
-               >
-                  Добавить
-               </UIButton>
-            </FooterBlock>
-         }
-      />
+               </ModalFormBLock>
+            }
+            footerContent={
+               <FooterBlock>
+                  <UIButton
+                     borderradius="8px"
+                     width="117px"
+                     height="40px"
+                     variant="outlined"
+                     onClick={closeHadler}
+                  >
+                     Отмена
+                  </UIButton>
+                  <UIButton
+                     borderradius="8px"
+                     width="117px"
+                     height="40px"
+                     variant="contained"
+                     onClick={createNewGroupHandler}
+                  >
+                     Добавить
+                  </UIButton>
+               </FooterBlock>
+            }
+         />
+      </>
    )
 }
 
@@ -129,4 +148,7 @@ const FooterBlock = styled.div`
    justify-content: flex-end;
    margin: 20px 25px 15px 0;
    column-gap: 10px;
+`
+const ErrorMessage = styled.p`
+   color: red;
 `

@@ -73,8 +73,9 @@ export const deleteGroups = createAsyncThunk(
    'admin-groups/delete',
    async (id, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.delete(`group/${id}`)
-         return dispatch(getGroups())
+         const response = await axiosInstance.delete(`group/${id}`)
+         const { data } = response
+         return dispatch(getGroups(data))
       } catch (err) {
          return rejectWithValue(err.message)
       }
@@ -105,8 +106,7 @@ export const editGroups = createAsyncThunk(
             dateOfStart: dateGroup,
             image: responseGroup.link,
          })
-         dispatch(getGroups())
-         return response
+         return dispatch(getGroups(response))
       } catch (err) {
          return rejectWithValue(err.message)
       }

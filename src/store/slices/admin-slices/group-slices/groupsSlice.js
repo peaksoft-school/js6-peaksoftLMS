@@ -6,14 +6,13 @@ import {
    editGroups,
    getGroupsById,
    getGroupStudentById,
+   deleteGroups,
 } from './group-actions'
 
 const initialState = {
    groups: [],
    status: null,
    error: null,
-   editStatus: null,
-   editError: null,
    singleGroup: [],
    groupStudents: [],
 }
@@ -54,9 +53,14 @@ export const groupsSlice = createSlice({
          state.status = 'rejected'
       },
 
+      // * deleting group
+      [deleteGroups.fulfilled]: (state) => {
+         state.status = 'deleted'
+      },
+
       // * creating groups redusers
       [postGroups.fulfilled]: (state) => {
-         state.status = 'Группа создана успешно'
+         state.status = 'created'
       },
       [postGroups.rejected]: (state) => {
          state.error = 'Произошла ошибка, не удалось создать группу'
@@ -64,10 +68,10 @@ export const groupsSlice = createSlice({
       },
       // * editing and updating groups
       [editGroups.fulfilled]: (state) => {
-         state.editGroups = 'Группа отредактирована успешно'
+         state.status = 'edited'
       },
       [editGroups.rejected]: (state) => {
-         state.editError = 'Не удалось провести редактирование'
+         state.error = 'Не удалось провести редактирование'
       },
    },
 })
