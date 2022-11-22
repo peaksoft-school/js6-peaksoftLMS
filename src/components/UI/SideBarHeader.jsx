@@ -1,13 +1,25 @@
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { SIDELAYOUT_DATA, SideData } from '../../utils/constants/constants'
+import {
+   SIDELAYOUT_DATA,
+   INSTRUCTOR_DATA,
+   STUDENT_DATA,
+} from '../../utils/constants/constants'
 import PathIcons from './PathIcons'
 
 const SideBarHeader = () => {
    const { pathname } = useLocation()
 
-   const ROLE = 'admin'
-   const check = ROLE === 'admin' ? SIDELAYOUT_DATA : SideData
+   const ROLE = JSON.parse(localStorage.getItem('role'))
+   let check = []
+
+   if (ROLE === 'ADMIN') {
+      check = SIDELAYOUT_DATA
+   } else if (ROLE === 'INSTRUCTOR') {
+      check = INSTRUCTOR_DATA
+   } else {
+      check = STUDENT_DATA
+   }
 
    return (
       <>
