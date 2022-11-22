@@ -82,3 +82,15 @@ export const HEAD_DATA = [
       actionsName: 'Действия',
    },
 ]
+
+export const STUDENT_HEADER = [
+   {
+      id: 1,
+      idName: 'ID',
+      firstName: 'Имя Фамилия',
+      groupName: 'Группа',
+      phoryatLearning: 'Формат',
+      phoneName: 'Номер телефона',
+      emailName: 'E-mail',
+   },
+]

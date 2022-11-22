@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import {
    TableBody,
@@ -28,7 +29,7 @@ const UiTable = (props) => {
                <HeadTable>
                   <StyledTableRow>
                      {headData.map((item) => (
-                        <>
+                        <React.Fragment key={item.id}>
                            <TableCell align="left">{item.idName}</TableCell>
                            <TableCell align="left">{item.firstName}</TableCell>
                            <TableCell align="left">{item.groupName}</TableCell>
@@ -43,7 +44,7 @@ const UiTable = (props) => {
                                  {item.actionsName}
                               </TableCell>
                            )}
-                        </>
+                        </React.Fragment>
                      ))}
                   </StyledTableRow>
                </HeadTable>

@@ -3,14 +3,14 @@ import { forgotPassSlice } from './slices/forgotPassSlice'
 import { resetPassSlice } from './slices/resetPasswordSlice'
 import { userSlice } from './slices/userSlice'
 // eslint-disable-next-line import/no-cycle
-import { teacherAdminSlice } from './slices/admin-slices/teacher-slices/addTeacherSlice'
+import { groupsSlice } from './slices/admin-slices/group-slices/groupsSlice'
 
 const store = configureStore({
    reducer: {
       auth: userSlice.reducer,
       email: forgotPassSlice.reducer,
       newPassword: resetPassSlice.reducer,
-      addTeacher: teacherAdminSlice.reducer,
+      groups: groupsSlice.reducer,
    },
 })
 
