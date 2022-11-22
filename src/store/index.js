@@ -1,9 +1,10 @@
+/* eslint-disable import/no-cycle */
 import { configureStore } from '@reduxjs/toolkit'
 import { forgotPassSlice } from './slices/forgotPassSlice'
 import { resetPassSlice } from './slices/resetPasswordSlice'
 import { userSlice } from './slices/userSlice'
-// eslint-disable-next-line import/no-cycle
 import { groupsSlice } from './slices/admin-slices/group-slices/groupsSlice'
+import { teacherAdminSlice } from './slices/admin-slices/teacher-slices/addTeacherSlice'
 
 const store = configureStore({
    reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
       email: forgotPassSlice.reducer,
       newPassword: resetPassSlice.reducer,
       groups: groupsSlice.reducer,
+      teacher: teacherAdminSlice.reducer,
    },
 })
 

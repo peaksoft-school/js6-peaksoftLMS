@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { createSlice } from '@reduxjs/toolkit'
 import {
+   editTeacher,
    addTeacher,
    deleteTeacher,
    getAllTeacher,
@@ -11,6 +12,7 @@ const initialState = {
    teachers: [],
    getTeacher: [],
    rename: [],
+   updateTeacher: [],
    status: null,
    error: null,
 }
@@ -37,6 +39,7 @@ export const teacherAdminSlice = createSlice({
       [getAllTeacher.fulfilled]: (state, action) => {
          state.status = 'success'
          state.getTeacher = action.payload
+         // console.log(action.payload)
       },
       [getAllTeacher.rejected]: (state, { payload }) => {
          state.status = 'error'
@@ -59,9 +62,21 @@ export const teacherAdminSlice = createSlice({
       [renameTeacher.fulfilled]: (state, action) => {
          state.status = 'success'
          state.rename = action.payload
-         console.log(state.rename)
+         // console.log(state.rename)
       },
       [renameTeacher.rejected]: (state, { payload }) => {
+         state.status = 'error'
+         state.error = payload
+      },
+      [editTeacher.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [editTeacher.fulfilled]: (state, action) => {
+         state.status = 'success'
+         state.updateTeacher = action.payload
+         // console.log(state.rename)
+      },
+      [editTeacher.rejected]: (state, { payload }) => {
          state.status = 'error'
          state.error = payload
       },

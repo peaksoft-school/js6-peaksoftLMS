@@ -66,3 +66,25 @@ export const addTeacher = createAsyncThunk(
       }
    }
 )
+
+export const editTeacher = createAsyncThunk(
+   'admin-groups/edit',
+   async (newGroup, { rejectWithValue, dispatch }) => {
+      try {
+         const response = await axiosInstace.put(`instructor/${newGroup.id}`, {
+            fullName: newGroup.body.fullName,
+            specialization: newGroup.body.specialization,
+            phoneNumber: newGroup.body.phoneNumber,
+            email: newGroup.body.email,
+         })
+         return dispatch(getAllTeacher(response))
+      } catch (err) {
+         return rejectWithValue(err.message)
+      }
+   }
+)
+
+// fullName: result.fullName,
+// specialization: result.specialization,
+// phoneNumber: result.phoneNumber,
+// email: result.email,

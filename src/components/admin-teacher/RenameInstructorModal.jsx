@@ -1,15 +1,31 @@
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 // import { unwrapResult } from '@reduxjs/toolkit'
-import { addTeacher } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
-import UIButton from '../../components/UI/UIButton'
-import UiInput from '../../components/UI/UiInput'
-import ModalWindow from '../../components/UI/ModalWindow'
+import { useSearchParams } from 'react-router-dom'
+import {
+   editTeacher,
+   //    addTeacher,
+   getTeacherById,
+} from '../../store/slices/admin-slices/teacher-slices/teacherActions'
+import UIButton from '../UI/UIButton'
+import UiInput from '../UI/UiInput'
+import ModalWindow from '../UI/ModalWindow'
 
-const AddInstructorModal = ({ open, handleClose }) => {
+const RenameInstructorModal = ({ open, handleClose }) => {
+   // const renameSelect = useSelector((state) => state.addTeacher.rename)
+   // console.log(renameSelect)
    const dispatch = useDispatch()
-   const { control, handleSubmit, reset } = useForm({
+   const [groupData, setGroupData] = useState({
+      fullName: '',
+      specialization: '',
+      phoneNumber: '',
+      email: '',
+   })
+   const [params] = useSearchParams()
+   const { id } = Object.fromEntries(params)
+   const { control, handleSubmit } = useForm({
       mode: 'onblur',
       defaultValues: {
          firstName: '',
@@ -23,19 +39,43 @@ const AddInstructorModal = ({ open, handleClose }) => {
    const { errors } = useFormState({
       control,
    })
-   const onSubmit = (data) => {
-      dispatch(addTeacher({ data }))
+
+   const editGroupHadler = () => {
+      dispatch(
+         editTeacher({
+            id,
+            body: {
+               fullName: groupData.fullName,
+               specialization: groupData.specialization,
+               phoneNumber: groupData.phoneNumber,
+               email: groupData.email,
+            },
+         })
+      )
       handleClose()
-      reset()
    }
+
+   useEffect(() => {
+      dispatch(getTeacherById(id))
+         .unwrap()
+         .then((result) => {
+            setGroupData({
+               ...groupData,
+               fullName: result.fullName,
+               specialization: result.specialization,
+               phoneNumber: result.phoneNumber,
+               email: result.email,
+            })
+         })
+   }, [])
 
    return (
       <ModalWindow
          open={open}
          handleClose={handleClose}
-         modalTitle="Добавление учителя"
+         modalTitle="Изменить учителя"
          bodyContent={
-            <DivContainer onSubmit={handleSubmit(onSubmit)}>
+            <DivContainer onSubmit={handleSubmit(editGroupHadler)}>
                <Controller
                   control={control}
                   name="firstName"
@@ -50,8 +90,13 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      <UiInput
                         margintop="16px"
                         placeholder="Имя"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
+                        onChange={(e) =>
+                           field.setGroupData({
+                              ...groupData,
+                              fullName: e.target.value,
+                           })
+                        }
+                        value={field.groupData.fullName}
                         type="text"
                         error={!!errors.firstName?.message}
                      />
@@ -64,32 +109,6 @@ const AddInstructorModal = ({ open, handleClose }) => {
                )}
                <Controller
                   control={control}
-                  name="lastName"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                     minLength: {
-                        value: 3,
-                        message: 'Минимум 3 символов и не должень быть число',
-                     },
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="12px"
-                        placeholder="Фамилия"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="text"
-                        error={!!errors.lastName?.message}
-                     />
-                  )}
-               />
-               {errors?.lastName && (
-                  <ErrorMessage>
-                     {errors?.lastName?.message || 'Error'}
-                  </ErrorMessage>
-               )}
-               <Controller
-                  control={control}
                   name="phoneNumber"
                   rules={{
                      required: 'Поле обязательно к заполнению',
@@ -98,8 +117,13 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      <UiInput
                         margintop="12px"
                         placeholder="+996 ___ __ __ __"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
+                        onChange={(e) =>
+                           field.setGroupData({
+                              ...groupData,
+                              phoneNumber: e.target.value,
+                           })
+                        }
+                        value={field.groupData.phoneNumber}
                         type="number"
                         error={!!errors.phoneNumber?.message}
                      />
@@ -128,8 +152,13 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      <UiInput
                         margintop="12px"
                         placeholder="Email"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
+                        onChange={(e) =>
+                           field.setGroupData({
+                              ...groupData,
+                              email: e.target.value,
+                           })
+                        }
+                        value={field.groupData.email}
                         type="email"
                         error={!!errors.email?.message}
                      />
@@ -140,31 +169,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      {errors?.email?.message || 'Error'}
                   </ErrorMessage>
                )}
-               <Controller
-                  control={control}
-                  name="password"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                     minLength: {
-                        value: 6,
-                        message:
-                           'Минимум 6 символов и должен содержать хотя бы одно число ',
-                     },
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="12px"
-                        placeholder="Пароль"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="password"
-                        error={!!errors.password?.message}
-                     />
-                  )}
-               />
-               {errors?.password && (
-                  <ErrorMessage>{errors?.password?.message}</ErrorMessage>
-               )}
+
                <Controller
                   control={control}
                   name="specialization"
@@ -179,8 +184,13 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      <UiInput
                         margintop="12px"
                         placeholder="Специализация"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
+                        onChange={(e) =>
+                           field.setGroupData({
+                              ...groupData,
+                              specialization: e.target.value,
+                           })
+                        }
+                        value={field.groupData.specialization}
                         type="text"
                         error={!!errors.specialization?.message}
                      />
@@ -208,7 +218,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
       />
    )
 }
-export default AddInstructorModal
+export default RenameInstructorModal
 const DivContainer = styled.form`
    width: 100%;
    margin-bottom: 20px;

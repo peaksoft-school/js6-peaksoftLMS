@@ -18,7 +18,6 @@ const UiTable = (props) => {
       firstIcon,
       secondIcon,
       thirdIcon,
-      firstOnClick,
       secondOnClick,
       thirdOnClick,
    } = props
@@ -60,16 +59,16 @@ const UiTable = (props) => {
                            <span>{el.id}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.fullName}</span>
+                           <span>{el.name}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.groupName}</span>
+                           <span>{el.group}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.specialization}</span>
+                           <span>{el.format}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.phoneNumber}</span>
+                           <span>{el.phone}</span>
                         </TableCell>
                         <TableCell align="left">
                            <span>{el.email}</span>
@@ -77,20 +76,17 @@ const UiTable = (props) => {
                         <TableCell align="left">
                            <span>{el.password}</span>
                         </TableCell>
-
                         {actions && (
                            <div>
-                              <TableCell onClick={firstOnClick} align="left">
-                                 {firstIcon}
-                              </TableCell>
+                              <TableCell align="left">{firstIcon}</TableCell>
                               <TableCell
-                                 onClick={() => secondOnClick(el.id)}
+                                 onClick={() => secondOnClick(el.itemId)}
                                  align="left"
                               >
                                  {secondIcon}
                               </TableCell>
                               <TableCell
-                                 onClick={() => thirdOnClick(el.id)}
+                                 onClick={() => thirdOnClick(el.itemId)}
                                  align="left"
                               >
                                  {thirdIcon}

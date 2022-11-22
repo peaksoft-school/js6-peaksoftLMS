@@ -6,7 +6,7 @@ import Wrapper from '../../components/UI/Wrapper'
 import UIButton from '../../components/UI/UIButton'
 import { ReactComponent as RenameIcon } from '../../assets/renameIcon.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg'
-import AddInstructorModal from './AddInstructorModal'
+import AddInstructorModal from '../../components/admin-teacher/AddInstructorModal'
 import { ReactComponent as PlusIcon } from '../../assets/buttonPlusIcon.svg'
 // import IconButton from '../../components/UI/IconButton'
 import { HEAD_DATA } from '../../utils/constants/constants'
@@ -15,15 +15,24 @@ import {
    getAllTeacher,
    renameTeacher,
 } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
-import RenameInstructorModal from './RenameInstructorModal'
+import RenameInstructorModal from '../../components/admin-teacher/RenameInstructorModal'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
-   const counter = useSelector((state) => state.addTeacher.getTeacher)
-   // const renameSelect = useSelector((state) => state.addTeacher.rename)
-   // console.log(renameSelect)
+   const { getTeacher } = useSelector((state) => state.teacher)
    const [open, setOpen] = useState(false)
    const [rename, setRename] = useState(false)
+
+   const render = getTeacher.map((el, i) => {
+      return {
+         itemId: el.id,
+         id: i + 1,
+         name: el.fullName,
+         format: el.specialization,
+         phone: el.phoneNumber,
+         email: el.email,
+      }
+   })
    const onCloseHandler = () => {
       setOpen(false)
    }
@@ -35,7 +44,6 @@ export const TeachersPage = () => {
    }, [])
    const deleteHandler = (id) => {
       dispatch(deleteTeacher(id))
-      // console.log(id, 'safns')
    }
    const renameHandler = (id) => {
       setRename(true)
@@ -58,7 +66,7 @@ export const TeachersPage = () => {
             <Wrapper height="500px">
                <UiTable
                   headData={HEAD_DATA}
-                  data={counter}
+                  data={render}
                   actions
                   secondIcon={<RenameIconTeacher />}
                   secondOnClick={renameHandler}

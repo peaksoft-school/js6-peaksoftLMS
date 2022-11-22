@@ -3,11 +3,11 @@ import { useForm, Controller, useFormState } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 // import { unwrapResult } from '@reduxjs/toolkit'
 import { addTeacher } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
-import UIButton from '../../components/UI/UIButton'
-import UiInput from '../../components/UI/UiInput'
-import ModalWindow from '../../components/UI/ModalWindow'
+import UIButton from '../UI/UIButton'
+import UiInput from '../UI/UiInput'
+import ModalWindow from '../UI/ModalWindow'
 
-const RenameInstructorModal = ({ open, handleClose }) => {
+const AddInstructorModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
    const { control, handleSubmit, reset } = useForm({
       mode: 'onblur',
@@ -33,7 +33,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
       <ModalWindow
          open={open}
          handleClose={handleClose}
-         modalTitle="Изменить учителя"
+         modalTitle="Добавление учителя"
          bodyContent={
             <DivContainer onSubmit={handleSubmit(onSubmit)}>
                <Controller
@@ -140,7 +140,31 @@ const RenameInstructorModal = ({ open, handleClose }) => {
                      {errors?.email?.message || 'Error'}
                   </ErrorMessage>
                )}
-
+               <Controller
+                  control={control}
+                  name="password"
+                  rules={{
+                     required: 'Поле обязательно к заполнению',
+                     minLength: {
+                        value: 6,
+                        message:
+                           'Минимум 6 символов и должен содержать хотя бы одно число ',
+                     },
+                  }}
+                  render={({ field }) => (
+                     <UiInput
+                        margintop="12px"
+                        placeholder="Пароль"
+                        onChange={(e) => field.onChange(e)}
+                        value={field.value}
+                        type="password"
+                        error={!!errors.password?.message}
+                     />
+                  )}
+               />
+               {errors?.password && (
+                  <ErrorMessage>{errors?.password?.message}</ErrorMessage>
+               )}
                <Controller
                   control={control}
                   name="specialization"
@@ -184,7 +208,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
       />
    )
 }
-export default RenameInstructorModal
+export default AddInstructorModal
 const DivContainer = styled.form`
    width: 100%;
    margin-bottom: 20px;
