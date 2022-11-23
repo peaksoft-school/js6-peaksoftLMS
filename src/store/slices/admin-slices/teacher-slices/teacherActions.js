@@ -28,12 +28,12 @@ export const deleteTeacher = createAsyncThunk(
 )
 export const getTeacherById = createAsyncThunk(
    'teacherAdmin/deleteTeacher',
-   async (id, { rejectWithValue, dispatch }) => {
+   async (id, { rejectWithValue }) => {
       // console.log(id)
       try {
          const response = await axiosInstace.delete(`instructor/${id}`)
-         // console.log(response)
-         return dispatch(getAllTeacher(response))
+         console.log(response)
+         return response.data
       } catch (err) {
          return rejectWithValue(err.message)
       }
@@ -41,12 +41,11 @@ export const getTeacherById = createAsyncThunk(
 )
 export const renameTeacher = createAsyncThunk(
    'teacherAdmin/deleteTeacher',
-   async (id, { rejectWithValue, dispatch }) => {
-      // console.log(id)
+   async (itemId, { rejectWithValue }) => {
       try {
-         const response = await axiosInstace.get(`instructor/${id}`)
-         // console.log(response)
-         return dispatch(getAllTeacher(response))
+         const response = await axiosInstace.get(`instructor/${itemId}`)
+         console.log(response)
+         return response.data
       } catch (err) {
          return rejectWithValue(err.message)
       }

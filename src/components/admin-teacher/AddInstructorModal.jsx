@@ -20,11 +20,14 @@ const AddInstructorModal = ({ open, handleClose }) => {
          specialization: '',
       },
    })
+
    const { errors } = useFormState({
       control,
    })
    const onSubmit = (data) => {
+      console.log(data)
       dispatch(addTeacher({ data }))
+      console.log(data)
       handleClose()
       reset()
    }

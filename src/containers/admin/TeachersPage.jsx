@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useSearchParams } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import UiTable from '../../components/UI/UiTable'
@@ -13,15 +14,17 @@ import { HEAD_DATA } from '../../utils/constants/constants'
 import {
    deleteTeacher,
    getAllTeacher,
-   renameTeacher,
 } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
 import RenameInstructorModal from '../../components/admin-teacher/RenameInstructorModal'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
+   const [params, setParams] = useSearchParams()
+   const { modalOpen } = Object.fromEntries(params)
    const { getTeacher } = useSelector((state) => state.teacher)
    const [open, setOpen] = useState(false)
-   const [rename, setRename] = useState(false)
+   // const [rename, setRename] = useState(false)
+   // const navigate = useNavigate()
 
    const render = getTeacher.map((el, i) => {
       return {
@@ -33,22 +36,41 @@ export const TeachersPage = () => {
          email: el.email,
       }
    })
+   useEffect(() => {
+      dispatch(getAllTeacher())
+   }, [])
+   // const showModalHandler = () => {
+   //    setParams({ modalOpen: 'CREATE-GROUP' })
+   // }
    const onCloseHandler = () => {
       setOpen(false)
    }
    const onCloseRenameHandler = () => {
-      setRename(false)
+      setParams({})
    }
-   useEffect(() => {
-      dispatch(getAllTeacher())
-   }, [])
    const deleteHandler = (id) => {
       dispatch(deleteTeacher(id))
    }
-   const renameHandler = (id) => {
-      setRename(true)
-      dispatch(renameTeacher(id))
+   const renameHandler = (itemId) => {
+      setParams({ modalOpen: 'EDDIT-GROUP', itemId })
    }
+
+   // const showModalHandler = () => {
+   //    setParams({ modalOpen: 'CREATE-GROUP' })
+   // }
+   // const openDeleteModal = (id) => {
+   //    dispatch(deleteGroups(id))
+   // }
+
+   // const openEdditModal = (id) => {
+   //    setParams({ modalOpen: 'EDDIT-GROUP', id })
+   // }
+   // const onCloseModal = () => {
+   //    setParams({})
+   // }
+   // const navigateHanlder = (id) => {
+   //    navigate(`/admin/groups/${id}`)
+   // }
    return (
       <>
          <Div>
@@ -68,19 +90,22 @@ export const TeachersPage = () => {
                   headData={HEAD_DATA}
                   data={render}
                   actions
-                  secondIcon={<RenameIconTeacher />}
-                  secondOnClick={renameHandler}
+                  firstIcon={<RenameIconTeacher />}
+                  // secondIcon={<RenameIconTeacher />}
+                  firstOnClick={renameHandler}
+                  // secondOnClick={renameHandler}
                   thirdIcon={<DeleteIconTeacher />}
                   thirdOnClick={deleteHandler}
                />
             </Wrapper>
          </Div>
-         {rename && (
+         {modalOpen === 'EDDIT-GROUP' && (
             <RenameInstructorModal
                handleClose={onCloseRenameHandler}
-               open={rename}
+               open={modalOpen === 'EDDIT-GROUP'}
             />
          )}
+
          {open && (
             <AddInstructorModal handleClose={onCloseHandler} open={open} />
          )}

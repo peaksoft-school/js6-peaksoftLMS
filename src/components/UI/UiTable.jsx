@@ -18,6 +18,7 @@ const UiTable = (props) => {
       firstIcon,
       secondIcon,
       thirdIcon,
+      firstOnClick,
       secondOnClick,
       thirdOnClick,
    } = props
@@ -78,7 +79,15 @@ const UiTable = (props) => {
                         </TableCell>
                         {actions && (
                            <div>
-                              <TableCell align="left">{firstIcon}</TableCell>
+                              <TableCell
+                                 onClick={(e) => {
+                                    e.stopPropagation()
+                                    firstOnClick(el.itemId)
+                                 }}
+                                 align="left"
+                              >
+                                 {firstIcon}
+                              </TableCell>
                               <TableCell
                                  onClick={() => secondOnClick(el.itemId)}
                                  align="left"
