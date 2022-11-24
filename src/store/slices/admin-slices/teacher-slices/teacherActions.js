@@ -16,11 +16,10 @@ export const getAllTeacher = createAsyncThunk(
 export const deleteTeacher = createAsyncThunk(
    'teacherAdmin/deleteTeacher',
    async (id, { rejectWithValue, dispatch }) => {
-      // console.log(id)
       try {
          const response = await axiosInstace.delete(`instructor/${id}`)
-         // console.log(response)
-         return dispatch(getAllTeacher(response))
+         dispatch(getAllTeacher(response))
+         return response.data
       } catch (err) {
          return rejectWithValue(err.message)
       }
@@ -29,10 +28,8 @@ export const deleteTeacher = createAsyncThunk(
 export const getTeacherById = createAsyncThunk(
    'teacherAdmin/deleteTeacher',
    async (id, { rejectWithValue }) => {
-      // console.log(id)
       try {
-         const response = await axiosInstace.delete(`instructor/${id}`)
-         console.log(response)
+         const response = await axiosInstace.get(`instructor/${id}`)
          return response.data
       } catch (err) {
          return rejectWithValue(err.message)
@@ -44,7 +41,6 @@ export const renameTeacher = createAsyncThunk(
    async (itemId, { rejectWithValue }) => {
       try {
          const response = await axiosInstace.get(`instructor/${itemId}`)
-         console.log(response)
          return response.data
       } catch (err) {
          return rejectWithValue(err.message)
@@ -58,7 +54,6 @@ export const addTeacher = createAsyncThunk(
       try {
          const response = await axiosInstace.post('instructor', data)
          const result = response.data
-         //  console.log(data)
          return dispatch(getAllTeacher(result))
       } catch (err) {
          return rejectWithValue(err.message)
@@ -68,13 +63,13 @@ export const addTeacher = createAsyncThunk(
 
 export const editTeacher = createAsyncThunk(
    'admin-groups/edit',
-   async (newGroup, { rejectWithValue, dispatch }) => {
+   async (data, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstace.put(`instructor/${newGroup.id}`, {
-            fullName: newGroup.body.fullName,
-            specialization: newGroup.body.specialization,
-            phoneNumber: newGroup.body.phoneNumber,
-            email: newGroup.body.email,
+         const response = await axiosInstace.put(`instructor/${data.itemId}`, {
+            fullName: data.body.fullName,
+            specialization: data.body.specialization,
+            phoneNumber: data.body.phoneNumber,
+            email: data.body.email,
          })
          return dispatch(getAllTeacher(response))
       } catch (err) {
@@ -82,8 +77,3 @@ export const editTeacher = createAsyncThunk(
       }
    }
 )
-
-// fullName: result.fullName,
-// specialization: result.specialization,
-// phoneNumber: result.phoneNumber,
-// email: result.email,

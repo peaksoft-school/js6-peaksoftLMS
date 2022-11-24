@@ -230,15 +230,12 @@ const DivBtn = styled.div`
 `
 const ButtonAddTeacher = styled(UIButton)`
    width: 117px;
-   &.gPSgfD.MuiButtonBase-root {
+   &.cojpMK.MuiButtonBase-root {
       margin-left: 10px;
    }
 `
 const ButtonCloseTeacher = styled(UIButton)`
    width: 117px;
-   &.gPSgfD.MuiButtonBase-root {
-      margin-left: 10px;
-   }
 `
 const ErrorMessage = styled.p`
    color: red;

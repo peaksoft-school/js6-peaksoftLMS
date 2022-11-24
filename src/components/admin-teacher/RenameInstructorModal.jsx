@@ -1,13 +1,10 @@
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-// import { useForm, Controller, useFormState } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 // import { unwrapResult } from '@reduxjs/toolkit'
 import {
    editTeacher,
-   //    addTeacher,
-   // getTeacherById,
    renameTeacher,
 } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
 import UIButton from '../UI/UIButton'
@@ -16,8 +13,6 @@ import ModalWindow from '../UI/ModalWindow'
 import PopUp from '../UI/PopUp'
 
 const RenameInstructorModal = ({ open, handleClose }) => {
-   // const renameSelect = useSelector((state) => state.addTeacher.rename)
-   // console.log(renameSelect)
    const dispatch = useDispatch()
    const [validateError, setValidateError] = useState(false)
    const [groupData, setGroupData] = useState({
@@ -28,10 +23,9 @@ const RenameInstructorModal = ({ open, handleClose }) => {
    })
    const [params] = useSearchParams()
    const { itemId } = Object.fromEntries(params)
-   console.log(itemId)
 
    // eslint-disable-next-line consistent-return
-   const editGroupHandler = (e, id) => {
+   const editGroupHandler = (e) => {
       e.preventDefault()
       if (
          !groupData.fullName &&
@@ -42,7 +36,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
          return setValidateError(true)
       dispatch(
          editTeacher({
-            id,
+            itemId,
             body: {
                fullName: groupData.fullName,
                phoneNumber: groupData.phoneNumber,
@@ -58,12 +52,11 @@ const RenameInstructorModal = ({ open, handleClose }) => {
       dispatch(renameTeacher(itemId))
          .unwrap()
          .then((result) => {
-            console.log(result, 'ressssult')
             setGroupData({
                ...groupData,
                fullName: result.fullName,
-               phoneNumber: result.specialization,
-               specialization: result.phoneNumber,
+               phoneNumber: result.phoneNumber,
+               specialization: result.specialization,
                email: result.email,
             })
          })
@@ -78,7 +71,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
             handleClose={handleClose}
             modalTitle="Изменить учителя"
             bodyContent={
-               <DivContainer onSubmit={editGroupHandler}>
+               <DivContainer>
                   {validateError && (
                      <ErrorMessage>
                         Все поля обязательны к заполнению
@@ -107,7 +100,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
                         })
                      }
                      value={groupData.phoneNumber}
-                     type="text"
+                     type="number"
                   />
                   <UiInput
                      margintop="12px"
@@ -141,7 +134,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
                         Отмена
                      </ButtonCloseTeacher>
                      <ButtonAddTeacher
-                        type="submit"
+                        onClick={editGroupHandler}
                         variant="contained"
                         background="#3772FF"
                      >
@@ -155,6 +148,7 @@ const RenameInstructorModal = ({ open, handleClose }) => {
    )
 }
 export default RenameInstructorModal
+
 const DivContainer = styled.form`
    width: 100%;
    margin-bottom: 20px;
@@ -173,7 +167,7 @@ const DivBtn = styled.div`
 `
 const ButtonAddTeacher = styled(UIButton)`
    width: 117px;
-   &.gPSgfD.MuiButtonBase-root {
+   &.cojpMK.MuiButtonBase-root {
       margin-left: 10px;
    }
 `
@@ -188,7 +182,6 @@ const ErrorMessage = styled.p`
    font-family: 'Open Sans';
    font-style: normal;
    font-weight: 400;
-   /* margin-top: 5px; */
    font-size: 15px;
    line-height: 16px;
 `

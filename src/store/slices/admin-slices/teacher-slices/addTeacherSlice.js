@@ -1,10 +1,11 @@
 /* eslint-disable import/no-cycle */
 import { createSlice } from '@reduxjs/toolkit'
 import {
-   // editTeacher,
    addTeacher,
    deleteTeacher,
+   editTeacher,
    getAllTeacher,
+   getTeacherById,
    renameTeacher,
 } from './teacherActions'
 
@@ -25,13 +26,12 @@ export const teacherAdminSlice = createSlice({
          state.status = 'loading'
       },
       [addTeacher.fulfilled]: (state, { payload }) => {
-         state.status = 'Учитель успешно добавлень'
+         state.status = 'created'
          state.teachers = payload
-         // console.log('payload', payload)
       },
-      [addTeacher.rejected]: (state, { payload }) => {
-         state.status = 'error'
-         state.error = payload
+      [addTeacher.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка, не удалось создать учителя '
       },
       [getAllTeacher.pending]: (state) => {
          state.status = 'loading'
@@ -39,22 +39,20 @@ export const teacherAdminSlice = createSlice({
       [getAllTeacher.fulfilled]: (state, action) => {
          state.status = 'success'
          state.getTeacher = action.payload
-         // console.log(action.payload)
       },
-      [getAllTeacher.rejected]: (state, { payload }) => {
-         state.status = 'error'
-         state.error = payload
+      [getAllTeacher.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка, не удалось загрузить учителя'
       },
       [deleteTeacher.pending]: (state) => {
          state.status = 'loading'
       },
       [deleteTeacher.fulfilled]: (state) => {
-         state.status = 'success'
-         // state.getTeacher = action.payload
+         state.status = 'deleted'
       },
-      [deleteTeacher.rejected]: (state, { payload }) => {
-         state.status = 'error'
-         state.error = payload
+      [deleteTeacher.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка,не удалось удалить учителя'
       },
       [renameTeacher.pending]: (state) => {
          state.status = 'loading'
@@ -62,24 +60,33 @@ export const teacherAdminSlice = createSlice({
       [renameTeacher.fulfilled]: (state, action) => {
          state.status = 'success'
          state.rename = action.payload
-         // console.log(state.rename)
       },
       [renameTeacher.rejected]: (state, { payload }) => {
          state.status = 'error'
          state.error = payload
       },
-      // [editTeacher.pending]: (state) => {
-      //    state.status = 'loading'
-      // },
-      // [editTeacher.fulfilled]: (state, action) => {
-      //    state.status = 'success'
-      //    state.updateTeacher = action.payload
-      //    // console.log(state.rename)
-      // },
-      // [editTeacher.rejected]: (state, { payload }) => {
-      //    state.status = 'error'
-      //    state.error = payload
-      // },
+      [editTeacher.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [editTeacher.fulfilled]: (state, action) => {
+         state.status = 'edited'
+         state.updateTeacher = action.payload
+      },
+      [editTeacher.rejected]: (state) => {
+         state.status = 'error'
+         state.error = 'Не удалось провести редактирование'
+      },
+      [getTeacherById.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [getTeacherById.fulfilled]: (state, action) => {
+         state.status = 'success'
+         state.updateTeacher = action.payload
+      },
+      [getTeacherById.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка, не удалось загрузить данные'
+      },
    },
 })
 
