@@ -1,25 +1,20 @@
 import styled from 'styled-components'
-import { useState, useDropzone } from 'react'
+import { useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import imagePickerIcon from '../../assets/ImagePickerIcon.svg'
 
-function ImagePicker({ GetImg }) {
-   const [files, setFiles] = useState(null)
-   const onDrop = (acceptedFiles) => {
+function ImagePicker({ setUploadedImage, uploadedImage }) {
+   const [file, setFiles] = useState(null)
+   const onDrop = (file) => {
       setFiles(
-         acceptedFiles.map((file) =>
-            Object.assign(file, {
-               preview: URL.createObjectURL(file),
-            })
-         )
+         Object.assign(file[0], {
+            preview: URL.createObjectURL(file[0]),
+         })
       )
-      GetImg(acceptedFiles)
+      setUploadedImage(file[0])
    }
-   const { getRootProps, getInputProps } = useDropzone({
-      accept: {
-         'image/jpeg': [],
-         'image/png': [],
-         'image/JPG': [],
-      },
+   const { getRootProps, getInputProps, open } = useDropzone({
+      accept: 'image/jpeg,image/png,image/gif',
       maxFiles: 1,
       onDrop,
    })
@@ -27,9 +22,12 @@ function ImagePicker({ GetImg }) {
    return (
       <Container>
          <MainPicker>
-            {files ? (
-               <ImageWrapper>
-                  <ImgContent alt="preview" src={files[0].preview} />
+            {file || uploadedImage ? (
+               <ImageWrapper onClick={open}>
+                  <ImgContent
+                     alt="preview"
+                     src={file?.preview || uploadedImage}
+                  />
                </ImageWrapper>
             ) : (
                <DropContainer {...getRootProps()}>
