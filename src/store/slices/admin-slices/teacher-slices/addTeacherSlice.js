@@ -29,9 +29,9 @@ export const teacherAdminSlice = createSlice({
          state.status = 'created'
          state.teachers = payload
       },
-      [addTeacher.rejected]: (state) => {
+      [addTeacher.rejected]: (state, { payload }) => {
          state.status = 'rejected'
-         state.error = 'Произошла ошибка, не удалось создать учителя '
+         state.error = payload
       },
       [getAllTeacher.pending]: (state) => {
          state.status = 'loading'

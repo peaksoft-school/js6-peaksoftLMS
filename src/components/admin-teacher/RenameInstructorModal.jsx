@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-// import { unwrapResult } from '@reduxjs/toolkit'
 import {
    editTeacher,
    renameTeacher,

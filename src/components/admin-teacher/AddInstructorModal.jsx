@@ -1,11 +1,14 @@
 import styled from 'styled-components'
 import { useForm, Controller, useFormState } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-// import { unwrapResult } from '@reduxjs/toolkit'
 import { addTeacher } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
 import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
+import {
+   PATTERN_FOR_EMAIL,
+   POLE_ZAPOLNEN,
+} from '../../utils/constants/constants'
 
 const AddInstructorModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
@@ -25,9 +28,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
       control,
    })
    const onSubmit = (data) => {
-      console.log(data)
       dispatch(addTeacher({ data }))
-      console.log(data)
       handleClose()
       reset()
    }
@@ -43,7 +44,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   control={control}
                   name="firstName"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 3,
                         message: 'Минимум 3 символов и не должень быть число',
@@ -69,7 +70,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   control={control}
                   name="lastName"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 3,
                         message: 'Минимум 3 символов и не должень быть число',
@@ -95,7 +96,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   control={control}
                   name="phoneNumber"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                   }}
                   render={({ field }) => (
                      <UiInput
@@ -117,9 +118,9 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   control={control}
                   name="email"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      pattern: {
-                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        value: PATTERN_FOR_EMAIL,
                         message: 'Адрес электронной почты введен не верно',
                      },
                      minLength: {
@@ -147,7 +148,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   control={control}
                   name="password"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 6,
                         message:
@@ -172,7 +173,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                   control={control}
                   name="specialization"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 3,
                         message: 'Минимум 3 символов',

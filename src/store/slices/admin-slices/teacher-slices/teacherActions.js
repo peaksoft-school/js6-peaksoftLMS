@@ -9,7 +9,7 @@ export const getAllTeacher = createAsyncThunk(
          const response = await axiosInstace.get('instructor')
          return response.data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -18,32 +18,31 @@ export const deleteTeacher = createAsyncThunk(
    async (id, { rejectWithValue, dispatch }) => {
       try {
          const response = await axiosInstace.delete(`instructor/${id}`)
-         dispatch(getAllTeacher(response))
-         return response.data
+         return dispatch(getAllTeacher(response.data))
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
 export const getTeacherById = createAsyncThunk(
-   'teacherAdmin/deleteTeacher',
+   'teacherAdmin/getTeacherById',
    async (id, { rejectWithValue }) => {
       try {
          const response = await axiosInstace.get(`instructor/${id}`)
          return response.data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
 export const renameTeacher = createAsyncThunk(
-   'teacherAdmin/deleteTeacher',
+   'teacherAdmin/renameTeacher',
    async (itemId, { rejectWithValue }) => {
       try {
          const response = await axiosInstace.get(`instructor/${itemId}`)
          return response.data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -56,13 +55,13 @@ export const addTeacher = createAsyncThunk(
          const result = response.data
          return dispatch(getAllTeacher(result))
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
 
 export const editTeacher = createAsyncThunk(
-   'admin-groups/edit',
+   'admin-teacher/edit',
    async (data, { rejectWithValue, dispatch }) => {
       try {
          const response = await axiosInstace.put(`instructor/${data.itemId}`, {
@@ -73,7 +72,7 @@ export const editTeacher = createAsyncThunk(
          })
          return dispatch(getAllTeacher(response))
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )

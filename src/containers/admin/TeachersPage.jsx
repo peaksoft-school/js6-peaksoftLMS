@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { useSearchParams } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
-// import { FadeLoader } from 'react-spinners/FadeLoader'
 import { useDispatch, useSelector } from 'react-redux'
 import UiTable from '../../components/UI/UiTable'
 import Wrapper from '../../components/UI/Wrapper'
@@ -39,6 +38,7 @@ export const TeachersPage = () => {
    useEffect(() => {
       dispatch(getAllTeacher())
    }, [])
+
    const onCloseHandler = () => {
       setOpen(false)
    }
@@ -49,7 +49,10 @@ export const TeachersPage = () => {
       dispatch(deleteTeacher(id))
    }
    const renameHandler = (itemId) => {
-      setParams({ modalOpen: 'EDDIT-GROUP', itemId })
+      setParams({ modalOpen: 'EDIT-TEACHER', itemId })
+   }
+   const openModalHandler = () => {
+      setOpen(true)
    }
 
    return (
@@ -73,7 +76,7 @@ export const TeachersPage = () => {
                <ButtonWrapper>
                   <UIButton
                      startIcon={<PlusIcon />}
-                     onClick={() => setOpen(true)}
+                     onClick={openModalHandler}
                      variant="contained"
                      background="#3772FF"
                   >
@@ -93,10 +96,10 @@ export const TeachersPage = () => {
                </Wrapper>
             </Div>
          </GroupsMain>
-         {modalOpen === 'EDDIT-GROUP' && (
+         {modalOpen === 'EDIT-TEACHER' && (
             <RenameInstructorModal
                handleClose={onCloseRenameHandler}
-               open={modalOpen === 'EDDIT-GROUP'}
+               open={modalOpen === 'EDIT-TEACHER'}
             />
          )}
 

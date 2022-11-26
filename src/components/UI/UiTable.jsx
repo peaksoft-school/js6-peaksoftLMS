@@ -89,7 +89,10 @@ const UiTable = (props) => {
                                  {firstIcon}
                               </TableCell>
                               <TableCell
-                                 onClick={() => secondOnClick(el.itemId)}
+                                 onClick={(e) => {
+                                    e.stopPropagation()
+                                    secondOnClick(el.itemId)
+                                 }}
                                  align="left"
                               >
                                  {secondIcon}
