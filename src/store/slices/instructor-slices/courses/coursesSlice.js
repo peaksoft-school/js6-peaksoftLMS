@@ -1,9 +1,14 @@
 /* eslint-disable import/no-cycle */
 import { createSlice } from '@reduxjs/toolkit'
-import { getCourses } from './course-actions'
+import {
+   assignGroups,
+   getCourses,
+   getCourseStudentsById,
+} from './course-actions'
 
 const initialState = {
    courses: [],
+   courseStudents: [],
    status: null,
    error: null,
 }
@@ -23,7 +28,28 @@ export const InsCoursesSlice = createSlice({
       },
       [getCourses.rejected]: (state, { payload }) => {
          state.status = 'rejected'
-         state.error = payload
+         state.error = `Ошибка: ${payload}`
+      },
+      // * assigning groups to course
+      [assignGroups.fulfilled]: (state) => {
+         state.status = 'assigned'
+      },
+      [assignGroups.rejected]: (state, { payload }) => {
+         state.status = 'rejected'
+         state.error = `Ошибка: ${payload}`
+      },
+      // * getting all students of course
+      [getCourseStudentsById.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [getCourseStudentsById.fulfilled]: (state, { payload }) => {
+         state.status = null
+         state.courseStudents = payload
+         state.error = null
+      },
+      [getCourseStudentsById.rejected]: (state, { payload }) => {
+         state.status = 'rejected'
+         state.error = `Ошибка: ${payload}`
       },
    },
 })

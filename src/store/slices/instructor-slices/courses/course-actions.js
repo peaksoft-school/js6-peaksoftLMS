@@ -10,7 +10,31 @@ export const getCourses = createAsyncThunk(
          const { data } = response
          return data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+export const getCourseStudentsById = createAsyncThunk(
+   'instructor-courses/getCourseStudentsById',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`course/students/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+
+export const assignGroups = createAsyncThunk(
+   'instructor-courses/assignGroups',
+   async (incomingData, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.post('course/assign/group', incomingData)
+         return dispatch(getCourseStudentsById(incomingData.courseId))
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
