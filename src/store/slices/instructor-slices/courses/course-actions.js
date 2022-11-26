@@ -14,6 +14,18 @@ export const getCourses = createAsyncThunk(
       }
    }
 )
+export const getCoursesById = createAsyncThunk(
+   'instructor-courses/getById',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`course/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
 export const getCourseStudentsById = createAsyncThunk(
    'instructor-courses/getCourseStudentsById',
    async (id, { rejectWithValue }) => {
