@@ -20,24 +20,22 @@ export const GroupsModalWindow = ({ onClose, open }) => {
       description: '',
       dateOfStart: '',
    })
-
-   // eslint-disable-next-line consistent-return
-   const createNewGroupHandler = () => {
-      if (
-         !groupData.groupName &&
-         !groupData.description &&
-         !groupData.dateOfStart &&
-         !uploadedImage
-      )
-         return setValidateError(true)
-
-      dispatch(postGroups({ ...groupData, image: uploadedImage }))
-      onClose()
-   }
-
    const closeHadler = () => {
       setValidateError(false)
       onClose()
+   }
+   const createNewGroupHandler = () => {
+      const isFormNotFilled = Object.values({
+         ...groupData,
+         image: uploadedImage,
+      }).some((value) => !value)
+
+      if (isFormNotFilled) return setValidateError(true)
+
+      dispatch(postGroups({ ...groupData, image: uploadedImage }))
+      setUploadedImage(null)
+      setGroupData({ groupName: '', description: '', dateOfStart: '' })
+      return closeHadler()
    }
 
    return (

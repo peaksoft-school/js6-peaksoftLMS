@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import FadeLoader from 'react-spinners/FadeLoader'
 import { getGroupStudentById } from '../../store/slices/admin-slices/group-slices/group-actions'
 import UiTable from '../../components/UI/UiTable'
 import Wrapper from '../../components/UI/Wrapper'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
 import PopUp from '../../components/UI/PopUp'
 import { STUDENT_HEADER } from '../../utils/constants/constants'
+import { UiLoading } from '../../components/UI/UiLoading'
+import { NoDataInfo } from '../../components/UI/NoDataInfo'
 
 export const GroupsInnerPage = () => {
    const { id } = useParams()
@@ -34,24 +35,19 @@ export const GroupsInnerPage = () => {
 
    useEffect(() => {
       dispatch(getGroupStudentById(id))
-   }, [])
+   }, [dispatch])
 
    return (
       <>
          {status === 'loading' ? (
-            <LoadingBlock>
-               <FadeLoader size={200} color="#3772FF" />
-            </LoadingBlock>
+            <UiLoading />
          ) : (
             <StudetsMain>
                <BreadcrumsBlock>
                   <BreadCrumbs paths={ADMIN_INNER_PATH} />
                </BreadcrumsBlock>
                {groupStudents.length === 0 ? (
-                  <NoDataInfo>
-                     <h4>В этой группе пока нет студентов :(</h4>
-                     <Link to="/admin/groups">Вернуться обратно</Link>
-                  </NoDataInfo>
+                  <NoDataInfo title="В этой группе пока нет студентов" />
                ) : (
                   <TableMain>
                      <Wrapper width="1140px" margin="24px 0" height="100vh">
@@ -77,16 +73,4 @@ const BreadcrumsBlock = styled.div`
    display: flex;
    padding-top: 44px;
    margin-left: 39px;
-`
-const LoadingBlock = styled.div`
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   padding: 50px;
-`
-const NoDataInfo = styled.div`
-   text-align: center;
-   display: flex;
-   flex-direction: column;
 `

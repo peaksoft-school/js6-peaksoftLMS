@@ -57,11 +57,20 @@ export const SIDELAYOUT_DATA = [
    },
 ]
 
-export const SideData = [
+export const INSTRUCTOR_DATA = [
    {
       title: 'Мои курсы',
       id: 1,
-      path: '/courses',
+      path: '/instructor',
+      photo: CoursesActive,
+      activePhoto: CoursesActive,
+   },
+]
+export const STUDENT_DATA = [
+   {
+      title: 'Мои курсы',
+      id: 1,
+      path: '/student',
       photo: CoursesActive,
       activePhoto: CoursesActive,
    },
