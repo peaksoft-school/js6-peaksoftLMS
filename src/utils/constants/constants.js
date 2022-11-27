@@ -81,6 +81,17 @@ export const BASE_URL =
 
 export const JWT_TOKEN_KEY = JSON.parse(localStorage.getItem('token'))
 
+export const HEAD_DATA = [
+   {
+      idName: 'ID',
+      firstName: 'Имя Фамилия',
+      phoryatLearning: 'Специализация',
+      phoneName: 'Номер телефона',
+      emailName: 'E-mail',
+      actionsName: 'Действия',
+   },
+]
+
 export const STUDENT_HEADER = [
    {
       id: 1,
@@ -92,3 +103,8 @@ export const STUDENT_HEADER = [
       emailName: 'E-mail',
    },
 ]
+
+export const PATTERN_FOR_EMAIL =
+   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+export const POLE_ZAPOLNEN = 'Поле обязательно к заполнению'
