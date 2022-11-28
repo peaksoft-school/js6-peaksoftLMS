@@ -1,9 +1,8 @@
-import React from 'react'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { MenuItem, FormControl, Checkbox, styled, Select } from '@mui/material'
+import { MenuItem, FormControl, styled, Select, Checkbox } from '@mui/material'
 
 export const TeacherSelect = (props) => {
-   const { personName, setPersonName, data } = props
+   const { data, personName, setPersonName, getIdHandler, pleceholder } = props
 
    const handleChange = (event) => {
       const { value } = event.target
@@ -19,19 +18,19 @@ export const TeacherSelect = (props) => {
                value={personName}
                onChange={handleChange}
                input={<OutlinedInput />}
-               renderValue={(selected) => {
-                  if (selected.length === 0) {
-                     return <em>Выбрать учителя</em>
-                  }
-
-                  return selected.join(', ')
-               }}
+               renderValue={() => <p>{pleceholder}</p>}
             >
-               {data.map((name) => (
-                  <CustomMenuItem key={name} value={name}>
-                     {name}{' '}
+               {data.map((item) => (
+                  <CustomMenuItem
+                     key={item.id}
+                     value={item.fullName}
+                     onClick={() => getIdHandler(item.id)}
+                  >
+                     {item.fullName}
                      <Checkbox
-                        checked={personName.some((e) => e.includes(name))}
+                        checked={personName.some((e) =>
+                           e.includes(item.fullName)
+                        )}
                      />
                   </CustomMenuItem>
                ))}

@@ -1,7 +1,11 @@
+import { useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import React, { useState } from 'react'
-import { postCourses } from '../../store/slices/admin-slices/courses-slices/courses-actions'
+import React, { useState, useEffect } from 'react'
+import {
+   editCourse,
+   getCourseById,
+} from '../../store/slices/admin-slices/courses-slices/courses-actions'
 import ImagePicker from '../UI/ImagePicker'
 import ModalWindow from '../UI/ModalWindow'
 import UiInput from '../UI/UiInput'
@@ -10,10 +14,14 @@ import TextArea from '../UI/TextArea'
 import UIButton from '../UI/UIButton'
 import PopUp from '../UI/PopUp'
 
-const CoursesModal = ({ open, isOpen }) => {
+const CourseEditModal = ({ open, onClose }) => {
    const dispatch = useDispatch()
    const [uploadedImage, setUploadedImage] = useState(null)
    const [validateError, setValidateError] = useState(false)
+
+   const [params] = useSearchParams()
+   const { id } = Object.fromEntries(params)
+
    const [courseData, setCourseData] = useState({
       courseName: '',
       description: '',
@@ -21,7 +29,7 @@ const CoursesModal = ({ open, isOpen }) => {
    })
 
    // eslint-disable-next-line consistent-return
-   const createNewCourseHandler = () => {
+   const editCourseHandler = () => {
       if (
          !courseData.courseName &&
          !courseData.description &&
@@ -29,10 +37,25 @@ const CoursesModal = ({ open, isOpen }) => {
          !uploadedImage
       )
          return setValidateError(true)
-      dispatch(postCourses({ ...courseData, image: uploadedImage }))
-      // onClose()
-      isOpen(false)
+      dispatch(
+         editCourse({ id, body: { ...courseData, image: uploadedImage } })
+      )
+      onClose()
    }
+
+   useEffect(() => {
+      dispatch(getCourseById(id))
+         .unwrap()
+         .then((result) => {
+            setCourseData({
+               ...courseData,
+               courseName: result.courseName,
+               description: result.description,
+               dateOfStart: result.dateOfStart,
+            })
+            setUploadedImage(result.image)
+         })
+   }, [])
 
    return (
       <>
@@ -41,8 +64,8 @@ const CoursesModal = ({ open, isOpen }) => {
          )}
          <ModalWindow
             open={open}
-            handleClose={() => isOpen(false)}
-            modalTitle="Создать  курс"
+            handleClose={() => onClose()}
+            modalTitle="Редактировать  курс"
             headerContent={
                <ImagePickerBlock>
                   <ImagePicker
@@ -55,6 +78,7 @@ const CoursesModal = ({ open, isOpen }) => {
                <ModalFormBLock>
                   <FormInputBlock>
                      <UiInput
+                        value={courseData.courseName}
                         width="327px"
                         placeholder="Название группы"
                         onChange={({ target }) =>
@@ -78,6 +102,7 @@ const CoursesModal = ({ open, isOpen }) => {
                      />
                   </FormInputBlock>
                   <TextArea
+                     value={courseData.description}
                      onChange={({ target }) =>
                         setCourseData({
                            ...courseData,
@@ -95,7 +120,7 @@ const CoursesModal = ({ open, isOpen }) => {
                      width="117px"
                      height="40px"
                      variant="outlined"
-                     onClick={() => isOpen(false)}
+                     onClick={() => onClose()}
                   >
                      Отмена
                   </UIButton>
@@ -104,9 +129,9 @@ const CoursesModal = ({ open, isOpen }) => {
                      width="117px"
                      height="40px"
                      variant="contained"
-                     onClick={createNewCourseHandler}
+                     onClick={editCourseHandler}
                   >
-                     Добавить
+                     Сохранить
                   </UIButton>
                </FooterBlock>
             }
@@ -115,7 +140,7 @@ const CoursesModal = ({ open, isOpen }) => {
    )
 }
 
-export default CoursesModal
+export default CourseEditModal
 
 const ModalFormBLock = styled.div`
    display: flex;

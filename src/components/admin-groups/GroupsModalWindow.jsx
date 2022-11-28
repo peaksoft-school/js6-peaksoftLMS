@@ -1,37 +1,43 @@
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import React, { useState } from 'react'
-import { postCourses } from '../../store/slices/admin-slices/courses-slices/courses-actions'
-import ImagePicker from '../UI/ImagePicker'
 import ModalWindow from '../UI/ModalWindow'
+import ImagePicker from '../UI/ImagePicker'
 import UiInput from '../UI/UiInput'
 import DatePicker from '../UI/DatePicker'
 import TextArea from '../UI/TextArea'
 import UIButton from '../UI/UIButton'
+import { postGroups } from '../../store/slices/admin-slices/group-slices/group-actions'
 import PopUp from '../UI/PopUp'
 
-const CoursesModal = ({ open, isOpen }) => {
+export const GroupsModalWindow = ({ onClose, open }) => {
    const dispatch = useDispatch()
    const [uploadedImage, setUploadedImage] = useState(null)
    const [validateError, setValidateError] = useState(false)
-   const [courseData, setCourseData] = useState({
-      courseName: '',
+
+   const [groupData, setGroupData] = useState({
+      groupName: '',
       description: '',
       dateOfStart: '',
    })
 
    // eslint-disable-next-line consistent-return
-   const createNewCourseHandler = () => {
+   const createNewGroupHandler = () => {
       if (
-         !courseData.courseName &&
-         !courseData.description &&
-         !courseData.dateOfStart &&
+         !groupData.groupName &&
+         !groupData.description &&
+         !groupData.dateOfStart &&
          !uploadedImage
       )
          return setValidateError(true)
-      dispatch(postCourses({ ...courseData, image: uploadedImage }))
-      // onClose()
-      isOpen(false)
+
+      dispatch(postGroups({ ...groupData, image: uploadedImage }))
+      onClose()
+   }
+
+   const closeHadler = () => {
+      setValidateError(false)
+      onClose()
    }
 
    return (
@@ -41,8 +47,8 @@ const CoursesModal = ({ open, isOpen }) => {
          )}
          <ModalWindow
             open={open}
-            handleClose={() => isOpen(false)}
-            modalTitle="Создать  курс"
+            handleClose={closeHadler}
+            modalTitle="Создание группы"
             headerContent={
                <ImagePickerBlock>
                   <ImagePicker
@@ -53,35 +59,40 @@ const CoursesModal = ({ open, isOpen }) => {
             }
             bodyContent={
                <ModalFormBLock>
+                  {validateError && (
+                     <ErrorMessage>
+                        Все поля обязательны к заполнению
+                     </ErrorMessage>
+                  )}
                   <FormInputBlock>
                      <UiInput
                         width="327px"
                         placeholder="Название группы"
-                        onChange={({ target }) =>
-                           setCourseData({
-                              ...courseData,
-                              courseName: target.value,
+                        onChange={(e) =>
+                           setGroupData({
+                              ...groupData,
+                              groupName: e.target.value,
                            })
                         }
                      />
                      <DatePicker
-                        value={courseData.dateOfStart}
+                        value={groupData.dateOfStart}
                         width="149px"
                         height="42px"
                         placeholder="дд.мм.гг"
                         onChange={(event) =>
-                           setCourseData({
-                              ...courseData,
+                           setGroupData({
+                              ...groupData,
                               dateOfStart: event,
                            })
                         }
                      />
                   </FormInputBlock>
                   <TextArea
-                     onChange={({ target }) =>
-                        setCourseData({
-                           ...courseData,
-                           description: target.value,
+                     onChange={(e) =>
+                        setGroupData({
+                           ...groupData,
+                           description: e.target.value,
                         })
                      }
                      placeholder="Описание группы"
@@ -95,7 +106,7 @@ const CoursesModal = ({ open, isOpen }) => {
                      width="117px"
                      height="40px"
                      variant="outlined"
-                     onClick={() => isOpen(false)}
+                     onClick={closeHadler}
                   >
                      Отмена
                   </UIButton>
@@ -104,7 +115,7 @@ const CoursesModal = ({ open, isOpen }) => {
                      width="117px"
                      height="40px"
                      variant="contained"
-                     onClick={createNewCourseHandler}
+                     onClick={createNewGroupHandler}
                   >
                      Добавить
                   </UIButton>
@@ -115,19 +126,17 @@ const CoursesModal = ({ open, isOpen }) => {
    )
 }
 
-export default CoursesModal
-
-const ModalFormBLock = styled.div`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-`
 const ImagePickerBlock = styled.div`
    display: flex;
    justify-content: center;
    margin: 10px;
 `
 
+const ModalFormBLock = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+`
 const FormInputBlock = styled.div`
    display: flex;
    justify-content: space-between;
@@ -139,4 +148,7 @@ const FooterBlock = styled.div`
    justify-content: flex-end;
    margin: 20px 25px 15px 0;
    column-gap: 10px;
+`
+const ErrorMessage = styled.p`
+   color: red;
 `
