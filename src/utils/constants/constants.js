@@ -83,3 +83,15 @@ export const STUDENT_HEADER = [
       emailName: 'E-mail',
    },
 ]
+
+export const LEARNING_FORMAT = [
+   {
+      studyFormat: 'ONLINE',
+   },
+   {
+      studyFormat: 'OFFLINE',
+   },
+   {
+      all: 'все',
+   },
+]

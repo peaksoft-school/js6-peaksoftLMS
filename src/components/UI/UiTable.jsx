@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import {
    TableBody,
@@ -9,9 +9,16 @@ import {
    Paper,
    Table,
 } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllStudents } from '../../store/slices/admin-slices/admin-student/student-actions'
 
 const UiTable = (props) => {
-   const { headData, data, actions, firstIcon, secondIcon, thirdIcon } = props
+   const dispatch = useDispatch()
+   const students = useSelector((state) => state.students.students)
+   useEffect(() => {
+      dispatch(getAllStudents())
+   }, [])
+   const { headData, actions, firstIcon, secondIcon, thirdIcon } = props
    return (
       <div>
          <TableContainer component={Paper}>
@@ -39,7 +46,7 @@ const UiTable = (props) => {
                   </StyledTableRow>
                </HeadTable>
                <TableBody>
-                  {data.map((el) => (
+                  {students?.map((el, index) => (
                      <RowTable
                         key={el.id}
                         sx={{
@@ -47,19 +54,19 @@ const UiTable = (props) => {
                         }}
                      >
                         <TableCell component="th" scope="row">
-                           <span>{el.id}</span>
+                           <span>{index + 1}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.name}</span>
+                           <span>{el.fullName}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.group}</span>
+                           <span>{el.groupName}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.format}</span>
+                           <span>{el.studyFormat}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.phone}</span>
+                           <span>{el.phoneNumber}</span>
                         </TableCell>
                         <TableCell align="left">
                            <span>{el.email}</span>
