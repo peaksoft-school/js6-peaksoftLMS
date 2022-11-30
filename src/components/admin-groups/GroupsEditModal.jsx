@@ -28,15 +28,13 @@ export const GroupsEditModal = ({ open, onClose, isOpen }) => {
    const [params] = useSearchParams()
    const { id } = Object.fromEntries(params)
 
-   // eslint-disable-next-line consistent-return
    const editGroupHadler = () => {
-      if (
-         !groupData.groupName &&
-         !groupData.description &&
-         !groupData.dateOfStart &&
-         !uploadedImage
-      )
-         return setValidateError(true)
+      const isFormNotFilled = Object.values({
+         ...groupData,
+         image: uploadedImage,
+      }).some((value) => !value)
+
+      if (isFormNotFilled) return setValidateError(true)
 
       dispatch(
          editGroups({
@@ -49,7 +47,7 @@ export const GroupsEditModal = ({ open, onClose, isOpen }) => {
             },
          })
       )
-      onClose()
+      return onClose()
    }
 
    useEffect(() => {
@@ -64,7 +62,7 @@ export const GroupsEditModal = ({ open, onClose, isOpen }) => {
             })
             setUploadedImage(result.image)
          })
-   }, [])
+   }, [dispatch])
 
    return (
       <>

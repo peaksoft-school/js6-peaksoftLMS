@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { resetPassword } from '../../api/services/resetPasswordService'
+import { resetPassword } from '../../api/loginServices/resetPasswordService'
 
 const initialState = {
    user: {

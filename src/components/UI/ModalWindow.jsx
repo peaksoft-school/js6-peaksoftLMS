@@ -11,7 +11,7 @@ const ModalWindow = ({
    return (
       <ModalMain open={open} onClose={handleClose}>
          <ModalBlock>
-            <TitleBlock>{modalTitle}</TitleBlock>
+            {modalTitle && <TitleBlock>{modalTitle}</TitleBlock>}
             <Grid>{headerContent}</Grid>
             <Grid>{bodyContent}</Grid>
             <Grid>{footerContent}</Grid>

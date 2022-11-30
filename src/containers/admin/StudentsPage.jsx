@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 import UIButton from '../../components/UI/UIButton'
 import { ReactComponent as ExporExcelIcon } from '../../assets/exportExcel.svg'
 import { ReactComponent as AddPlusIcon } from '../../assets/addPlusIcon.svg'
+import { ReactComponent as RenameIcon } from '../../assets/renameIcon.svg'
+import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg'
 import AddStudentModal from '../../components/student-groups/AddStudentModal'
 import { getFilteredlStudents } from '../../store/slices/admin-slices/admin-student/student-actions'
 import Wrapper from '../../components/UI/Wrapper'
@@ -78,8 +80,13 @@ export const StudentsPage = () => {
          </Block>
 
          <TableMain>
-            <Wrapper width="1140px" margin="24px 0" height="100%">
-               <UiTable headData={STUDENT_HEADER} />
+            <Wrapper width="1240px" margin="24px 0" height="100%">
+               <UiTable
+                  headData={STUDENT_HEADER}
+                  actions
+                  secondIcon={<RenameIcon />}
+                  thirdIcon={<DeleteIcon />}
+               />
             </Wrapper>
          </TableMain>
          <AddStudentModal handleClose={openModalAddStudent} open={stateItems} />

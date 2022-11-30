@@ -29,19 +29,18 @@ const PopUp = ({ message, messageType }) => {
          </AlertBlock>
       </Snackbar>
    )
-
-   // eslint-disable-next-line no-unreachable
-   PopUp.propTypes = {
-      // eslint-disable-next-line react/require-default-props
-      messageType: PropTypes.oneOf(['error', 'success']),
-      message: PropTypes.string,
-   }
-   PopUp.defaultProps = {
-      messageType: 'success' || 'error',
-      message: [],
-   }
 }
+PopUp.propTypes = {
+   messageType: PropTypes.oneOf(['error', 'success']),
+   message: PropTypes.string,
+}
+PopUp.defaultProps = {
+   messageType: 'success' || 'error',
+   message: [],
+}
+
 export default PopUp
+
 const AlertBlock = style(Alert)`
    display: flex;
    flex-direction: row-reverse;

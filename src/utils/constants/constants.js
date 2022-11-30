@@ -57,11 +57,20 @@ export const SIDELAYOUT_DATA = [
    },
 ]
 
-export const SideData = [
+export const INSTRUCTOR_DATA = [
    {
       title: 'Мои курсы',
       id: 1,
-      path: '/courses',
+      path: '/instructor',
+      photo: CoursesActive,
+      activePhoto: CoursesActive,
+   },
+]
+export const STUDENT_DATA = [
+   {
+      title: 'Мои курсы',
+      id: 1,
+      path: '/student',
       photo: CoursesActive,
       activePhoto: CoursesActive,
    },
@@ -71,6 +80,17 @@ export const BASE_URL =
    'http://ec2-18-195-58-95.eu-central-1.compute.amazonaws.com/api/'
 
 export const JWT_TOKEN_KEY = JSON.parse(localStorage.getItem('token'))
+
+export const HEAD_DATA = [
+   {
+      idName: 'ID',
+      firstName: 'Имя Фамилия',
+      phoryatLearning: 'Специализация',
+      phoneName: 'Номер телефона',
+      emailName: 'E-mail',
+      actionsName: 'Действия',
+   },
+]
 
 export const STUDENT_HEADER = [
    {
@@ -95,3 +115,7 @@ export const LEARNING_FORMAT = [
       all: 'все',
    },
 ]
+export const PATTERN_FOR_EMAIL =
+   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+export const POLE_ZAPOLNEN = 'Поле обязательно к заполнению'

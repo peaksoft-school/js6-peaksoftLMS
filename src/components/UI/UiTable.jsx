@@ -18,7 +18,17 @@ const UiTable = (props) => {
    useEffect(() => {
       dispatch(getAllStudents())
    }, [])
-   const { headData, actions, firstIcon, secondIcon, thirdIcon } = props
+
+   const {
+      headData,
+      actions,
+      firstIcon,
+      secondIcon,
+      thirdIcon,
+      firstOnClick,
+      secondOnClick,
+      thirdOnClick,
+   } = props
    return (
       <div>
          <TableContainer component={Paper}>
@@ -74,12 +84,32 @@ const UiTable = (props) => {
                         <TableCell align="left">
                            <span>{el.password}</span>
                         </TableCell>
-
                         {actions && (
                            <div>
-                              <TableCell align="left">{firstIcon}</TableCell>
-                              <TableCell align="left">{secondIcon}</TableCell>
-                              <TableCell align="left">{thirdIcon}</TableCell>
+                              <TableCell
+                                 onClick={(e) => {
+                                    e.stopPropagation()
+                                    firstOnClick(el.itemId)
+                                 }}
+                                 align="left"
+                              >
+                                 {firstIcon}
+                              </TableCell>
+                              <TableCell
+                                 onClick={(e) => {
+                                    e.stopPropagation()
+                                    secondOnClick(el.itemId)
+                                 }}
+                                 align="left"
+                              >
+                                 {secondIcon}
+                              </TableCell>
+                              <TableCell
+                                 onClick={() => thirdOnClick(el.itemId)}
+                                 align="left"
+                              >
+                                 {thirdIcon}
+                              </TableCell>
                            </div>
                         )}
                      </RowTable>

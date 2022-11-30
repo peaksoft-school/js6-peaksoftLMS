@@ -7,7 +7,7 @@ import { unwrapResult } from '@reduxjs/toolkit'
 import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
-import { forgotPassword } from '../../api/services/forgotPasswordService'
+import { forgotPassword } from '../../api/loginServices/forgotPasswordService'
 
 export const ForgotPasswordModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
