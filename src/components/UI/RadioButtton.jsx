@@ -1,14 +1,22 @@
 import * as React from 'react'
-import Radio from '@mui/material/Radio'
-import { styled } from '@mui/material'
+import styled from 'styled-components'
+import { Radio, RadioGroup } from '@mui/material'
 import { ReactComponent as SuccessIcon } from '../../assets/checkedRadio.svg'
 import { ReactComponent as ErrorIcon } from '../../assets/crossRadio.svg'
 
-const RadioButton = ({ onChange, value, changeRadio }) => {
+const RadioButton = ({ onChange, value, changeRadio, name, type }) => {
    return (
-      <div>
+      <RadioGroup
+         aria-labelledby="demo-radio-buttons-group-label"
+         name="radio-buttons-group"
+      >
          {!changeRadio ? (
-            <StyledRadio onChange={onChange} value={value} />
+            <StyledRadio
+               type={type}
+               name={name}
+               onChange={onChange}
+               value={value}
+            />
          ) : (
             <StyledRadio
                onChange={onChange}
@@ -19,7 +27,7 @@ const RadioButton = ({ onChange, value, changeRadio }) => {
                }
             />
          )}
-      </div>
+      </RadioGroup>
    )
 }
 
