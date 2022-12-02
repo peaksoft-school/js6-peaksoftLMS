@@ -5,14 +5,16 @@ import headerLogo from '../../assets/headerLogo.svg'
 import arrowIcon from '../../assets/arrowIcon.svg'
 
 const HeaderLoyout = (props) => {
-   const { roles, firstPath, secondPath, clickHandler, firstLink, secondLink } =
-      props
+   const { roles, clickHandler, links } = props
    return (
       <Header>
          <div> </div>
          <Navigation>
-            <Nav to={firstPath}>{firstLink}</Nav>
-            <Nav to={secondPath}>{secondLink}</Nav>
+            {links?.map((item) => (
+               <Nav key={item.link} to={item.path}>
+                  {item.name}
+               </Nav>
+            ))}
          </Navigation>
          <NavContainer>
             <EllipseLogo>
@@ -32,6 +34,7 @@ const Nav = styled(NavLink)`
    color: #000000;
    padding: 25px;
    font-weight: 600;
+   text-decoration: none;
    :active {
       color: #3772ff;
       border-bottom: 4px solid #3772ff;

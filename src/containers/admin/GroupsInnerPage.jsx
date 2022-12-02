@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { getGroupStudentById } from '../../store/slices/admin-slices/group-slices/group-actions'
 import UiTable from '../../components/UI/UiTable'
@@ -10,10 +10,14 @@ import PopUp from '../../components/UI/PopUp'
 import { STUDENT_HEADER } from '../../utils/constants/constants'
 import { UiLoading } from '../../components/UI/UiLoading'
 import { NoDataInfo } from '../../components/UI/NoDataInfo'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
+import { LogOutModal } from '../../components/UI/LogoutModal'
 
 export const GroupsInnerPage = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
+   const [params, setParams] = useSearchParams()
+   const { modalOpen } = Object.fromEntries(params)
 
    const { groupStudents, error, status } = useSelector((state) => state.groups)
 
@@ -43,6 +47,10 @@ export const GroupsInnerPage = () => {
             <UiLoading />
          ) : (
             <StudetsMain>
+               <HeaderLoyout
+                  roles="Администратор"
+                  clickHandler={() => setParams({ modalOpen: 'LOG-OUT' })}
+               />
                <BreadcrumsBlock>
                   <BreadCrumbs paths={ADMIN_INNER_PATH} />
                </BreadcrumsBlock>
@@ -57,11 +65,16 @@ export const GroupsInnerPage = () => {
                )}
             </StudetsMain>
          )}
+         <LogOutModal
+            open={modalOpen === 'LOG-OUT'}
+            onClose={() => setParams({})}
+         />
          {error && <PopUp message={error} messageType="error" />}
       </>
    )
 }
 const StudetsMain = styled.div`
+   padding: 0 10px;
    background-color: #eff0f4;
    width: 100%;
 `

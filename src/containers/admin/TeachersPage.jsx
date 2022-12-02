@@ -16,6 +16,8 @@ import {
 } from '../../store/slices/admin-slices/teacher-slices/teacherActions'
 import RenameInstructorModal from '../../components/admin-teacher/RenameInstructorModal'
 import PopUp from '../../components/UI/PopUp'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
+import { LogOutModal } from '../../components/UI/LogoutModal'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
@@ -71,30 +73,31 @@ export const TeachersPage = () => {
             />
          )}
          <GroupsMain>
-            <Div>
-               <Header>header</Header>
-               <ButtonWrapper>
-                  <UIButton
-                     startIcon={<PlusIcon />}
-                     onClick={openModalHandler}
-                     variant="contained"
-                     background="#3772FF"
-                  >
-                     Добавить учителя
-                  </UIButton>
-               </ButtonWrapper>
-               <Wrapper height="500px">
-                  <UiTable
-                     headData={HEAD_DATA}
-                     data={render}
-                     actions
-                     secondIcon={<RenameIconTeacher />}
-                     secondOnClick={renameHandler}
-                     thirdIcon={<DeleteIconTeacher />}
-                     thirdOnClick={deleteHandler}
-                  />
-               </Wrapper>
-            </Div>
+            <HeaderLoyout
+               roles="Администратор"
+               clickHandler={() => setParams({ modalOpen: 'LOG-OUT' })}
+            />
+            <ButtonWrapper>
+               <UIButton
+                  startIcon={<PlusIcon />}
+                  onClick={openModalHandler}
+                  variant="contained"
+                  background="#3772FF"
+               >
+                  Добавить учителя
+               </UIButton>
+            </ButtonWrapper>
+            <Wrapper height="100%">
+               <UiTable
+                  headData={HEAD_DATA}
+                  data={render}
+                  actions
+                  secondIcon={<RenameIconTeacher />}
+                  secondOnClick={renameHandler}
+                  thirdIcon={<DeleteIconTeacher />}
+                  thirdOnClick={deleteHandler}
+               />
+            </Wrapper>
          </GroupsMain>
          {modalOpen === 'EDIT-TEACHER' && (
             <RenameInstructorModal
@@ -102,6 +105,10 @@ export const TeachersPage = () => {
                open={modalOpen === 'EDIT-TEACHER'}
             />
          )}
+         <LogOutModal
+            open={modalOpen === 'LOG-OUT'}
+            onClose={() => setParams({})}
+         />
 
          {open && (
             <AddInstructorModal handleClose={onCloseHandler} open={open} />
@@ -113,23 +120,13 @@ const GroupsMain = styled.div`
    width: 100%;
    display: flex;
    flex-direction: column;
-   padding: 0 40px 0 20px;
+   padding: 0 10px;
    background-color: #eff0f4;
 `
 const ButtonWrapper = styled.div`
    display: flex;
    justify-content: end;
-   margin-bottom: 20px;
-`
-const Header = styled.div`
-   height: 75px;
-   margin-bottom: 24px;
-   text-align: center;
-   background-color: aqua;
-`
-const Div = styled.div`
-   background: #eff0f4;
-   margin: 0 40px 0 20px;
+   margin: 20px 0;
 `
 const DeleteIconTeacher = styled(DeleteIcon)`
    cursor: pointer;
