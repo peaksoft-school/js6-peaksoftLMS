@@ -15,6 +15,7 @@ import PopUp from '../../components/UI/PopUp'
 import CourseEditModal from '../../components/admin-courses/CourseEditModal'
 import CourseAssignModal from '../../components/admin-courses/CourseAssignModal'
 import { CourseDeleteModal } from '../../components/admin-courses/CourseDeleteModal'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
 
 export const CoursesPage = () => {
    const [params, setParams] = useSearchParams()
@@ -69,9 +70,7 @@ export const CoursesPage = () => {
                   messageType="success"
                />
             )}
-            <HeaderBlock>
-               <button>Администратор</button>
-            </HeaderBlock>
+            <HeaderLoyout roles="Администратор" />
             <ButtonDiv>
                <UiButton
                   onClick={() => setShowModal((prev) => !prev)}
@@ -146,14 +145,14 @@ const CourseMain = styled.div`
    justify-content: center;
    flex-wrap: wrap;
 `
-const HeaderBlock = styled.div`
-   width: 100%;
-   background: red;
-   display: flex;
-   justify-content: end;
-   height: 75px;
-   margin-bottom: 24px;
-`
+// const HeaderBlock = styled.div`
+//    width: 100%;
+//    background: red;
+//    display: flex;
+//    justify-content: end;
+//    height: 75px;
+//    margin-bottom: 24px;
+// `
 const ContainerDiv = styled.div`
    width: 1170px;
    display: flex;

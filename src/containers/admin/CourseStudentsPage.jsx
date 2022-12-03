@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { UiLoading } from '../../components/UI/UiLoading'
 import Wrapper from '../../components/UI/Wrapper'
@@ -13,6 +13,7 @@ import {
    courseStudentsRequest,
    getCourseById,
 } from '../../store/slices/admin-slices/courses-slices/courses-actions'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
 
 export const CourseStudentsPage = () => {
    const { id } = useParams()
@@ -41,6 +42,14 @@ export const CourseStudentsPage = () => {
       { path: `/admin/course/${id}`, name: 'Студенты' },
    ]
 
+   const COURSE_STUDENT_PATH = [
+      {
+         path: `/admin/courses/course-teachers/${id}`,
+         name: 'Учителя',
+      },
+      { path: '', name: 'Студенты' },
+   ]
+
    const courseStudentDate = courseStudent.map((el, i) => {
       return {
          id: i + 1,
@@ -58,21 +67,15 @@ export const CourseStudentsPage = () => {
          ) : (
             <StudetsMain>
                <StudentContainer>
-                  <HeaderBlock>
-                     <Link to={`/admin/courses/course-teachers/${id}`}>
-                        Teachers
-                     </Link>
-                     <h4>Student</h4>
-                     <button>Администратор</button>
-                  </HeaderBlock>
+                  <HeaderLoyout
+                     links={COURSE_STUDENT_PATH}
+                     roles="Администратор"
+                  />
                   <BreadcrumsBlock>
                      <BreadCrumbs paths={ADMIN_COURSE_PATH} />
                   </BreadcrumsBlock>
                   {courseStudent.length === 0 ? (
-                     <NoDataInfo
-                        title="В этой группе пока нет
-                студентов"
-                     />
+                     <NoDataInfo title="В этой группе пока нет студентов" />
                   ) : (
                      <Wrapper width="1140px" margin="24px 0" height="100vh">
                         <UiTable
@@ -102,20 +105,4 @@ const BreadcrumsBlock = styled.div`
    display: flex;
    justify-content: start;
    margin: 34px 0 24px 0;
-`
-const HeaderBlock = styled.div`
-   width: 100%;
-   background: red;
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   height: 75px;
-   a,
-   h4 {
-      cursor: pointer;
-      font-size: 20px;
-   }
-   :active {
-      color: white;
-   }
 `

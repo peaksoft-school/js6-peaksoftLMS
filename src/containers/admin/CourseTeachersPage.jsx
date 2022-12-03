@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { UiLoading } from '../../components/UI/UiLoading'
 import Wrapper from '../../components/UI/Wrapper'
@@ -18,6 +18,7 @@ import {
    getCourseById,
 } from '../../store/slices/admin-slices/courses-slices/courses-actions'
 import CourseAssignModal from '../../components/admin-courses/CourseAssignModal'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
 
 export const CourseTeachersPage = () => {
    const { id } = useParams()
@@ -47,6 +48,13 @@ export const CourseTeachersPage = () => {
          name: currentCourse,
       },
       { path: `/admin/course/${id}`, name: 'Учителя' },
+   ]
+   const COURSE_TEACHERS_PATH = [
+      { path: '', name: 'Учителя' },
+      {
+         path: `/admin/courses/course-students/${id}`,
+         name: ' Студенты',
+      },
    ]
 
    const courseStudentDate = courseTeachers.map((el, i) => {
@@ -82,13 +90,10 @@ export const CourseTeachersPage = () => {
          ) : (
             <TeacherMain>
                <TeacherContainer>
-                  <HeaderBlock>
-                     <h4>Teachers</h4>
-                     <Link to={`/admin/courses/course-students/${id}`}>
-                        Student
-                     </Link>
-                     <button>Администратор</button>
-                  </HeaderBlock>
+                  <HeaderLoyout
+                     links={COURSE_TEACHERS_PATH}
+                     roles="Администратор"
+                  />
                   <Block>
                      <BreadCrumbs paths={ADMIN_COURSE_PATH} />
                      <UIButton
@@ -155,22 +160,7 @@ const Block = styled.div`
       display: inline-block;
    }
 `
-const HeaderBlock = styled.div`
-   width: 100%;
-   background: red;
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   height: 75px;
-   a,
-   h4 {
-      cursor: pointer;
-      font-size: 20px;
-   }
-   :active {
-      color: white;
-   }
-`
+
 const DeleteIconTeacher = styled(DeleteIcon)`
    cursor: pointer;
 `
