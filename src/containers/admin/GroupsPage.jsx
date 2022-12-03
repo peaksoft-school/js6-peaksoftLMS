@@ -13,7 +13,6 @@ import { getGroups } from '../../store/slices/admin-slices/group-slices/group-ac
 import { GroupDeleteModal } from '../../components/admin-groups/DeleteModal'
 import { UiLoading } from '../../components/UI/UiLoading'
 import HeaderLoyout from '../../components/UI/HeaderLoyout'
-import { LogOutModal } from '../../components/UI/LogoutModal'
 
 export const GroupsPage = () => {
    const [params, setParams] = useSearchParams()
@@ -60,10 +59,7 @@ export const GroupsPage = () => {
             />
          )}
          <GroupsMain>
-            <HeaderLoyout
-               roles="Администратор"
-               clickHandler={() => setParams({ modalOpen: 'LOG-OUT' })}
-            />
+            <HeaderLoyout roles="Администратор" />
             <ButtonBlock>
                <UIButton
                   width="177px"
@@ -115,10 +111,6 @@ export const GroupsPage = () => {
                   onClose={onCloseModal}
                />
             )}
-            <LogOutModal
-               open={modalOpen === 'LOG-OUT'}
-               onClose={onCloseModal}
-            />
          </GroupsMain>
       </>
    )

@@ -1,32 +1,41 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useSearchParams } from 'react-router-dom'
 import headerLogo from '../../assets/headerLogo.svg'
 import arrowIcon from '../../assets/arrowIcon.svg'
 import { CustomLink } from './CustomLink'
+import { LogOutModal } from './LogoutModal'
 
-const HeaderLoyout = (props) => {
-   const { roles, clickHandler, links } = props
+const HeaderLoyout = ({ roles, links }) => {
+   const [params, setParams] = useSearchParams()
+   const { modalOpen } = Object.fromEntries(params)
 
    return (
-      <Header>
-         <div> </div>
-         <Navigation>
-            {links?.map((item) => (
-               <CustomLink key={item.link} to={item.path}>
-                  {item.name}
-               </CustomLink>
-            ))}
-         </Navigation>
-         <NavContainer onClick={clickHandler}>
-            <EllipseLogo>
-               <img src={headerLogo} alt="logo" />
-            </EllipseLogo>
-            <ProfileBlock>
-               <p>{roles}</p>
-               <img src={arrowIcon} alt="logo" />
-            </ProfileBlock>
-         </NavContainer>
-      </Header>
+      <>
+         <Header>
+            <div> </div>
+            <Navigation>
+               {links?.map((item) => (
+                  <CustomLink key={item.link} to={item.path}>
+                     {item.name}
+                  </CustomLink>
+               ))}
+            </Navigation>
+            <NavContainer onClick={() => setParams({ modalOpen: 'LOG-OUT' })}>
+               <EllipseLogo>
+                  <img src={headerLogo} alt="logo" />
+               </EllipseLogo>
+               <ProfileBlock>
+                  <p>{roles}</p>
+                  <img src={arrowIcon} alt="logo" />
+               </ProfileBlock>
+            </NavContainer>
+         </Header>
+         <LogOutModal
+            open={modalOpen === 'LOG-OUT'}
+            onClose={() => setParams({})}
+         />
+      </>
    )
 }
 export default HeaderLoyout
@@ -50,16 +59,8 @@ const NavContainer = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-around;
-   width: 160px;
    height: 46px;
    cursor: pointer;
-   transition: all 0.2s;
-   :hover {
-      -webkit-box-shadow: inset 0px -119px 36px -78px rgba(214, 214, 214, 1);
-      -moz-box-shadow: inset 0px -119px 36px -78px rgba(214, 214, 214, 1);
-      box-shadow: inset 0px -119px 36px -78px rgba(214, 214, 214, 1);
-      border-radius: 8px;
-   }
 `
 const EllipseLogo = styled.div`
    display: flex;
@@ -73,6 +74,7 @@ const EllipseLogo = styled.div`
 const ProfileBlock = styled.div`
    display: flex;
    align-items: center;
+   padding-left: 4px;
    p {
       margin-right: 8px;
    }

@@ -17,7 +17,6 @@ import {
 import RenameInstructorModal from '../../components/admin-teacher/RenameInstructorModal'
 import PopUp from '../../components/UI/PopUp'
 import HeaderLoyout from '../../components/UI/HeaderLoyout'
-import { LogOutModal } from '../../components/UI/LogoutModal'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
@@ -73,10 +72,7 @@ export const TeachersPage = () => {
             />
          )}
          <GroupsMain>
-            <HeaderLoyout
-               roles="Администратор"
-               clickHandler={() => setParams({ modalOpen: 'LOG-OUT' })}
-            />
+            <HeaderLoyout roles="Администратор" />
             <ButtonWrapper>
                <UIButton
                   startIcon={<PlusIcon />}
@@ -105,10 +101,6 @@ export const TeachersPage = () => {
                open={modalOpen === 'EDIT-TEACHER'}
             />
          )}
-         <LogOutModal
-            open={modalOpen === 'LOG-OUT'}
-            onClose={() => setParams({})}
-         />
 
          {open && (
             <AddInstructorModal handleClose={onCloseHandler} open={open} />
