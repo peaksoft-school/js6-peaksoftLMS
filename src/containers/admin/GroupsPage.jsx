@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-import FadeLoader from 'react-spinners/FadeLoader'
 import GroupCard from '../../components/UI/GroupCard'
 import UIButton from '../../components/UI/UIButton'
 import { ReactComponent as PlusIcon } from '../../assets/plusIconAdmin.svg'
@@ -10,27 +9,28 @@ import { GroupsModalWindow } from '../../components/admin-groups/GroupsModalWind
 import { GroupsEditModal } from '../../components/admin-groups/GroupsEditModal'
 import PopUp from '../../components/UI/PopUp'
 import { GroupsMeatBalls } from '../../components/admin-groups/GroupsMeatBalls'
-import {
-   deleteGroups,
-   getGroups,
-} from '../../store/slices/admin-slices/group-slices/group-actions'
+import { getGroups } from '../../store/slices/admin-slices/group-slices/group-actions'
+import { GroupDeleteModal } from '../../components/admin-groups/DeleteModal'
+import { UiLoading } from '../../components/UI/UiLoading'
 
 export const GroupsPage = () => {
    const [params, setParams] = useSearchParams()
    const { modalOpen } = Object.fromEntries(params)
+
    const dispatch = useDispatch()
    const { error, status } = useSelector((state) => state.groups)
-   const groups = useSelector((state) => state.groups)
+   const { groups } = useSelector((state) => state.groups)
    const navigate = useNavigate()
+
    useEffect(() => {
       dispatch(getGroups())
-   }, [])
+   }, [dispatch])
 
    const showModalHandler = () => {
       setParams({ modalOpen: 'CREATE-GROUP' })
    }
    const openDeleteModal = (id) => {
-      dispatch(deleteGroups(id))
+      setParams({ modalOpen: 'DELETE-GROUP', id })
    }
 
    const openEdditModal = (id) => {
@@ -74,12 +74,10 @@ export const GroupsPage = () => {
             </ButtonBlock>
 
             {status === 'loading' ? (
-               <LoadingBlock>
-                  <FadeLoader size={200} color="#3772FF" />
-               </LoadingBlock>
+               <UiLoading />
             ) : (
                <GridGroups>
-                  {groups.groups?.map((element) => (
+                  {groups.map((element) => (
                      <GroupCard
                         key={element.id}
                         someImage={element.image}
@@ -101,6 +99,10 @@ export const GroupsPage = () => {
 
             <GroupsModalWindow
                open={modalOpen === 'CREATE-GROUP'}
+               onClose={onCloseModal}
+            />
+            <GroupDeleteModal
+               open={modalOpen === 'DELETE-GROUP'}
                onClose={onCloseModal}
             />
             {modalOpen === 'EDDIT-GROUP' && (
@@ -133,10 +135,4 @@ const GridGroups = styled.div`
    grid-template-columns: repeat(4, 1fr);
    column-gap: 20px;
    row-gap: 20px;
-`
-const LoadingBlock = styled.div`
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
 `

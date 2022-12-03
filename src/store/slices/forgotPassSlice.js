@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { forgotPassword } from '../../api/services/forgotPasswordService'
+import { forgotPassword } from '../../api/loginServices/forgotPasswordService'
 
 const initialState = {
    user: {

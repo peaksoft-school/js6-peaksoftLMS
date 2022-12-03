@@ -1,5 +1,176 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
+import styled from 'styled-components'
+import { UiLoading } from '../../components/UI/UiLoading'
+import Wrapper from '../../components/UI/Wrapper'
+import UiTable from '../../components/UI/UiTable'
+import BreadCrumbs from '../../components/UI/BreadCrambs'
+import PopUp from '../../components/UI/PopUp'
+import { NoDataInfo } from '../../components/UI/NoDataInfo'
+import { COURSE_DATA_TEACHERS } from '../../utils/constants/constants'
+import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg'
+import UIButton from '../../components/UI/UIButton'
+import { ReactComponent as AsignTeacherModal } from '../../assets/asignTeacherModal.svg'
+import {
+   courseTeachersRequest,
+   deleteCourseTeachers,
+   getCourseById,
+} from '../../store/slices/admin-slices/courses-slices/courses-actions'
+import CourseAssignModal from '../../components/admin-courses/CourseAssignModal'
 
 export const CourseTeachersPage = () => {
-   return <div>CourseTeachersPage</div>
+   const { id } = useParams()
+
+   const [params, setParams] = useSearchParams()
+   const { modalOpen } = Object.fromEntries(params)
+   const [currentCourse, setCurrentCourse] = useState('')
+   const { courseTeachers, error, status } = useSelector(
+      (state) => state.courses
+   )
+   const dispatch = useDispatch()
+
+   useEffect(() => {
+      dispatch(courseTeachersRequest(id))
+      dispatch(getCourseById(id))
+         .unwrap()
+         .then((response) => {
+            setCurrentCourse(response.courseName)
+         })
+   }, [dispatch])
+
+   const ADMIN_COURSE_PATH = [
+      { path: '/admin/courses', to: '/admin/courses', name: 'Курсы ' },
+      {
+         path: '',
+         to: '',
+         name: currentCourse,
+      },
+      { path: `/admin/course/${id}`, name: 'Учителя' },
+   ]
+
+   const courseStudentDate = courseTeachers.map((el, i) => {
+      return {
+         itemId: el.id,
+         id: i + 1,
+         name: el.fullName,
+         format: el.specialization,
+         phone: el.phoneNumber,
+         email: el.email,
+      }
+   })
+
+   const deleteHandler = (instructorId) => {
+      dispatch(
+         deleteCourseTeachers({
+            instructorId,
+            courseId: +id,
+         })
+      )
+   }
+
+   const openAssignModal = () => {
+      setParams({ modalOpen: 'ASSIGN-TEACHER', id })
+   }
+   const closeModalHandler = () => {
+      setParams({})
+   }
+   return (
+      <>
+         {status === 'loading' ? (
+            <UiLoading />
+         ) : (
+            <TeacherMain>
+               <TeacherContainer>
+                  <HeaderBlock>
+                     <h4>Teachers</h4>
+                     <Link to={`/admin/courses/course-students/${id}`}>
+                        Student
+                     </Link>
+                     <button>Администратор</button>
+                  </HeaderBlock>
+                  <Block>
+                     <BreadCrumbs paths={ADMIN_COURSE_PATH} />
+                     <UIButton
+                        width="250px"
+                        startIcon={<AsignTeacherModal />}
+                        onClick={openAssignModal}
+                        variant="contained"
+                        background="#3772FF"
+                        colour="#FFF"
+                        height="40px"
+                     >
+                        Назначить учителя
+                     </UIButton>
+                  </Block>
+                  {courseTeachers.length === 0 ? (
+                     <NoDataInfo title="В этой группе не назначены учителя" />
+                  ) : (
+                     <Wrapper width="1140px" margin="24px 0" height="100vh">
+                        <UiTable
+                           headData={COURSE_DATA_TEACHERS}
+                           data={courseStudentDate}
+                           actions
+                           thirdIcon={<DeleteIconTeacher />}
+                           thirdOnClick={deleteHandler}
+                        />
+                     </Wrapper>
+                  )}
+               </TeacherContainer>
+            </TeacherMain>
+         )}
+         <CourseAssignModal
+            open={modalOpen === 'ASSIGN-TEACHER'}
+            onClose={closeModalHandler}
+         />
+         {status === 'deleted' && (
+            <PopUp message="Учитель удален" messageType="success" />
+         )}
+
+         {error && <PopUp message={error} messageType="error" />}
+      </>
+   )
 }
+const TeacherContainer = styled.div`
+   width: 1140px;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+`
+
+const TeacherMain = styled.div`
+   background-color: #eff0f4;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+`
+
+const Block = styled.div`
+   display: flex;
+   width: 100%;
+   justify-content: space-between;
+   align-items: center;
+   margin: 25px 0 20px 0;
+   nav > {
+      display: inline-block;
+   }
+`
+const HeaderBlock = styled.div`
+   width: 100%;
+   background: red;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   height: 75px;
+   a,
+   h4 {
+      cursor: pointer;
+      font-size: 20px;
+   }
+   :active {
+      color: white;
+   }
+`
+const DeleteIconTeacher = styled(DeleteIcon)`
+   cursor: pointer;
+`

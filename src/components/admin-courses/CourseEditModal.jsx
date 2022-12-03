@@ -27,7 +27,7 @@ const CourseEditModal = ({ open, onClose }) => {
       description: '',
       dateOfStart: '',
    })
-
+   console.log(courseData, 'setCourseData')
    // eslint-disable-next-line consistent-return
    const editCourseHandler = () => {
       if (

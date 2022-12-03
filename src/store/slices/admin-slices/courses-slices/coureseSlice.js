@@ -5,11 +5,21 @@ import {
    editCourse,
    getCourse,
    postCourses,
-   getAllTeacher,
    assignCourseinstructor,
+   courseStudentsRequest,
+   courseTeachersRequest,
+   deleteCourseTeachers,
+   getAllTeachers,
 } from './courses-actions'
 
-const initialState = { courses: [], status: null, error: null, teachers: [] }
+const initialState = {
+   courses: [],
+   status: null,
+   error: null,
+   teachers: [],
+   courseStudent: [],
+   courseTeachers: [],
+}
 
 export const coursesSlice = createSlice({
    name: 'coursesSlices',
@@ -47,11 +57,54 @@ export const coursesSlice = createSlice({
       [editCourse.rejected]: (state) => {
          state.error = 'Не удалось провести редактирование'
       },
-      [getAllTeacher.fulfilled]: (state, { payload }) => {
+
+      [getAllTeachers.fulfilled]: (state, { payload }) => {
+         state.status = 'success'
          state.teachers = payload
       },
+      [getAllTeachers.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка, не удалось загрузить учителя'
+      },
+      // [assignCourseinstructor.pending]: (state) => {
+      //    state.status = 'loading'
+      // },
       [assignCourseinstructor.fulfilled]: (state) => {
          state.status = 'assigned'
+      },
+      [assignCourseinstructor.rejected]: (state, actions) => {
+         // state.status = 'err'
+         state.error = actions.payload
+      },
+      [courseStudentsRequest.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [courseStudentsRequest.fulfilled]: (state, { payload }) => {
+         state.courseStudent = payload
+         state.status = 'succes'
+      },
+      [courseStudentsRequest.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка, не удалось загрузить данные'
+      },
+      [courseTeachersRequest.pending]: (state) => {
+         state.status = 'loading'
+      },
+      [courseTeachersRequest.fulfilled]: (state, { payload }) => {
+         state.status = 'succes'
+         state.courseTeachers = payload
+      },
+      [courseTeachersRequest.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка, не удалось загрузить данные'
+      },
+
+      [deleteCourseTeachers.fulfilled]: (state) => {
+         state.status = 'deleted'
+      },
+      [deleteCourseTeachers.rejected]: (state) => {
+         state.status = 'rejected'
+         state.error = 'Произошла ошибка,не удалось удалить учителя'
       },
    },
 })

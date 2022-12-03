@@ -4,34 +4,43 @@ import styled from 'styled-components'
 import React, { useEffect, useState } from 'react'
 import {
    assignCourseinstructor,
-   getAllTeacher,
+   getAllTeachers,
 } from '../../store/slices/admin-slices/courses-slices/courses-actions'
 import ModalWindow from '../UI/ModalWindow'
-import { TeacherSelect } from '../UI/TeacherSelect'
 import UIButton from '../UI/UIButton'
 import DeleteX from '../../assets/removeX.svg'
+import { CourseSelect } from '../../containers/admin/CourseSelect'
 
 const CourseAssignModal = ({ open, onClose }) => {
    const dispatch = useDispatch()
    const { teachers } = useSelector((state) => state.courses)
-   const [personName, setPersonName] = useState([])
-   const [nameID, setNameID] = useState(null)
-
    const [params] = useSearchParams()
    const { id } = Object.fromEntries(params)
-
    useEffect(() => {
-      dispatch(getAllTeacher())
+      dispatch(getAllTeachers())
    }, [])
+   const [personName, setPersonName] = useState([])
+   const [value, setValue] = useState('')
+   const [nameID, setNameID] = useState([])
 
-   // const newData = (data) => {
-   //    console.log(data, 'datataata')
-   //    setNameID(data)
-   // }
-   const assignHandler = () => {
-      dispatch(assignCourseinstructor({ instructorId: nameID, courseId: id }))
+   const newData = (data) => {
+      setNameID((prev) => [...prev, data.id])
+      setPersonName((prev) => [...prev, { ...data }])
    }
 
+   const assignHandler = () => {
+      const asignPost = {
+         instructorId: nameID,
+         courseId: +id,
+      }
+      dispatch(assignCourseinstructor(asignPost))
+      onClose()
+   }
+
+   const filteredRemove = (item) => {
+      const deletedItems = personName.filter((el) => el.id !== item)
+      setPersonName(deletedItems)
+   }
    return (
       <ModalWindow
          open={open}
@@ -39,22 +48,25 @@ const CourseAssignModal = ({ open, onClose }) => {
          modalTitle="Назначить учителя"
          headerContent={
             <NameBlock>
-               <NameInstructor>
-                  {personName.map((el) => (
-                     <Text>
-                        {el} <img src={DeleteX} alt="icons" />
-                     </Text>
-                  ))}
-               </NameInstructor>
+               {personName.map((el) => (
+                  <Items key={el.id}>
+                     <Text>{el.name}</Text>
+                     <img
+                        src={DeleteX}
+                        alt="icons"
+                        onClick={() => filteredRemove(el.id)}
+                     />
+                  </Items>
+               ))}
             </NameBlock>
          }
          bodyContent={
             <ModalFormBLock>
-               <TeacherSelect
+               <CourseSelect
                   data={teachers}
-                  personName={personName}
-                  setPersonName={setPersonName}
-                  getIdHandler={setNameID}
+                  value={value}
+                  setValue={setValue}
+                  getIdHandler={newData}
                   pleceholder="Выбрать учителя"
                />
             </ModalFormBLock>
@@ -86,11 +98,19 @@ const CourseAssignModal = ({ open, onClose }) => {
 }
 
 export default CourseAssignModal
-const NameInstructor = styled.div`
+
+const Items = styled.div`
+   width: 491px;
+   height: 42px;
+   border: 1px solid #d4d4d4;
+   border-radius: 10px;
    display: flex;
    align-items: center;
    justify-content: space-between;
-   flex-direction: column;
+   margin-bottom: 10px;
+   padding: 10px 10px 10px 160px;
+   text-align: center;
+   cursor: pointer;
 `
 
 const ModalFormBLock = styled.div`
@@ -100,17 +120,11 @@ const ModalFormBLock = styled.div`
 `
 const NameBlock = styled.div`
    display: flex;
-   justify-content: center;
+   align-items: center;
    flex-direction: column;
+   text-align: center;
    margin: 10px;
 `
-
-// const FormInputBlock = styled.div`
-//    display: flex;
-//    justify-content: space-between;
-//    column-gap: 12px;
-//    padding: 15px 0;
-// `
 
 const FooterBlock = styled.div`
    display: flex;
@@ -119,7 +133,7 @@ const FooterBlock = styled.div`
    column-gap: 10px;
 `
 const Text = styled.p`
-   display: flex;
+   /* display: flex;
    align-items: center;
    justify-content: space-between;
    width: 491px;
@@ -128,5 +142,5 @@ const Text = styled.p`
    border-radius: 10px;
    padding: 10px 10px;
    margin-bottom: 12px;
-   cursor: pointer;
+   cursor: pointer; */
 `

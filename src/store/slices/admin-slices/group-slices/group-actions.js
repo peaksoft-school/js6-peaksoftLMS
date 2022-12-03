@@ -12,7 +12,7 @@ export const getGroups = createAsyncThunk(
          const { data } = response
          return data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -24,7 +24,7 @@ export const getGroupsById = createAsyncThunk(
          const { data } = response
          return data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -37,7 +37,7 @@ export const getGroupStudentById = createAsyncThunk(
          const { data } = response
          return data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -64,7 +64,7 @@ export const postGroups = createAsyncThunk(
 
          return dispatch(getGroups(data))
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -77,7 +77,7 @@ export const deleteGroups = createAsyncThunk(
          const { data } = response
          return dispatch(getGroups(data))
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
@@ -108,7 +108,7 @@ export const editGroups = createAsyncThunk(
          })
          return dispatch(getGroups(response))
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.response.data.message)
       }
    }
 )

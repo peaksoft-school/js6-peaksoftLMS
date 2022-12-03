@@ -20,7 +20,6 @@ export const signIn = createAsyncThunk(
          }
          return result
       } catch (err) {
-         console.log(err)
          showError(err.response.data.message)
       }
       return null

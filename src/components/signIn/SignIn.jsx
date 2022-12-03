@@ -10,7 +10,11 @@ import UiIsPassword from '../UI/UiIsPasswod'
 import UIButton from '../UI/UIButton'
 import { ForgotPasswordModal } from './ForgotPasswordModal'
 import UiInput from '../UI/UiInput'
-import { signIn } from '../../api/services/userAuthService'
+import { signIn } from '../../api/loginServices/userAuthService'
+import {
+   PATTERN_FOR_EMAIL,
+   POLE_ZAPOLNEN,
+} from '../../utils/constants/constants'
 
 function SignIn() {
    const dispatch = useDispatch()
@@ -55,10 +59,10 @@ function SignIn() {
                      control={control}
                      name="email"
                      rules={{
-                        required: 'Поле обязательно к заполнению',
+                        required: POLE_ZAPOLNEN,
                         minLength: { value: 6, message: 'Минимум 6 символов' },
                         pattern: {
-                           value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                           value: PATTERN_FOR_EMAIL,
                            message: 'Адрес электронной почты введен не верно',
                         },
                      }}
@@ -88,7 +92,7 @@ function SignIn() {
                      control={control}
                      name="password"
                      rules={{
-                        required: 'Поле обязательно к заполнению',
+                        required: POLE_ZAPOLNEN,
                         minLength: { value: 6, message: 'Минимум 6 символов' },
                      }}
                      render={({ field }) => (

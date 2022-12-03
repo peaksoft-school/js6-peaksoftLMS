@@ -24,7 +24,10 @@ export const AdminRoutes = () => {
                   path="course-students/:id"
                   element={<CourseStudentsPage />}
                />
-               <Route path="course-teachers" element={<CourseTeachersPage />} />
+               <Route
+                  path="course-teachers/:id"
+                  element={<CourseTeachersPage />}
+               />
             </Route>
             <Route path="/teachers" element={<TeachersPage />} />
             <Route path="/students" element={<StudentsPage />} />

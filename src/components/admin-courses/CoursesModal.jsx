@@ -30,7 +30,6 @@ const CoursesModal = ({ open, isOpen }) => {
       )
          return setValidateError(true)
       dispatch(postCourses({ ...courseData, image: uploadedImage }))
-      // onClose()
       isOpen(false)
    }
 

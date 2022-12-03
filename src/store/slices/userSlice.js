@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { signIn } from '../../api/services/userAuthService'
+import { signIn } from '../../api/loginServices/userAuthService'
 
 const initialState = {
    user: JSON.parse(localStorage.getItem('role'))

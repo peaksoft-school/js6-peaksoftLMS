@@ -104,29 +104,66 @@ export const editCourse = createAsyncThunk(
    }
 )
 
-export const getAllTeacher = createAsyncThunk(
+export const getAllTeachers = createAsyncThunk(
    'admin-course/getAllTeachers',
    async (_, { rejectWithValue }) => {
       try {
          const response = await axiosInstance.get('instructor')
          return response.data
       } catch (err) {
-         return rejectWithValue(err.message)
+         return rejectWithValue(err.data.message)
       }
    }
 )
+
 export const assignCourseinstructor = createAsyncThunk(
    'admin-course/assignCourseinstructor',
    async (assignCourse, { rejectWithValue, dispatch }) => {
       try {
-         const response = await axiosInstance.post(
-            'course/assign',
-            assignCourse
-         )
-         const { data } = response
-         return dispatch(getCourse(data))
+         await axiosInstance.post('course/assign', assignCourse)
+         return dispatch(courseTeachersRequest(assignCourse.courseId))
       } catch (err) {
-         return rejectWithValue(err.message)
+         console.log(err)
+         return rejectWithValue('Инструктор уже назначен на курс')
+      }
+   }
+)
+
+export const courseStudentsRequest = createAsyncThunk(
+   'admin-course/courseStudentsRequest',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`course/students/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+
+export const courseTeachersRequest = createAsyncThunk(
+   'admin-course/courseTeachersRequest',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`course/instructors/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+
+export const deleteCourseTeachers = createAsyncThunk(
+   'admin-course/deleteCourseTeachers',
+   async (date, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.post(`course/unassigned/`, date)
+
+         return dispatch(courseTeachersRequest(date.courseId))
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
       }
    }
 )
