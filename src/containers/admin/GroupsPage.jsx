@@ -12,6 +12,7 @@ import { GroupsMeatBalls } from '../../components/admin-groups/GroupsMeatBalls'
 import { getGroups } from '../../store/slices/admin-slices/group-slices/group-actions'
 import { GroupDeleteModal } from '../../components/admin-groups/DeleteModal'
 import { UiLoading } from '../../components/UI/UiLoading'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
 
 export const GroupsPage = () => {
    const [params, setParams] = useSearchParams()
@@ -60,6 +61,7 @@ export const GroupsPage = () => {
             />
          )}
          <GroupsMain>
+            <HeaderLoyout roles="Администратор" />
             <ButtonBlock>
                <UIButton
                   width="177px"
@@ -127,7 +129,7 @@ const GroupsMain = styled.div`
 const ButtonBlock = styled.div`
    display: flex;
    justify-content: end;
-   margin: 34px 0;
+   margin: 20px 0;
 `
 
 const GridGroups = styled.div`

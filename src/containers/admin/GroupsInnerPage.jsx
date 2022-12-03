@@ -10,6 +10,7 @@ import PopUp from '../../components/UI/PopUp'
 import { STUDENT_HEADER } from '../../utils/constants/constants'
 import { UiLoading } from '../../components/UI/UiLoading'
 import { NoDataInfo } from '../../components/UI/NoDataInfo'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
 
 export const GroupsInnerPage = () => {
    const { id } = useParams()
@@ -42,6 +43,7 @@ export const GroupsInnerPage = () => {
             <UiLoading />
          ) : (
             <StudetsMain>
+               <HeaderLoyout roles="Администратор" />
                <BreadcrumsBlock>
                   <BreadCrumbs paths={ADMIN_INNER_PATH} />
                </BreadcrumsBlock>
@@ -61,6 +63,7 @@ export const GroupsInnerPage = () => {
    )
 }
 const StudetsMain = styled.div`
+   padding: 0 10px;
    background-color: #eff0f4;
    width: 100%;
 `
