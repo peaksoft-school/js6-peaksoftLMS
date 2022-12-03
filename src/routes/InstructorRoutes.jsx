@@ -17,7 +17,7 @@ export const InstructorRoutes = () => {
                   path="course-students/:id"
                   element={<InstructorStudents />}
                />
-               <Route path="materials" element={<InstructorMaterials />} />
+               <Route path="materials/:id" element={<InstructorMaterials />} />
             </Route>
             <Route path="*" index element={<NotFoundPage />} />
          </Routes>

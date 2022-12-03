@@ -7,20 +7,36 @@ import linkIcon from '../../assets/LinkIcon.svg'
 import testIcon from '../../assets/TestIcon.svg'
 
 const LessonCard = (props) => {
-   const { title, headerIcon, actionIcon, actionButton } = props
+   const {
+      title,
+      headerIcon,
+      actionIcon,
+      actionButton,
+      deleteHandler,
+      editHandler,
+   } = props
    return (
-      <CardBody>
+      <CardMain>
          <CardHeader>
             <HeaderLeft>
-               <HeaderIcon src={headerIcon} alt="icon" />
+               {headerIcon && (
+                  <p onClick={editHandler}>
+                     <HeaderIcon src={headerIcon} alt="icon" />
+                  </p>
+               )}
 
                <h2>{title}</h2>
             </HeaderLeft>
             <HeaderRight>
-               {actionButton} <ActionIcon src={actionIcon} alt="icon" />
+               {actionButton}
+               {actionIcon && (
+                  <p onClick={deleteHandler}>
+                     <ActionIcon src={actionIcon} alt="icon" />
+                  </p>
+               )}
             </HeaderRight>
          </CardHeader>
-         <CardMain>
+         <CardBody>
             <ContentLessonCard>
                <img src={lessonVideoIcon} alt="icon" />
                <TextLesson>Видеоурок</TextLesson>
@@ -45,15 +61,17 @@ const LessonCard = (props) => {
                <img src={testIcon} alt="icon" />
                <TextLesson>Тест</TextLesson>
             </ContentLessonCard>
-         </CardMain>
-      </CardBody>
+         </CardBody>
+      </CardMain>
    )
 }
 export default LessonCard
-const CardBody = styled.div`
+
+const CardMain = styled.div`
    width: 560px;
    border: 1px solid #d4d4d4;
    border-radius: 10px;
+   background-color: #fff;
 `
 const CardHeader = styled.div`
    justify-content: space-between;
@@ -64,18 +82,25 @@ const CardHeader = styled.div`
 `
 const HeaderLeft = styled.div`
    display: flex;
+   align-items: center;
    margin-left: 20px;
 `
 const HeaderRight = styled.div`
    display: flex;
+   align-items: center;
    margin-right: 27px;
 `
-const CardMain = styled.div`
-   margin: 17px 20px 21px 23px;
-`
+const CardBody = styled.div``
+
 const ContentLessonCard = styled.div`
    display: flex;
-   margin-top: 20px;
+   padding: 10px 22px;
+   margin-top: 5px;
+   cursor: pointer;
+   transition: all 0.2s;
+   :hover {
+      background: rgba(26, 35, 126, 0.07);
+   }
 `
 const TextLesson = styled.p`
    margin: 0px 0px 0px 18px;
@@ -87,7 +112,9 @@ const TextLesson = styled.p`
 `
 const ActionIcon = styled.img`
    margin-left: 30px;
+   cursor: pointer;
 `
 const HeaderIcon = styled.img`
    margin-right: 17px;
+   cursor: pointer;
 `

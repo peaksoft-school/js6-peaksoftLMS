@@ -10,6 +10,7 @@ import { UiLoading } from '../../components/UI/UiLoading'
 import { NoDataInfo } from '../../components/UI/NoDataInfo'
 import { AssignGroupModal } from '../../components/instructor/AssignGroupModal'
 import PopUp from '../../components/UI/PopUp'
+import HeaderLayout from '../../components/UI/HeaderLoyout'
 
 export const InstructorMain = () => {
    const { courses, status } = useSelector((state) => state.insCourses)
@@ -37,6 +38,7 @@ export const InstructorMain = () => {
    ) : (
       <>
          <CourseMain>
+            <HeaderLayout roles="Инструктор" />
             {courses.length === 0 ? (
                <NoDataInfo title="У вас пока нет курсов" />
             ) : (
@@ -87,4 +89,5 @@ const GridCourses = styled.div`
    grid-template-columns: repeat(4, 1fr);
    column-gap: 20px;
    row-gap: 20px;
+   margin-top: 10px;
 `

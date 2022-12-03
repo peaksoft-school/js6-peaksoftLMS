@@ -16,7 +16,7 @@ const HeaderLoyout = ({ roles, links }) => {
             <div> </div>
             <Navigation>
                {links?.map((item) => (
-                  <CustomLink key={item.link} to={item.path}>
+                  <CustomLink key={item.name} to={item.path}>
                      {item.name}
                   </CustomLink>
                ))}
@@ -74,7 +74,7 @@ const EllipseLogo = styled.div`
 const ProfileBlock = styled.div`
    display: flex;
    align-items: center;
-   padding-left: 4px;
+   padding-left: 8px;
    p {
       margin-right: 8px;
    }
