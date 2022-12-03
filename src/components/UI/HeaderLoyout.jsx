@@ -1,26 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
 import headerLogo from '../../assets/headerLogo.svg'
 import arrowIcon from '../../assets/arrowIcon.svg'
+import { CustomLink } from './CustomLink'
 
 const HeaderLoyout = (props) => {
    const { roles, clickHandler, links } = props
+
    return (
       <Header>
          <div> </div>
          <Navigation>
             {links?.map((item) => (
-               <Nav key={item.link} to={item.path}>
+               <CustomLink key={item.link} to={item.path}>
                   {item.name}
-               </Nav>
+               </CustomLink>
             ))}
          </Navigation>
-         <NavContainer>
+         <NavContainer onClick={clickHandler}>
             <EllipseLogo>
                <img src={headerLogo} alt="logo" />
             </EllipseLogo>
-            <ProfileBlock onClick={clickHandler}>
+            <ProfileBlock>
                <p>{roles}</p>
                <img src={arrowIcon} alt="logo" />
             </ProfileBlock>
@@ -30,17 +31,6 @@ const HeaderLoyout = (props) => {
 }
 export default HeaderLoyout
 
-const Nav = styled(NavLink)`
-   color: #000000;
-   padding: 25px;
-   font-weight: 600;
-   text-decoration: none;
-   :active {
-      color: #3772ff;
-      border-bottom: 4px solid #3772ff;
-      border-radius: 5px 5px 0px 0px;
-   }
-`
 const Navigation = styled.nav`
    display: flex;
    align-items: center;
@@ -60,8 +50,16 @@ const NavContainer = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-around;
-   width: 181px;
+   width: 160px;
    height: 46px;
+   cursor: pointer;
+   transition: all 0.2s;
+   :hover {
+      -webkit-box-shadow: inset 0px -119px 36px -78px rgba(214, 214, 214, 1);
+      -moz-box-shadow: inset 0px -119px 36px -78px rgba(214, 214, 214, 1);
+      box-shadow: inset 0px -119px 36px -78px rgba(214, 214, 214, 1);
+      border-radius: 8px;
+   }
 `
 const EllipseLogo = styled.div`
    display: flex;
@@ -73,7 +71,6 @@ const EllipseLogo = styled.div`
    background-color: #d9d9d9;
 `
 const ProfileBlock = styled.div`
-   cursor: pointer;
    display: flex;
    align-items: center;
    p {
