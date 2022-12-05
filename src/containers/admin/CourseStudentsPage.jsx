@@ -47,7 +47,7 @@ export const CourseStudentsPage = () => {
          path: `/admin/courses/course-teachers/${id}`,
          name: 'Учителя',
       },
-      { path: '', name: 'Студенты' },
+      { path: `/admin/courses/course-students/${id}`, name: 'Студенты' },
    ]
 
    const courseStudentDate = courseStudent.map((el, i) => {

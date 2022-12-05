@@ -50,7 +50,7 @@ export const CourseTeachersPage = () => {
       { path: `/admin/course/${id}`, name: 'Учителя' },
    ]
    const COURSE_TEACHERS_PATH = [
-      { path: '', name: 'Учителя' },
+      { path: `/admin/courses/course-teachers/${id}`, name: 'Учителя' },
       {
          path: `/admin/courses/course-students/${id}`,
          name: ' Студенты',
