@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
@@ -9,27 +10,48 @@ import Plus from '../../assets/Plus.svg'
 import UiInput from './UiInput'
 import UIButton from './UIButton'
 import IconButton from './IconButton'
+import Checkbox from './CheckBox'
 
 const Test = () => {
    const [get, setGet] = React.useState()
+   const [getRadio, setGetRadio] = useState()
+   // const [renderCheck, setRenderCheck] = useState(false)
+   const getVariantHandler = (event) => {
+      setGetRadio(event.target.value)
+   }
 
-   const handleChange = (event) => {
-      setGet(event.target.value)
-   }
-   const [state, setState] = useState([])
    const [newTest, setNewTest] = useState([])
-   function handleClick() {
-      setState((prev) => [...prev, { id: Math.random() }])
-   }
+
    const newTestHandler = () => {
-      setNewTest([...newTest, { amount: Math.random() }])
+      setNewTest([...newTest, { amount: Math.random(), data: [] }])
    }
-   const removeItem = () => {
-      setState()
+
+   const addVariantHandler = (i) => {
+      // const newSubtask = newTest.find((item) => item.amount === i)
+      // newSubtask.data.push({ id: Math.random() })
+      // setNewTest([...newSubtask, { data: newSubtask }])
+      // вариант 1
+      // setNewTest([
+      //    ...newTest,
+      //    { data: newSubtask.data.push({ id: Math.random() }) },
+      // ])
+      // вариант 2
+      // setNewTest([
+      //    ...newTest,
+      //    ...newSubtask[i].data.push({ id: Math.random() }),
+      // ])
+      // вариант 3
+      // setNewTest([
+      //    ...newTest,
+      //    {newTest[i].data.push({ id: Math.random() }) },
+      // ])
    }
+
    return (
       <Container>
-         <Header>HEADER{get}</Header>
+         <Header>
+            {getRadio}HEADER{get}
+         </Header>
          <form>
             <Wrapper margin="24px 0px 20px 0px" width="1140px" height="124px">
                <TestName>Название теста</TestName>
@@ -39,17 +61,17 @@ const Test = () => {
                   placeholder="Введите название теста"
                />
             </Wrapper>
-            {newTest.map((e, i) => {
+            {newTest?.map((question, index) => {
                return (
                   <Wrapper
-                     key={e.amount + 1}
+                     key={question.amount}
                      padding="20px"
                      margin="0px 0px 20px 0px "
                      width="1140px"
                   >
                      <MainForm>
                         <Label htmlFor="Question">
-                           <Num>{i + 1}</Num>
+                           <Num>{index + 1}</Num>
                            <UiInput
                               marginright="10px"
                               width="659px"
@@ -60,16 +82,17 @@ const Test = () => {
                            <RadioGroup
                               name="controlled-radio-buttons-group"
                               value={get}
-                              onChange={handleChange}
                            >
                               <Label>
                                  <FormControlLabel
-                                    value="female"
+                                    key={Math.random()}
+                                    value="one"
                                     control={<Radio />}
                                     label="Один из списка"
                                  />
                                  <FormControlLabel
-                                    value="male"
+                                    key={Math.random()}
+                                    value="more"
                                     control={<Radio />}
                                     label="Несколько из списков "
                                  />
@@ -77,28 +100,42 @@ const Test = () => {
                            </RadioGroup>
                         </FormControl>
                      </MainForm>
-                     {state.map((el) => {
-                        return (
-                           <OptionLabel key={el.id + 1} htmlFor="Variant">
-                              <FormControl>
+                     {question.data?.map((variant) => {
+                        return get === 'one' ? (
+                           <OptionLabel key={variant.id} htmlFor="Variant">
+                              {/* <FormControl>
                                  <RadioGroup
                                     name="controlled-radio-buttons-group"
-                                    value={get}
-                                    onChange={handleChange}
+                                    value={getRadio}
+                                    onChange={getVariantHandler}
                                  >
                                     <FormControlLabel
                                        value="dasd"
                                        control={<Radio />}
                                     />
                                  </RadioGroup>
-                              </FormControl>
+                              </FormControl> */}
+                              <TestRadio
+                                 type="radio"
+                                 id={variant.id}
+                                 name="contact"
+                                 value="email"
+                              />
+                              <UiInput width="1064px" placeholder="Вариант" />
+                           </OptionLabel>
+                        ) : (
+                           <OptionLabel key={variant.id} htmlFor="Variant">
+                              <Checkbox setIsClicked={getVariantHandler} />
                               <UiInput width="1064px" placeholder="Вариант" />
                            </OptionLabel>
                         )
                      })}
+
                      <BottomBlock>
                         <p>
-                           <ButtonAddOption onClick={() => handleClick()}>
+                           <ButtonAddOption
+                              onClick={() => addVariantHandler(question.amount)}
+                           >
                               Добавить вариант
                            </ButtonAddOption>
                            или
@@ -113,7 +150,6 @@ const Test = () => {
                               alt="Icon"
                            />
                            <img
-                              onClick={() => removeItem()}
                               style={{ cursor: 'pointer' }}
                               src={basket}
                               alt="Icon"
@@ -182,9 +218,12 @@ const BottomBlock = styled.div`
 const ButtonAddOption = styled.span`
    cursor: pointer;
    margin-right: 3px;
+   color: #7a7a7a;
 `
 const ButtonAddOther = styled.span`
    cursor: pointer;
+   color: #0680e4;
+   margin-left: 5px;
 `
 const IconBlock = styled.div`
    display: flex;
@@ -202,7 +241,13 @@ const ContainerIconButton = styled.div`
    margin: 160px 31px 0 0;
 `
 const SaveButton = styled(UIButton)`
-   &.cglbNa.MuiButtonBase-root {
+   &.jvAZlq.MuiButtonBase-root {
       margin-left: 10px;
    }
+`
+const TestRadio = styled.input`
+   width: 20px;
+   height: 20px;
+   margin-right: 15px;
+   margin-left: 9px;
 `
