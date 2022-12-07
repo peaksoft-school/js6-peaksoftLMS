@@ -13,10 +13,11 @@ const CourseMeatBalls = ({
    const navigate = [
       {
          id: '1',
-         icon: <DeleteIcon />,
-         name: 'Удалить',
-         click: () => openDeleteModal(id),
+         icon: <AssignTeacher />,
+         name: 'Назначить учителя',
+         click: () => openAssignModal(id),
       },
+
       {
          id: '2',
          icon: <EditIcon />,
@@ -25,9 +26,9 @@ const CourseMeatBalls = ({
       },
       {
          id: '3',
-         icon: <AssignTeacher />,
-         name: 'Назначить учителя',
-         click: () => openAssignModal(id),
+         icon: <DeleteIcon />,
+         name: 'Удалить',
+         click: () => openDeleteModal(id),
       },
    ]
    return <MeatBalls options={navigate} />

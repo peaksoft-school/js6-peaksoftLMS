@@ -123,7 +123,6 @@ export const assignCourseinstructor = createAsyncThunk(
          await axiosInstance.post('course/assign', assignCourse)
          return dispatch(courseTeachersRequest(assignCourse.courseId))
       } catch (err) {
-         console.log(err)
          return rejectWithValue('Инструктор уже назначен на курс')
       }
    }
@@ -160,7 +159,6 @@ export const deleteCourseTeachers = createAsyncThunk(
    async (date, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.post(`course/unassigned/`, date)
-
          return dispatch(courseTeachersRequest(date.courseId))
       } catch (err) {
          return rejectWithValue(err.response.data.message)

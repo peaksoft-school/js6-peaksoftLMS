@@ -27,6 +27,7 @@ export const coursesSlice = createSlice({
    reducers: {},
    extraReducers: {
       [getCourse.pending]: (state) => {
+         state.error = null
          state.status = 'loading'
       },
       [getCourse.fulfilled]: (state, { payload }) => {
@@ -66,14 +67,11 @@ export const coursesSlice = createSlice({
          state.status = 'rejected'
          state.error = 'Произошла ошибка, не удалось загрузить учителя'
       },
-      // [assignCourseinstructor.pending]: (state) => {
-      //    state.status = 'loading'
-      // },
+
       [assignCourseinstructor.fulfilled]: (state) => {
          state.status = 'assigned'
       },
       [assignCourseinstructor.rejected]: (state, actions) => {
-         // state.status = 'err'
          state.error = actions.payload
       },
       [courseStudentsRequest.pending]: (state) => {

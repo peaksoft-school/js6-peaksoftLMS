@@ -20,7 +20,7 @@ const CourseAssignModal = ({ open, onClose }) => {
       dispatch(getAllTeachers())
    }, [])
    const [personName, setPersonName] = useState([])
-   const [value, setValue] = useState('')
+   const [nameInputValue, setNameInputValue] = useState('')
    const [nameID, setNameID] = useState([])
 
    const newData = (data) => {
@@ -50,7 +50,7 @@ const CourseAssignModal = ({ open, onClose }) => {
             <NameBlock>
                {personName.map((el) => (
                   <Items key={el.id}>
-                     <Text>{el.name}</Text>
+                     <p>{el.name}</p>
                      <img
                         src={DeleteX}
                         alt="icons"
@@ -64,8 +64,8 @@ const CourseAssignModal = ({ open, onClose }) => {
             <ModalFormBLock>
                <CourseSelect
                   data={teachers}
-                  value={value}
-                  setValue={setValue}
+                  value={nameInputValue}
+                  setValue={setNameInputValue}
                   getIdHandler={newData}
                   pleceholder="Выбрать учителя"
                />
@@ -131,16 +131,4 @@ const FooterBlock = styled.div`
    justify-content: flex-end;
    margin: 20px 25px 15px 0;
    column-gap: 10px;
-`
-const Text = styled.p`
-   /* display: flex;
-   align-items: center;
-   justify-content: space-between;
-   width: 491px;
-   height: 42px;
-   border: 1px solid #d4d4d4;
-   border-radius: 10px;
-   padding: 10px 10px;
-   margin-bottom: 12px;
-   cursor: pointer; */
 `

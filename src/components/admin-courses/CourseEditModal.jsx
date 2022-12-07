@@ -27,7 +27,6 @@ const CourseEditModal = ({ open, onClose }) => {
       description: '',
       dateOfStart: '',
    })
-   console.log(courseData, 'setCourseData')
    // eslint-disable-next-line consistent-return
    const editCourseHandler = () => {
       if (
@@ -80,7 +79,7 @@ const CourseEditModal = ({ open, onClose }) => {
                      <UiInput
                         value={courseData.courseName}
                         width="327px"
-                        placeholder="Название группы"
+                        placeholder="Название курс"
                         onChange={({ target }) =>
                            setCourseData({
                               ...courseData,

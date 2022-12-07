@@ -33,6 +33,13 @@ const InputPassword = styled(OutlinedInput)`
       border: none;
    }
 
+   & .MuiInputBase-input {
+      padding: 10px 14px;
+      :-webkit-autofill {
+         transition-delay: 9999s;
+      }
+   }
+
    &.MuiInputBase-root {
       height: 42px;
       border-radius: 8px;

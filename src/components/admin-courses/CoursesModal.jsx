@@ -20,17 +20,18 @@ const CoursesModal = ({ open, isOpen }) => {
       dateOfStart: '',
    })
 
-   // eslint-disable-next-line consistent-return
    const createNewCourseHandler = () => {
-      if (
-         !courseData.courseName &&
-         !courseData.description &&
-         !courseData.dateOfStart &&
-         !uploadedImage
-      )
-         return setValidateError(true)
+      const isFormNotFilled = Object.values({
+         ...courseData,
+         image: uploadedImage,
+      }).some((value) => !value)
+
+      if (isFormNotFilled) return setValidateError(true)
+
       dispatch(postCourses({ ...courseData, image: uploadedImage }))
-      isOpen(false)
+      setUploadedImage(null)
+      setCourseData({ courseName: '', description: '', dateOfStart: '' })
+      return isOpen(false)
    }
 
    return (
