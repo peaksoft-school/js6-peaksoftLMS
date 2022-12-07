@@ -15,21 +15,24 @@ import Checkbox from './CheckBox'
 const Test = () => {
    const [get, setGet] = React.useState()
    const [getRadio, setGetRadio] = useState()
-   // const [renderCheck, setRenderCheck] = useState(false)
+   const [newTest, setNewTest] = useState([])
    const getVariantHandler = (event) => {
       setGetRadio(event.target.value)
    }
-
-   const [newTest, setNewTest] = useState([])
-
-   const newTestHandler = () => {
-      setNewTest([...newTest, { amount: Math.random(), data: [] }])
+   const getOneOrMoreHandler = (event) => {
+      setGet(event.target.value)
    }
-
+   const newTestHandler = () => {
+      setNewTest([...newTest, { amount: Math.random().toString(), data: [] }])
+   }
    const addVariantHandler = (i) => {
-      // const newSubtask = newTest.find((item) => item.amount === i)
-      // newSubtask.data.push({ id: Math.random() })
-      // setNewTest([...newSubtask, { data: newSubtask }])
+      const changeTest = [...newTest]
+      changeTest[i].data = [
+         ...changeTest[i].data,
+         { id: Math.random().toString() },
+      ]
+      setNewTest(changeTest)
+
       // вариант 1
       // setNewTest([
       //    ...newTest,
@@ -85,14 +88,16 @@ const Test = () => {
                            >
                               <Label>
                                  <FormControlLabel
-                                    key={Math.random()}
+                                    key={question.amount}
                                     value="one"
+                                    onChange={getOneOrMoreHandler}
                                     control={<Radio />}
                                     label="Один из списка"
                                  />
                                  <FormControlLabel
-                                    key={Math.random()}
+                                    key={question.amount}
                                     value="more"
+                                    onChange={getOneOrMoreHandler}
                                     control={<Radio />}
                                     label="Несколько из списков "
                                  />
@@ -116,16 +121,20 @@ const Test = () => {
                                  </RadioGroup>
                               </FormControl> */}
                               <TestRadio
+                                 name="contact"
                                  type="radio"
                                  id={variant.id}
-                                 name="contact"
-                                 value="email"
+                                 value={variant.id}
+                                 onChange={getVariantHandler}
                               />
                               <UiInput width="1064px" placeholder="Вариант" />
                            </OptionLabel>
                         ) : (
                            <OptionLabel key={variant.id} htmlFor="Variant">
-                              <Checkbox setIsClicked={getVariantHandler} />
+                              <Checkbox
+                                 value={variant.id}
+                                 setIsClicked={getVariantHandler}
+                              />
                               <UiInput width="1064px" placeholder="Вариант" />
                            </OptionLabel>
                         )
@@ -134,7 +143,7 @@ const Test = () => {
                      <BottomBlock>
                         <p>
                            <ButtonAddOption
-                              onClick={() => addVariantHandler(question.amount)}
+                              onClick={() => addVariantHandler(index)}
                            >
                               Добавить вариант
                            </ButtonAddOption>
