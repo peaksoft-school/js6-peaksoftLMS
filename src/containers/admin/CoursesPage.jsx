@@ -53,6 +53,7 @@ export const CoursesPage = () => {
 
    return (
       <CourseMain>
+         {/* <ContainerDiv> */}
          {error && <PopUp message={error} messageType="error" />}
          {status === 'created' && (
             <PopUp message="Группа успешно создана" messageType="success" />
@@ -130,6 +131,7 @@ export const CoursesPage = () => {
             />
          )}
          <Outlet />
+         {/* </ContainerDiv> */}
       </CourseMain>
    )
 }
@@ -147,9 +149,10 @@ const ButtonDiv = styled.div`
    justify-content: end;
    margin: 24px 0;
 `
+
 const CardDiv = styled.div`
    display: flex;
-   justify-content: start;
+   column-width: 100%;
    flex-wrap: wrap;
    gap: 20px;
 `
