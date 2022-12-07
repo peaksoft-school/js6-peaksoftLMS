@@ -111,10 +111,20 @@ export const LEARNING_FORMAT = [
    {
       studyFormat: 'OFFLINE',
    },
+]
+
+export const LEARNING_FORMAT_STUDENTS = [
    {
-      all: 'все',
+      studyFormat: 'ONLINE',
+   },
+   {
+      studyFormat: 'OFFLINE',
+   },
+   {
+      studyFormat: 'ALL',
    },
 ]
+
 export const PATTERN_FOR_EMAIL =
    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 

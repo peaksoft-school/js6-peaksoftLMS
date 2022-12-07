@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem'
 import SelectMui from '@mui/material/Select'
 import styled from 'styled-components'
 
-function GroupsSelect({ valueFormats, setValueFormats, formats }) {
+function StudyFormatSelect({ valueFormats, setValueFormats, formats }) {
    const handleChange = (event) => {
       setValueFormats(event.target.value)
    }
@@ -30,7 +30,8 @@ function GroupsSelect({ valueFormats, setValueFormats, formats }) {
       </Form>
    )
 }
-export default GroupsSelect
+export default StudyFormatSelect
+
 const Form = styled(FormControl)`
    .MuiSelect-select {
       display: flex;

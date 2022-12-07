@@ -1,96 +1,181 @@
 import styled from 'styled-components'
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 import UIButton from '../../components/UI/UIButton'
+import PopUp from '../../components/UI/PopUp'
 import { ReactComponent as ExporExcelIcon } from '../../assets/exportExcel.svg'
 import { ReactComponent as AddPlusIcon } from '../../assets/addPlusIcon.svg'
 import { ReactComponent as RenameIcon } from '../../assets/renameIcon.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg'
 import AddStudentModal from '../../components/student-groups/AddStudentModal'
-import { getFilteredlStudents } from '../../store/slices/admin-slices/admin-student/student-actions'
+import {
+   deleteStudent,
+   getAllStudents,
+   getFilteredlStudents,
+} from '../../store/slices/admin-slices/admin-student/student-actions'
 import Wrapper from '../../components/UI/Wrapper'
 import UiTable from '../../components/UI/UiTable'
 import {
-   LEARNING_FORMAT,
+   LEARNING_FORMAT_STUDENTS,
    STUDENT_HEADER,
 } from '../../utils/constants/constants'
-import StudyFormatSelect from '../../components/UI/StudentsSelects/StudyFormatSelect'
+import FilteredStudyFormat from '../../components/UI/StudentsSelects/FilteredStudyFormat'
+import EditStudentModal from '../../components/student-groups/EditStudentModal'
+import ImportExcelModal from '../../components/student-groups/ImportExcelModal'
 
 export const StudentsPage = () => {
-   const [stateItems, setStateItems] = useState(false)
-   const [studyFormat, setStudyFormat] = useState('')
    const dispatch = useDispatch()
+   const [stateItems, setStateItems] = useState({
+      openModalAddStudents: false,
+      openModalImportExcel: false,
+   })
+   const [params, setParams] = useSearchParams()
+   const { modalOpen } = Object.fromEntries(params)
 
-   const openModalAddStudent = () => {
-      setStateItems(false)
-   }
+   const { students, status, error, fulfilled } = useSelector(
+      (state) => state.students
+   )
 
-   const filterStudentsHandler = () => {
-      dispatch(getFilteredlStudents(studyFormat))
-   }
    useEffect(() => {
-      dispatch(getFilteredlStudents())
+      dispatch(getAllStudents())
    }, [])
 
-   const getValueFormatsSelect = (format) => {
-      setStudyFormat({ studyFormat: format })
+   const render = students.map((item, i) => {
+      return {
+         itemId: item.id,
+         id: i + 1,
+         name: item.fullName,
+         format: item.studyFormat,
+         group: item.groupName,
+         phone: item.phoneNumber,
+         email: item.email,
+      }
+   })
+
+   const [filteredFormat, setFilteredFormat] = useState('')
+
+   const onCloseHandler = () => {
+      setParams({})
    }
 
-   const getOptionValue = (name) => {
-      setStudyFormat(name)
+   const renameHandler = (id) => {
+      setParams({ modalOpen: 'EDIT-STUDENT', id })
+   }
+
+   const openModalAddStudent = () => {
+      setStateItems({
+         ...stateItems,
+         openModalAddStudents: false,
+      })
+   }
+
+   const onCloseImportExcelHandler = () => {
+      setStateItems({
+         ...stateItems,
+         openModalImportExcel: false,
+      })
+   }
+   const getValueFormatsSelect = (format) => {
+      dispatch(getFilteredlStudents(format))
+      setFilteredFormat(format)
+   }
+
+   const deleteHandler = (id) => {
+      dispatch(deleteStudent(id))
    }
 
    return (
-      <Conatiner>
-         <Block>
-            <StudyFormatSelect
-               placeholder="Формат обучения"
-               value={studyFormat.studyFormat}
-               setValue={getValueFormatsSelect}
-               options={LEARNING_FORMAT}
-               getOptionValue={getOptionValue}
-               onChange={filterStudentsHandler}
-            >
-               Формат обучения
-            </StudyFormatSelect>
-            <ButtonBlock>
-               <UIButton
-                  startIcon={<ExporExcelIcon />}
-                  variant="outlined"
-                  borderradius="8px"
-                  margin="0 10px 0 0"
-                  fontSize="14px"
-                  width="162px"
-                  height="40px"
-               >
-                  Импорт Excel
-               </UIButton>
-               <UIButton
-                  onClick={() => setStateItems((prev) => !prev)}
-                  startIcon={<AddPlusIcon />}
-                  variant="contained"
-                  borderradius="8px"
-                  fontSize="14px"
-                  width="204px"
-                  height="40px"
-               >
-                  Добавить студента
-               </UIButton>
-            </ButtonBlock>
-         </Block>
+      <>
+         {status === 'mistake' && <PopUp message={error} messageType="error" />}
+         {status === 'rejected' && (
+            <PopUp message={error} messageType="error" />
+         )}
 
-         <TableMain>
-            <Wrapper width="1240px" margin="24px 0" height="100%">
-               <UiTable
-                  headData={STUDENT_HEADER}
-                  actions
-                  secondIcon={<RenameIcon />}
-                  thirdIcon={<DeleteIcon />}
+         {status === 'created' && (
+            <PopUp message={fulfilled} messageType="success" />
+         )}
+         {status === 'deleted' && (
+            <PopUp message={fulfilled} messageType="success" />
+         )}
+         {status === 'edited' && (
+            <PopUp message={fulfilled} messageType="success" />
+         )}
+
+         <Conatiner>
+            <Block>
+               <FilteredStudyFormat
+                  valueFormats={filteredFormat}
+                  setValueFormats={getValueFormatsSelect}
+                  formats={LEARNING_FORMAT_STUDENTS}
                />
-            </Wrapper>
-         </TableMain>
-         <AddStudentModal handleClose={openModalAddStudent} open={stateItems} />
-      </Conatiner>
+
+               <ButtonBlock>
+                  <UIButton
+                     startIcon={<ExporExcelIcon />}
+                     onClick={() =>
+                        setStateItems({
+                           ...stateItems,
+                           openModalImportExcel: true,
+                        })
+                     }
+                     variant="outlined"
+                     borderradius="8px"
+                     margin="0 10px 0 0"
+                     fontSize="14px"
+                     width="162px"
+                     height="40px"
+                  >
+                     Импорт Excel
+                  </UIButton>
+
+                  <UIButton
+                     onClick={() =>
+                        setStateItems({
+                           ...stateItems,
+                           openModalAddStudents: true,
+                        })
+                     }
+                     startIcon={<AddPlusIcon />}
+                     variant="contained"
+                     borderradius="8px"
+                     fontSize="14px"
+                     width="204px"
+                     height="40px"
+                  >
+                     Добавить студента
+                  </UIButton>
+               </ButtonBlock>
+            </Block>
+            <TableMain>
+               <Wrapper width="1240px" margin="24px 0" height="100%">
+                  <UiTable
+                     data={render}
+                     headData={STUDENT_HEADER}
+                     actions
+                     secondIcon={<RenameIcon />}
+                     secondOnClick={renameHandler}
+                     thirdIcon={<DeleteIcon />}
+                     thirdOnClick={deleteHandler}
+                  />
+               </Wrapper>
+            </TableMain>
+            <AddStudentModal
+               handleClose={openModalAddStudent}
+               open={stateItems.openModalAddStudents}
+            />
+            {modalOpen === 'EDIT-STUDENT' && (
+               <EditStudentModal
+                  handleClose={onCloseHandler}
+                  open={modalOpen === 'EDIT-STUDENT'}
+               />
+            )}
+            <ImportExcelModal
+               handleClose={onCloseImportExcelHandler}
+               open={stateItems.openModalImportExcel}
+            />
+         </Conatiner>
+      </>
    )
 }
 const Conatiner = styled.div`

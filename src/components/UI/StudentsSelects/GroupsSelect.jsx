@@ -3,18 +3,23 @@ import MenuItem from '@mui/material/MenuItem'
 import SelectMui from '@mui/material/Select'
 import styled from 'styled-components'
 
-function GroupsSelect({ value, setValue, options, getOptionValue }) {
+function GroupsSelect({
+   valueGroupSelect,
+   setValueGroupSelect,
+   options,
+   getOptionValue,
+}) {
    const handleChange = (event) => {
-      setValue(event.target.value)
+      setValueGroupSelect(event.target.value)
    }
    return (
       <Form>
          <SelectMui
             onChange={handleChange}
-            value={value}
+            value={valueGroupSelect}
             displayEmpty
             renderValue={
-               value !== ''
+               valueGroupSelect !== ''
                   ? undefined
                   : () => <Placeholder>Группа</Placeholder>
             }
@@ -35,6 +40,7 @@ function GroupsSelect({ value, setValue, options, getOptionValue }) {
    )
 }
 export default GroupsSelect
+
 const Form = styled(FormControl)`
    .MuiSelect-select {
       display: flex;

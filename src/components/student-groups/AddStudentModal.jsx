@@ -6,7 +6,11 @@ import UIButton from '../UI/UIButton'
 import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
 import { getGroups } from '../../store/slices/admin-slices/group-slices/group-actions'
-import { LEARNING_FORMAT } from '../../utils/constants/constants'
+import {
+   LEARNING_FORMAT,
+   PATTERN_FOR_EMAIL,
+   POLE_ZAPOLNEN,
+} from '../../utils/constants/constants'
 import GroupsSelect from '../UI/StudentsSelects/GroupsSelect'
 import StudyFormatSelect from '../UI/StudentsSelects/StudyFormatSelect'
 import { addStudents } from '../../store/slices/admin-slices/admin-student/student-actions'
@@ -23,6 +27,7 @@ const AddStudentModal = ({ open, handleClose }) => {
          phoneNumber: '',
          email: '',
          password: '',
+         studyFormat: '',
       },
    })
 
@@ -42,6 +47,7 @@ const AddStudentModal = ({ open, handleClose }) => {
    const getValueFormatsSelect = (format) => {
       setValue({ ...value, studyFormat: format })
    }
+
    const { errors } = useFormState({
       control,
    })
@@ -77,7 +83,7 @@ const AddStudentModal = ({ open, handleClose }) => {
                   control={control}
                   name="firstName"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 3,
                         message: 'Введите не менее 3 символов',
@@ -103,7 +109,7 @@ const AddStudentModal = ({ open, handleClose }) => {
                   control={control}
                   name="lastName"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 4,
                         message: 'Введите не менее 4 символов',
@@ -129,7 +135,7 @@ const AddStudentModal = ({ open, handleClose }) => {
                   control={control}
                   name="phoneNumber"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                   }}
                   render={({ field }) => (
                      <UiInput
@@ -151,9 +157,9 @@ const AddStudentModal = ({ open, handleClose }) => {
                   control={control}
                   name="email"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      pattern: {
-                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        value: PATTERN_FOR_EMAIL,
                         message: 'Адрес электронной почты введен не верно',
                      },
                      minLength: {
@@ -181,7 +187,7 @@ const AddStudentModal = ({ open, handleClose }) => {
                   control={control}
                   name="password"
                   rules={{
-                     required: 'Поле обязательно к заполнению',
+                     required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 6,
                         message: 'Введите не менее 6 символовн',
@@ -202,8 +208,8 @@ const AddStudentModal = ({ open, handleClose }) => {
                   <ErrorMessage>{errors?.password?.message}</ErrorMessage>
                )}
                <GroupsSelect
-                  value={value.groupId}
-                  setValue={getValueGroupsSelect}
+                  valueGroupSelect={value.groupId}
+                  setValueGroupSelect={getValueGroupsSelect}
                   options={groups}
                   getOptionValue={getOptionValue}
                />

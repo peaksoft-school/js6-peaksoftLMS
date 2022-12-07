@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {
    TableBody,
@@ -9,18 +9,11 @@ import {
    Paper,
    Table,
 } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllStudents } from '../../store/slices/admin-slices/admin-student/student-actions'
 
 const UiTable = (props) => {
-   const dispatch = useDispatch()
-   const students = useSelector((state) => state.students.students)
-   useEffect(() => {
-      dispatch(getAllStudents())
-   }, [])
-
    const {
       headData,
+      data,
       actions,
       firstIcon,
       secondIcon,
@@ -29,6 +22,7 @@ const UiTable = (props) => {
       secondOnClick,
       thirdOnClick,
    } = props
+
    return (
       <div>
          <TableContainer component={Paper}>
@@ -56,7 +50,7 @@ const UiTable = (props) => {
                   </StyledTableRow>
                </HeadTable>
                <TableBody>
-                  {students?.map((el, index) => (
+                  {data.map((el) => (
                      <RowTable
                         key={el.id}
                         sx={{
@@ -64,19 +58,19 @@ const UiTable = (props) => {
                         }}
                      >
                         <TableCell component="th" scope="row">
-                           <span>{index + 1}</span>
+                           <span>{el.id}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.fullName}</span>
+                           <span>{el.name}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.groupName}</span>
+                           <span>{el.group}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.studyFormat}</span>
+                           <span>{el.format}</span>
                         </TableCell>
                         <TableCell align="left">
-                           <span>{el.phoneNumber}</span>
+                           <span>{el.phone}</span>
                         </TableCell>
                         <TableCell align="left">
                            <span>{el.email}</span>
@@ -85,7 +79,7 @@ const UiTable = (props) => {
                            <span>{el.password}</span>
                         </TableCell>
                         {actions && (
-                           <div>
+                           <div key={el.id}>
                               <TableCell
                                  onClick={(e) => {
                                     e.stopPropagation()

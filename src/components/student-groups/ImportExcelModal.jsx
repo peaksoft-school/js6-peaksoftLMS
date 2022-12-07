@@ -1,243 +1,132 @@
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { useForm, Controller, useFormState } from 'react-hook-form'
-import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useState, useRef } from 'react'
 import UIButton from '../UI/UIButton'
-import UiInput from '../UI/UiInput'
 import ModalWindow from '../UI/ModalWindow'
-import StudentSelect from '../UI/GroupsSelect'
-import { getGroups } from '../../store/slices/admin-slices/group-slices/group-actions'
-import { LEARNING_FORMAT } from '../../utils/constants/constants'
-import { addStudents } from '../../store/slices/admin-slices/admin-student/student-actions'
+import GroupsSelect from '../UI/StudentsSelects/GroupsSelect'
+import PopUp from '../UI/PopUp'
+import UiInput from '../UI/UiInput'
+import { postImportExcel } from '../../store/slices/admin-slices/admin-student/student-actions'
 
 const ImportExcelModal = ({ open, handleClose }) => {
    const dispatch = useDispatch()
-   const { groups } = useSelector((state) => state.groups)
 
-   const { control, handleSubmit, reset } = useForm({
-      mode: 'onblur',
-      defaultValues: {
-         firstName: '',
-         lastName: '',
-         phoneNumber: '',
-         email: '',
-         password: '',
-      },
+   const { status, fulfilled, error } = useSelector((state) => state.students)
+
+   const [importExcel, setImportExcel] = useState({
+      groupId: '',
+      uploadFile: [],
    })
+
+   const filePicker = useRef(null)
+
+   const { groups } = useSelector((state) => state.groups)
 
    const [value, setValue] = useState({
       groupId: '',
-      groupName: '',
-      studyFormat: '',
    })
 
-   const getOptionValue = (name, id) => {
-      setValue({ ...value, groupId: id })
+   const getOptionValue = (grId) => {
+      setValue({ ...value, groupId: grId })
    }
 
-   const getValueSelect = (grName) => {
-      setValue({ ...value, groupName: grName })
+   const getValueGroupsSelect = (grName) => {
+      setValue({ ...value, groupId: grName })
    }
 
-   const getValueSelectFormatLearning = (format) => {
-      setValue({ ...value, studyFormat: format })
+   const handlePick = () => {
+      filePicker.current.click()
+   }
+   const handleChange = (event) => {
+      setImportExcel({
+         ...importExcel,
+         uploadFile: event.target.files[0],
+         groupId: value.groupId,
+      })
    }
 
-   const { errors } = useFormState({
-      control,
-   })
-
-   useEffect(() => {
-      dispatch(getGroups())
-   }, [])
-
-   const onSubmit = ({ email, firstName, lastName, phoneNumber, password }) => {
-      dispatch(
-         addStudents({
-            firstName,
-            lastName,
-            phoneNumber,
-            email,
-            password,
-            groupId: value.groupId,
-            studyFormat: value.studyFormat,
-         })
-      )
+   const sendingFile = (e) => {
+      e.preventDefault()
+      dispatch(postImportExcel(importExcel))
       handleClose()
-      reset()
    }
-   return (
-      <ModalWindow
-         open={open}
-         handleClose={handleClose}
-         modalTitle="Добавить студента"
-         bodyContent={
-            <DivContainer onSubmit={handleSubmit(onSubmit)}>
-               <Controller
-                  control={control}
-                  name="firstName"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                     minLength: {
-                        value: 3,
-                        message: 'Введите не менее 3 символов',
-                     },
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="16px"
-                        placeholder="Имя"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="text"
-                        error={!!errors.firstName?.message}
-                     />
-                  )}
-               />
-               {errors?.firstName && (
-                  <ErrorMessage>
-                     {errors?.firstName?.message || 'Error'}
-                  </ErrorMessage>
-               )}
-               <Controller
-                  control={control}
-                  name="lastName"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                     minLength: {
-                        value: 4,
-                        message: 'Введите не менее 4 символов',
-                     },
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="12px"
-                        placeholder="Фамилия"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="text"
-                        error={!!errors.lastName?.message}
-                     />
-                  )}
-               />
-               {errors?.lastName && (
-                  <ErrorMessage>
-                     {errors?.lastName?.message || 'Error'}
-                  </ErrorMessage>
-               )}
-               <Controller
-                  control={control}
-                  name="phoneNumber"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="12px"
-                        placeholder="+996 ___ __ __ __"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="number"
-                        error={!!errors.phoneNumber?.message}
-                     />
-                  )}
-               />
-               {errors?.phoneNumber && (
-                  <ErrorMessage>
-                     {errors?.phoneNumber?.message || 'Error'}
-                  </ErrorMessage>
-               )}
-               <Controller
-                  control={control}
-                  name="email"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                     pattern: {
-                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                        message: 'Адрес электронной почты введен не верно',
-                     },
-                     minLength: {
-                        value: 6,
-                        message: 'Введите более 6 символов',
-                     },
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="12px"
-                        placeholder="Email"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="email"
-                        error={!!errors.email?.message}
-                     />
-                  )}
-               />
-               {errors?.email && (
-                  <ErrorMessage>
-                     {errors?.email?.message || 'Error'}
-                  </ErrorMessage>
-               )}
-               <Controller
-                  control={control}
-                  name="password"
-                  rules={{
-                     required: 'Поле обязательно к заполнению',
-                     minLength: {
-                        value: 6,
-                        message: 'Введите не менее 6 символовн',
-                     },
-                  }}
-                  render={({ field }) => (
-                     <UiInput
-                        margintop="12px"
-                        placeholder="Пароль"
-                        onChange={(e) => field.onChange(e)}
-                        value={field.value}
-                        type="password"
-                        error={!!errors.password?.message}
-                     />
-                  )}
-               />
-               {errors?.password && (
-                  <ErrorMessage>{errors?.password?.message}</ErrorMessage>
-               )}
-               <StudentSelect
-                  placeholder="Группа"
-                  value={value.groupName}
-                  setValue={getValueSelect}
-                  options={groups}
-                  getOptionValue={getOptionValue}
-               />
-               <StudentSelect
-                  placeholder="Формат обучения"
-                  value={value.studyFormat}
-                  setValue={getValueSelectFormatLearning}
-                  options={LEARNING_FORMAT}
-                  getOptionValue={getOptionValue}
-               />
 
-               <ContaiberButton>
-                  <UIButton
-                     onClick={handleClose}
-                     variant="outlined"
-                     width="103px"
-                     borderradius="8px"
-                  >
-                     Отмена
-                  </UIButton>
-                  <UIButton
-                     type="submit"
-                     variant="contained"
-                     background="#3772FF"
-                     width="117px"
-                     borderradius="8px"
-                  >
-                     Добавить
-                  </UIButton>
-               </ContaiberButton>
-            </DivContainer>
-         }
-      />
+   return (
+      <>
+         {status === 'error' && <PopUp message={error} messageType="error" />}
+
+         {status === 'imported' && (
+            <PopUp message={fulfilled} messageType="success" />
+         )}
+         <ModalWindow
+            open={open}
+            handleClose={handleClose}
+            modalTitle="Импорт Excel в БД"
+            bodyContent={
+               <DivContainer>
+                  <GroupsSelect
+                     valueGroupSelect={
+                        importExcel.groupId
+                           ? importExcel.groupId
+                           : value.groupId
+                     }
+                     setValueGroupSelect={getValueGroupsSelect}
+                     options={groups}
+                     getOptionValue={getOptionValue}
+                  />
+                  <StyledBox>
+                     <UiInput
+                        placeholder="Выберите Excel файл для импорта"
+                        type="text"
+                        isDisabled
+                        onChange={(event) =>
+                           setImportExcel({
+                              ...importExcel,
+                              uploadFile: event.target.files,
+                           })
+                        }
+                        value={importExcel.uploadFile.name || ''}
+                     />
+                     <input
+                        className="hidden"
+                        type="file"
+                        ref={filePicker}
+                        onChange={handleChange}
+                     />
+                     <UIButton
+                        onClick={handlePick}
+                        variant="outlined"
+                        borderradius="8px"
+                        background="rgba(26, 35, 126, 0.07)"
+                     >
+                        Обзор...
+                     </UIButton>
+                  </StyledBox>
+
+                  <ContaiberButton>
+                     <UIButton
+                        onClick={handleClose}
+                        variant="outlined"
+                        width="103px"
+                        borderradius="8px"
+                     >
+                        Отмена
+                     </UIButton>
+                     <UIButton
+                        onClick={sendingFile}
+                        type="submit"
+                        variant="contained"
+                        background="#3772FF"
+                        width="117px"
+                        borderradius="8px"
+                     >
+                        Добавить
+                     </UIButton>
+                  </ContaiberButton>
+               </DivContainer>
+            }
+         />
+      </>
    )
 }
 export default ImportExcelModal
@@ -274,12 +163,16 @@ const ContaiberButton = styled.div`
    display: flex;
    justify-content: end;
 `
-const ErrorMessage = styled.p`
-   color: red;
-   font-family: 'Open Sans';
-   font-style: normal;
-   font-weight: 400;
-   margin-top: 5px;
-   font-size: 13px;
-   line-height: 16px;
+const StyledBox = styled.div`
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   .MuiInputBase-root {
+      width: 369px;
+   }
+   button {
+      width: 110px;
+      height: 42px;
+      margin: 12px 0 0 12px;
+   }
 `

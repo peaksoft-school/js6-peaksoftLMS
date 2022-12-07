@@ -3,13 +3,20 @@ import MenuItem from '@mui/material/MenuItem'
 import SelectMui from '@mui/material/Select'
 import styled from 'styled-components'
 
-function GroupsSelect({ valueFormats, setValueFormats, formats }) {
+function FilteredStudyFormat({
+   valueFormats,
+   setValueFormats,
+   formats,
+   onChange,
+   onClick,
+}) {
    const handleChange = (event) => {
       setValueFormats(event.target.value)
    }
    return (
       <Form>
          <SelectMui
+            onClick={onClick}
             onChange={handleChange}
             value={valueFormats}
             displayEmpty
@@ -22,7 +29,7 @@ function GroupsSelect({ valueFormats, setValueFormats, formats }) {
             {formats?.map((item) => {
                return (
                   <MenuItem key={item.studyFormat} value={item.studyFormat}>
-                     <p>{item.studyFormat}</p>
+                     <p onChange={onChange}>{item.studyFormat}</p>
                   </MenuItem>
                )
             })}
@@ -30,27 +37,27 @@ function GroupsSelect({ valueFormats, setValueFormats, formats }) {
       </Form>
    )
 }
-export default GroupsSelect
+export default FilteredStudyFormat
+
 const Form = styled(FormControl)`
    .MuiSelect-select {
       display: flex;
       justify-content: flex-start;
    }
    & > div {
-      height: ${(props) => props.height || '40px'};
+      height: 40px;
       border-radius: 10px;
    }
-   width: ${(props) => props.width};
-   margin: ${(props) => props.margin};
+   width: 202px;
+   height: 40px;
    background: #ffffff;
    border-radius: 10px;
    & fieldset {
-      border-radius: 10px;
-      border: ${(props) => props.border};
+      border: 2px solid #3772ff;
    }
 `
 const Placeholder = styled.p`
-   font-weight: 400;
-   font-size: 16px;
-   color: #8d949e;
+   font-weight: 600;
+   font-size: 14px;
+   color: #3772ff;
 `
