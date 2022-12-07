@@ -37,9 +37,11 @@ export const GroupsPage = () => {
    const openEdditModal = (id) => {
       setParams({ modalOpen: 'EDDIT-GROUP', id })
    }
+
    const onCloseModal = () => {
       setParams({})
    }
+
    const navigateHanlder = (id) => {
       navigate(`/admin/groups/${id}`)
    }

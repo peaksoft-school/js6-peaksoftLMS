@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import AdminCourseLayot from '../components/admin-courses/AdminCourseLayot'
 import { CoursesPage } from '../containers/admin/CoursesPage'
 import { CourseStudentsPage } from '../containers/admin/CourseStudentsPage'
 import { CourseTeachersPage } from '../containers/admin/CourseTeachersPage'
@@ -17,9 +18,16 @@ export const AdminRoutes = () => {
             <Route path="/" element={<Navigate to="groups" />} />
             <Route path="/groups" element={<GroupsPage />} />
             <Route path="/groups/:id" element={<GroupsInnerPage />} />
-            <Route path="/courses/*" element={<CoursesPage />}>
-               <Route index path="teachers" element={<CourseTeachersPage />} />
-               <Route path="students" element={<CourseStudentsPage />} />
+            <Route path="/courses" element={<AdminCourseLayot />}>
+               <Route index element={<CoursesPage />} />
+               <Route
+                  path="course-students/:id"
+                  element={<CourseStudentsPage />}
+               />
+               <Route
+                  path="course-teachers/:id"
+                  element={<CourseTeachersPage />}
+               />
             </Route>
             <Route path="/teachers" element={<TeachersPage />} />
             <Route path="/students" element={<StudentsPage />} />
