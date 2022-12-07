@@ -89,6 +89,7 @@ const ImportExcelModal = ({ open, handleClose }) => {
                      />
                      <input
                         className="hidden"
+                        accept=".xlsx, application/vnd.openxmlformsts-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                         type="file"
                         ref={filePicker}
                         onChange={handleChange}

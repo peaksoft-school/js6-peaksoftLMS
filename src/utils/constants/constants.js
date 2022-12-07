@@ -101,6 +101,7 @@ export const STUDENT_HEADER = [
       phoryatLearning: 'Формат',
       phoneName: 'Номер телефона',
       emailName: 'E-mail',
+      actionsName: 'Действия',
    },
 ]
 

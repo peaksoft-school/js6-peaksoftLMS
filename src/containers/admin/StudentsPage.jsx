@@ -23,6 +23,7 @@ import {
 import FilteredStudyFormat from '../../components/UI/StudentsSelects/FilteredStudyFormat'
 import EditStudentModal from '../../components/student-groups/EditStudentModal'
 import ImportExcelModal from '../../components/student-groups/ImportExcelModal'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
 
 export const StudentsPage = () => {
    const dispatch = useDispatch()
@@ -103,6 +104,7 @@ export const StudentsPage = () => {
          )}
 
          <Conatiner>
+            <HeaderLoyout roles="Администратор" />
             <Block>
                <FilteredStudyFormat
                   valueFormats={filteredFormat}
@@ -148,7 +150,7 @@ export const StudentsPage = () => {
                </ButtonBlock>
             </Block>
             <TableMain>
-               <Wrapper width="1240px" margin="24px 0" height="100%">
+               <Wrapper width="100%" margin="24px 0" height="100%">
                   <UiTable
                      data={render}
                      headData={STUDENT_HEADER}
@@ -181,18 +183,18 @@ export const StudentsPage = () => {
 const Conatiner = styled.div`
    width: 100%;
    background: #eff0f4;
+   padding: 0 40px 0 20px;
 `
 const TableMain = styled.div`
    display: flex;
    justify-content: center;
 `
 const Block = styled.div`
-   margin-left: 69.5px;
+   margin-top: 20px;
    display: flex;
    justify-content: space-between;
 `
 const ButtonBlock = styled.div`
    display: flex;
    gap: 10px;
-   margin-right: 5.85%;
 `
