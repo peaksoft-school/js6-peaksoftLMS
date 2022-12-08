@@ -5,13 +5,15 @@ const SidebarLayout = ({ children }) => {
    return (
       <MainSidebar>
          <BlockSide>
-            <BlockHeader>
-               <BlockLinear />
-               <BlockTheme>PEAKSOFT</BlockTheme>
-            </BlockHeader>
-            <BlockItems>
-               <SideBarHeader />
-            </BlockItems>
+            <Fixed>
+               <BlockHeader>
+                  <BlockLinear />
+                  <BlockTheme>PEAKSOFT</BlockTheme>
+               </BlockHeader>
+               <BlockItems>
+                  <SideBarHeader />
+               </BlockItems>
+            </Fixed>
          </BlockSide>
          {children}
       </MainSidebar>
@@ -20,10 +22,15 @@ const SidebarLayout = ({ children }) => {
 
 export default SidebarLayout
 
+const Fixed = styled.div`
+   position: fixed;
+`
 const MainSidebar = styled.div`
    display: flex;
 `
 const BlockSide = styled.div`
+   padding-right: 88px;
+   padding-left: 90px;
    position: relative;
    width: 240px;
    height: 100vh;
@@ -35,10 +42,11 @@ const BlockSide = styled.div`
 `
 const BlockHeader = styled.nav`
    position: relative;
-   margin-top: 32px;
+   margin-top: 42px;
    display: flex;
    justify-content: center;
    align-items: flex-start;
+   margin-bottom: 50px;
 `
 
 const BlockTheme = styled.h2`

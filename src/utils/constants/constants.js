@@ -104,6 +104,27 @@ export const STUDENT_HEADER = [
    },
 ]
 
+export const COURSE_DATA_STUDENT = [
+   {
+      idName: 'ID',
+      firstName: 'Имя Фамилия',
+      groupName: 'Группа',
+      phoryatLearning: 'Формат',
+      phoneName: 'Номер телефона',
+      emailName: 'E-mail',
+   },
+]
+export const COURSE_DATA_TEACHERS = [
+   {
+      idName: 'ID',
+      firstName: 'Имя Фамилия',
+      phoryatLearning: 'Специализация',
+      phoneName: 'Номер телефона',
+      emailName: 'E-mail',
+      actionsName: 'Действия',
+   },
+]
+
 export const PATTERN_FOR_EMAIL =
    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
