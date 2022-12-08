@@ -30,29 +30,7 @@ import { DeleteVideoModal } from '../../components/ins-materials/DeleteVideoModa
 import { CreateLinkModal } from '../../components/ins-materials/CreateLinkModal'
 import { EditLinkModal } from '../../components/ins-materials/EditLinkModal'
 import { DeleteLinkModal } from '../../components/ins-materials/DeleteLinkModal'
-
-const render = [
-   {
-      id: Math.random(),
-      name: 'Видеоурок',
-   },
-   {
-      id: Math.random(),
-      name: 'Презентация',
-   },
-   {
-      id: Math.random(),
-      name: 'Задание',
-   },
-   {
-      id: Math.random(),
-      name: 'Ссылка',
-   },
-   {
-      id: Math.random(),
-      name: 'Тест',
-   },
-]
+import { SELECT_OPTIONS } from '../../utils/constants/constants'
 
 export const InstructorMaterials = () => {
    const { id } = useParams()
@@ -95,7 +73,7 @@ export const InstructorMaterials = () => {
             navigate(`/instructor/test/${id}/${idLesson}`)
             break
          default:
-            console.log('undefined action')
+            setParams({})
       }
    }
 
@@ -188,7 +166,7 @@ export const InstructorMaterials = () => {
                   </BreadCrumbsBlock>
                   <CustomButton variant="contained" onClick={openCreateModal}>
                      <AddIcon />
-                     <ButtonText> Добавить урок</ButtonText>
+                     <ButtonText>Добавить урок</ButtonText>
                   </CustomButton>
                </HeaderBlock>
                {lessons.length === 0 ? (
@@ -225,7 +203,7 @@ export const InstructorMaterials = () => {
                               <ActionSelect
                                  getActionHandler={onGetActionHandler}
                                  placeholder="Добавить"
-                                 data={render}
+                                 data={SELECT_OPTIONS}
                                  personName={state}
                                  idLesson={element.lessonId}
                                  setPersonName={setState}

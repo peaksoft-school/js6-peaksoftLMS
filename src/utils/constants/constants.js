@@ -109,5 +109,28 @@ export const PATTERN_FOR_EMAIL =
 
 export const POLE_ZAPOLNEN = 'Поле обязательно к заполнению'
 
+export const SELECT_OPTIONS = [
+   {
+      id: Math.random(),
+      name: 'Видеоурок',
+   },
+   {
+      id: Math.random(),
+      name: 'Презентация',
+   },
+   {
+      id: Math.random(),
+      name: 'Задание',
+   },
+   {
+      id: Math.random(),
+      name: 'Ссылка',
+   },
+   {
+      id: Math.random(),
+      name: 'Тест',
+   },
+]
+
 export const VIDEO_LINK =
    'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley'
