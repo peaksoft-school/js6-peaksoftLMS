@@ -30,28 +30,20 @@ const Test = () => {
    const deleteTestHandler = (id) => {
       const filteredDelete = newTest.filter((item) => item.id !== id)
       setNewTest(filteredDelete)
-      console.log(newTest)
    }
-   const deleteVariantHandler = (itemId, questionId) => {
-      // const filteredX = newTest.find((item) => item.id === questionId)
-      // console.log(filteredX, 'fiiil')
-      // const newDelete = filteredX.data.filter((item) => item.id !== itemId)
-      // console.log(newDelete, 'newDelte')
-      // setNewTest([...newTest, { data: newDelete }])
+   const deleteVariantHandler = (itemId) => {
+      setNewTest(
+         newTest.map((item) => ({
+            ...item,
+            data: item.data.filter((tag) => tag.id !== itemId),
+         }))
+      )
+   }
 
-      const delete=newTest.map((item)=>{
-         if (item.id===questionId) {
-           const newItem = item.data.filter((item)=>item.id!==itemId)
-           setNewTest([...newTest,{data:newItem}])
-            
-         }
-      })
-   }
    const otmenaTestHandler = (product) => {
       setNewTest(
          newTest.filter((productItem) => productItem.id.id !== product.id)
       )
-      console.log(newTest)
    }
    const newTestHandler = () => {
       setNewTest([...newTest, { id: Math.random().toString(), data: [] }])
@@ -157,10 +149,7 @@ const Test = () => {
                               <UiInput width="1064px" placeholder="Вариант" />
                               <IconX
                                  onClick={() =>
-                                    deleteVariantHandler(
-                                       variant.id,
-                                       question.id
-                                    )
+                                    deleteVariantHandler(variant.id)
                                  }
                               />
                            </OptionLabel>
