@@ -5,11 +5,13 @@ import {
    createNewLessons,
    createPresentation,
    deleteLesson,
+   deleteLessonLink,
    deletePresentation,
    deleteVideoLesson,
    editPresentation,
    editVideo,
    getCoursesLessons,
+   postLink,
    postVideo,
 } from './materials-actions'
 
@@ -79,6 +81,16 @@ export const insMaterials = createSlice({
          state.status = 'deleted'
       },
       [deleteVideoLesson.rejected]: setError,
+      // * creating lesson link
+      [postLink.fulfilled]: (state) => {
+         state.status = 'uploaded'
+      },
+      [postLink.rejected]: setError,
+      // * delete lesson link
+      [deleteLessonLink.fulfilled]: (state) => {
+         state.status = 'deleted'
+      },
+      [deleteLessonLink.rejected]: setError,
    },
 })
 

@@ -21,6 +21,8 @@ const LessonCard = (props) => {
       deletePresentation,
       deleteVideo,
       editVideo,
+      editLink,
+      deleteLink,
    } = props
    return (
       <CardMain>
@@ -103,12 +105,12 @@ const LessonCard = (props) => {
                <TextLesson>Ссылка</TextLesson>
             </TextBlock>
             <ButtonBlock>
-               <CustomButton variant="contained">
+               <CustomButton onClick={editLink} variant="contained">
                   <img src={EditLesson} alt="edit" />
                   <p>Редактировать</p>
                </CustomButton>
 
-               <CustomButton variant="contained">
+               <CustomButton onClick={deleteLink} variant="contained">
                   <img src={DeleteItem} alt="delete" />
                   <p>Удалить</p>
                </CustomButton>

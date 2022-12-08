@@ -36,6 +36,21 @@ export const courseCrumbs = (courseName, lastPath) => {
       },
    ]
 }
+export const taskCrumbs = (courseName, lastPath, currentId) => {
+   return [
+      { path: '/instructor', to: '/instructor', name: 'Kурсы' },
+      {
+         path: '',
+         to: `/instructor/materials/${currentId}`,
+         name: courseName,
+      },
+      {
+         path: '',
+         to: '',
+         name: lastPath,
+      },
+   ]
+}
 
 export const setError = (state, { payload }) => {
    state.status = 'rejected'

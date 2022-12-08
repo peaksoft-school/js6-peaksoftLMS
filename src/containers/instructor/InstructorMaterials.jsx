@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Button, styled as style } from '@mui/material'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
@@ -27,6 +27,9 @@ import { PpesentationDeleteModal } from '../../components/ins-materials/DeletePr
 import { CreateVideoModal } from '../../components/ins-materials/CreateVideoModal'
 import { EditVideoModal } from '../../components/ins-materials/EditVideoModal'
 import { DeleteVideoModal } from '../../components/ins-materials/DeleteVideoModal'
+import { CreateLinkModal } from '../../components/ins-materials/CreateLinkModal'
+import { EditLinkModal } from '../../components/ins-materials/EditLinkModal'
+import { DeleteLinkModal } from '../../components/ins-materials/DeleteLinkModal'
 
 const render = [
    {
@@ -54,9 +57,9 @@ const render = [
 export const InstructorMaterials = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
-
    const [params, setParams] = useSearchParams()
    const { modalOpen } = Object.fromEntries(params)
+   const navigate = useNavigate()
 
    const { courseName } = useSelector((state) => state.insCourses)
    const { lessons, status, error } = useSelector((state) => state.materials)
@@ -81,6 +84,15 @@ export const InstructorMaterials = () => {
             break
          case 'Презентация':
             setParams({ modalOpen: 'POST-PPTX', idLesson, courseId: id })
+            break
+         case 'Задание':
+            navigate(`/instructor/task/${id}/${idLesson}`)
+            break
+         case 'Ссылка':
+            setParams({ modalOpen: 'POST-LINK', idLesson, courseId: id })
+            break
+         case 'Тест':
+            navigate(`/instructor/test/${id}/${idLesson}`)
             break
          default:
             console.log('undefined action')
@@ -116,6 +128,23 @@ export const InstructorMaterials = () => {
          setValidateError((prev) => !prev)
       } else {
          setParams({ modalOpen: 'DELETE-VIDEO', videoId })
+      }
+   }
+
+   // * video lesson functions
+
+   const editLink = (linkId, lessonId) => {
+      if (linkId === null) {
+         setValidateError((prev) => !prev)
+      } else {
+         setParams({ modalOpen: 'EDIT-LINK', linkId, lessonId })
+      }
+   }
+   const deleteLink = (linkId) => {
+      if (linkId === null) {
+         setValidateError((prev) => !prev)
+      } else {
+         setParams({ modalOpen: 'DELETE-LINK', linkId })
       }
    }
 
@@ -162,7 +191,6 @@ export const InstructorMaterials = () => {
                      <ButtonText> Добавить урок</ButtonText>
                   </CustomButton>
                </HeaderBlock>
-
                {lessons.length === 0 ? (
                   <NoDataInfo title="Тут пока нет никаких уроков" />
                ) : (
@@ -188,6 +216,11 @@ export const InstructorMaterials = () => {
                               editVideo(element.videoId, element.lessonId)
                            }
                            deleteVideo={() => deleteVideo(element.videoId)}
+                           // * video lesson functions
+                           editLink={() =>
+                              editLink(element.linkId, element.lessonId)
+                           }
+                           deleteLink={() => deleteLink(element.linkId)}
                            actionButton={
                               <ActionSelect
                                  getActionHandler={onGetActionHandler}
@@ -203,24 +236,20 @@ export const InstructorMaterials = () => {
                      ))}
                   </LessonGrid>
                )}
-
                <CreateLessonModal
                   open={modalOpen === 'CREATE-LESSON'}
                   onClose={() => setParams({})}
                />
-
                <RenameModal
                   open={modalOpen === 'RENAME-LESSON'}
                   onClose={() => setParams({})}
                />
-
                {modalOpen === 'POST-PPTX' && (
                   <CreatePresentationModal
                      open={modalOpen === 'POST-PPTX'}
                      onClose={() => setParams({})}
                   />
                )}
-
                {modalOpen === 'EDIT-PPTX' && (
                   <EditPresentationModal
                      open={modalOpen === 'EDIT-PPTX'}
@@ -248,6 +277,24 @@ export const InstructorMaterials = () => {
                {modalOpen === 'DELETE-VIDEO' && (
                   <DeleteVideoModal
                      open={modalOpen === 'DELETE-VIDEO'}
+                     onClose={() => setParams({})}
+                  />
+               )}
+               {modalOpen === 'POST-LINK' && (
+                  <CreateLinkModal
+                     open={modalOpen === 'POST-LINK'}
+                     onClose={() => setParams({})}
+                  />
+               )}
+               {modalOpen === 'EDIT-LINK' && (
+                  <EditLinkModal
+                     open={modalOpen === 'EDIT-LINK'}
+                     onClose={() => setParams({})}
+                  />
+               )}
+               {modalOpen === 'DELETE-LINK' && (
+                  <DeleteLinkModal
+                     open={modalOpen === 'DELETE-LINK'}
                      onClose={() => setParams({})}
                   />
                )}

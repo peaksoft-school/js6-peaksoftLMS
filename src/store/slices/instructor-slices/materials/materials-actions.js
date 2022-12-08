@@ -175,10 +175,47 @@ export const getVideoById = createAsyncThunk(
 )
 
 export const deleteVideoLesson = createAsyncThunk(
-   'instructor-materials/ deleteVideoLesson',
+   'instructor-materials/deleteVideoLesson',
    async ({ videoId, courseId }, { rejectWithValue, dispatch }) => {
       try {
          await axiosInstance.delete(`video/${videoId}`)
+         return dispatch(getCoursesLessons(courseId))
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+// * link CRUD functions
+
+export const postLink = createAsyncThunk(
+   'instructor-materials/postLink',
+   async ({ linkValueData, courseId }, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.post(`link`, linkValueData)
+         return dispatch(getCoursesLessons(courseId))
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+
+export const getLinkById = createAsyncThunk(
+   'instructor-materials/getLinkById',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`link/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+export const deleteLessonLink = createAsyncThunk(
+   'instructor-materials/deleteLessonLink',
+   async ({ linkId, courseId }, { rejectWithValue, dispatch }) => {
+      try {
+         await axiosInstance.delete(`link/${linkId}`)
          return dispatch(getCoursesLessons(courseId))
       } catch (err) {
          return rejectWithValue(err.response.data.message)
