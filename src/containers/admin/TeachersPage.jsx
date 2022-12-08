@@ -17,6 +17,7 @@ import {
 import RenameInstructorModal from '../../components/admin-teacher/RenameInstructorModal'
 import PopUp from '../../components/UI/PopUp'
 import HeaderLoyout from '../../components/UI/HeaderLoyout'
+import { UiLoading } from '../../components/UI/UiLoading'
 
 export const TeachersPage = () => {
    const dispatch = useDispatch()
@@ -71,7 +72,7 @@ export const TeachersPage = () => {
                messageType="success"
             />
          )}
-         <GroupsMain>
+         <Container>
             <HeaderLoyout roles="Администратор" />
             <ButtonWrapper>
                <UIButton
@@ -83,18 +84,25 @@ export const TeachersPage = () => {
                   Добавить учителя
                </UIButton>
             </ButtonWrapper>
-            <Wrapper height="100%">
-               <UiTable
-                  headData={HEAD_DATA}
-                  data={render}
-                  actions
-                  secondIcon={<RenameIconTeacher />}
-                  secondOnClick={renameHandler}
-                  thirdIcon={<DeleteIconTeacher />}
-                  thirdOnClick={deleteHandler}
-               />
-            </Wrapper>
-         </GroupsMain>
+            {status === 'loading' ? (
+               <UiLoading />
+            ) : (
+               <GroupsMain>
+                  <Wrapper height="100%">
+                     <UiTable
+                        headData={HEAD_DATA}
+                        data={render}
+                        actions
+                        secondIcon={<RenameIconTeacher />}
+                        secondOnClick={renameHandler}
+                        thirdIcon={<DeleteIconTeacher />}
+                        thirdOnClick={deleteHandler}
+                     />
+                  </Wrapper>
+               </GroupsMain>
+            )}
+         </Container>
+
          {modalOpen === 'EDIT-TEACHER' && (
             <RenameInstructorModal
                handleClose={onCloseRenameHandler}
@@ -108,11 +116,15 @@ export const TeachersPage = () => {
       </>
    )
 }
+const Container = styled.div`
+   width: 100%;
+   background-color: #eff0f4;
+   padding: 0 10px;
+`
 const GroupsMain = styled.div`
    width: 100%;
    display: flex;
    flex-direction: column;
-   padding: 0 10px;
    background-color: #eff0f4;
 `
 const ButtonWrapper = styled.div`

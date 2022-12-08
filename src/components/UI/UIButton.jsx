@@ -2,6 +2,8 @@ import { Button } from '@mui/material'
 import styled from 'styled-components'
 
 const UIButton = ({
+   marginRight,
+   marginLeft,
    onClick,
    hover,
    variant,
@@ -29,6 +31,8 @@ const UIButton = ({
          fontSize={fontSize}
          borderradius={borderradius}
          background={background}
+         marginLeft={marginLeft}
+         marginRight={marginRight}
          {...other}
       >
          {children}
@@ -42,10 +46,12 @@ const ButtonWrap = styled(Button)`
    width: ${(props) => props.width};
    height: ${(props) => props.height};
    &.MuiButtonBase-root {
+      margin-left: ${(props) => props.marginLeft};
+      margin-right: ${(props) => props.marginRight};
       background-color: ${(props) => props.background};
       border-radius: ${(props) => props.borderradius};
       font-size: ${(props) => props.fontSize};
-      color: ${(props) => props.colour};
+      color: ${(props) => props.color};
       font-family: 'Open Sans';
       font-weight: 600;
       text-transform: none;

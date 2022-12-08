@@ -3,27 +3,60 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import Wrapper from './Wrapper'
-import basket from '../../assets/basket.svg'
-import copy from '../../assets/copy.svg'
-import Plus from '../../assets/Plus.svg'
+import { ReactComponent as CopyIcon } from '../../assets/basket.svg'
+import { ReactComponent as DeleteIcon } from '../../assets/copy.svg'
+import { ReactComponent as PlusIcon } from '../../assets/Plus.svg'
+import { ReactComponent as XIcon } from '../../assets/xIcon.svg'
 import UiInput from './UiInput'
 import UIButton from './UIButton'
 import IconButton from './IconButton'
 import Checkbox from './CheckBox'
 
 const Test = () => {
-   const [get, setGet] = React.useState()
+   const [getOne, setGetOne] = React.useState()
+   const [getMore, setGetMore] = React.useState()
    const [getRadio, setGetRadio] = useState()
    const [newTest, setNewTest] = useState([])
+
    const getVariantHandler = (event) => {
       setGetRadio(event.target.value)
    }
-   const getOneOrMoreHandler = (event) => {
-      setGet(event.target.value)
+   const getOneHandler = (event) => {
+      setGetOne(event.target.value)
+   }
+   const getMoreHandler = (event) => {
+      setGetMore(event.target.value)
+   }
+   const deleteTestHandler = (id) => {
+      const filteredDelete = newTest.filter((item) => item.id !== id)
+      setNewTest(filteredDelete)
+      console.log(newTest)
+   }
+   const deleteVariantHandler = (itemId, questionId) => {
+      // const filteredX = newTest.find((item) => item.id === questionId)
+      // console.log(filteredX, 'fiiil')
+      // const newDelete = filteredX.data.filter((item) => item.id !== itemId)
+      // console.log(newDelete, 'newDelte')
+      // setNewTest([...newTest, { data: newDelete }])
+
+      const delete=newTest.map((item)=>{
+         if (item.id===questionId) {
+           const newItem = item.data.filter((item)=>item.id!==itemId)
+           setNewTest([...newTest,{data:newItem}])
+            
+         }
+      })
+   }
+   const otmenaTestHandler = (product) => {
+      setNewTest(
+         newTest.filter((productItem) => productItem.id.id !== product.id)
+      )
+      console.log(newTest)
    }
    const newTestHandler = () => {
-      setNewTest([...newTest, { amount: Math.random().toString(), data: [] }])
+      setNewTest([...newTest, { id: Math.random().toString(), data: [] }])
    }
+
    const addVariantHandler = (i) => {
       const changeTest = [...newTest]
       changeTest[i].data = [
@@ -36,7 +69,8 @@ const Test = () => {
    return (
       <Container>
          <Header>
-            {getRadio}HEADER{get}
+            {getRadio}HEADER{getOne}
+            {getMore}
          </Header>
          <form>
             <Wrapper margin="24px 0px 20px 0px" width="1140px" height="124px">
@@ -47,10 +81,11 @@ const Test = () => {
                   placeholder="Введите название теста"
                />
             </Wrapper>
-            {newTest?.map((question, index) => {
+            {newTest.map((question, index) => {
                return (
                   <Wrapper
-                     key={question.amount}
+                     key={question.id}
+                     id={index + 1}
                      padding="20px"
                      margin="0px 0px 20px 0px "
                      width="1140px"
@@ -67,20 +102,20 @@ const Test = () => {
                         <FormControl>
                            <RadioGroup
                               name="controlled-radio-buttons-group"
-                              value={get}
+                              value={getOne}
                            >
                               <Label>
                                  <FormControlLabel
-                                    key={question.amount}
-                                    value="one"
-                                    onChange={getOneOrMoreHandler}
+                                    // key={question.id}
+                                    // value={index + 1}
+                                    onChange={getOneHandler}
                                     control={<Radio />}
                                     label="Один из списка"
                                  />
                                  <FormControlLabel
-                                    key={question.amount}
-                                    value="more"
-                                    onChange={getOneOrMoreHandler}
+                                    // key={question.id + 1}
+                                    // value={index + 12}
+                                    onChange={getMoreHandler}
                                     control={<Radio />}
                                     label="Несколько из списков "
                                  />
@@ -89,40 +124,48 @@ const Test = () => {
                         </FormControl>
                      </MainForm>
                      {question.data?.map((variant) => {
-                        return get === 'one' ? (
-                           <OptionLabel key={variant.id} htmlFor="Variant">
-                              {/* <FormControl>
-                                 <RadioGroup
-                                    name="controlled-radio-buttons-group"
-                                    value={getRadio}
-                                    onChange={getVariantHandler}
-                                 >
-                                    <FormControlLabel
-                                       value="dasd"
-                                       control={<Radio />}
-                                    />
-                                 </RadioGroup>
-                              </FormControl> */}
-                              <TestRadio
-                                 name="contact"
-                                 type="radio"
-                                 id={variant.id}
-                                 value={variant.id}
-                                 onChange={getVariantHandler}
-                              />
-                              <UiInput width="1064px" placeholder="Вариант" />
-                           </OptionLabel>
-                        ) : (
+                        // return getOne === index + 1 ? (
+                        //    <OptionLabel key={variant.id} htmlFor="Variant">
+                        //       {/* <FormControl>
+                        //          <RadioGroup
+                        //             name="controlled-radio-buttons-group"
+                        //             value={getRadio}
+                        //             onChange={getVariantHandler}
+                        //          >
+                        //             <FormControlLabel
+                        //                value="dasd"
+                        //                control={<Radio />}
+                        //             />
+                        //          </RadioGroup>
+                        //       </FormControl> */}
+                        //       <TestRadio
+                        //          name="contact"
+                        //          type="radio"
+                        //          // id={variant.id}
+                        //          // value={variant.id}
+                        //          onChange={getVariantHandler}
+                        //       />
+                        //       <UiInput width="1064px" placeholder="Вариант" />
+                        //    </OptionLabel>
+                        // ) :
+                        return (
                            <OptionLabel key={variant.id} htmlFor="Variant">
                               <Checkbox
-                                 value={variant.id}
+                                 // value={variant.id}
                                  setIsClicked={getVariantHandler}
                               />
                               <UiInput width="1064px" placeholder="Вариант" />
+                              <IconX
+                                 onClick={() =>
+                                    deleteVariantHandler(
+                                       variant.id,
+                                       question.id
+                                    )
+                                 }
+                              />
                            </OptionLabel>
                         )
                      })}
-
                      <BottomBlock>
                         <p>
                            <ButtonAddOption
@@ -136,15 +179,9 @@ const Test = () => {
                            </ButtonAddOther>
                         </p>
                         <IconBlock>
-                           <img
-                              style={{ cursor: 'pointer' }}
-                              src={copy}
-                              alt="Icon"
-                           />
-                           <img
-                              style={{ cursor: 'pointer' }}
-                              src={basket}
-                              alt="Icon"
+                           <IconCopy />
+                           <IconDelete
+                              onClick={() => deleteTestHandler(question.id)}
                            />
                         </IconBlock>
                      </BottomBlock>
@@ -155,14 +192,20 @@ const Test = () => {
                <SaveButton variant="contained" width="125px" height="40px">
                   Сохранить
                </SaveButton>
-               <UIButton variant="outlined" width="103px" height="40px">
+               <UIButton
+                  marginRight="10px"
+                  onClick={otmenaTestHandler}
+                  variant="outlined"
+                  width="103px"
+                  height="40px"
+               >
                   Отмена
                </UIButton>
             </ContainerUIbutton>
          </form>
          <ContainerIconButton>
             <IconButton onclick={() => newTestHandler()} background=" #FA2B56 ">
-               <img src={Plus} alt="Icon" />
+               <PlusIcon />
             </IconButton>
          </ContainerIconButton>
       </Container>
@@ -171,6 +214,29 @@ const Test = () => {
 
 export default Test
 
+const IconX = styled(XIcon)`
+   position: relative;
+   margin-right: 10px;
+   cursor: pointer;
+   :hover {
+      background-color: #e6e3e3;
+      border-radius: 4px;
+   }
+`
+const IconDelete = styled(DeleteIcon)`
+   :hover {
+      background-color: #e6e3e3;
+      border-radius: 4px;
+   }
+   cursor: pointer;
+`
+const IconCopy = styled(CopyIcon)`
+   cursor: pointer;
+   :hover {
+      background-color: #e6e3e3;
+      border-radius: 4px;
+   }
+`
 const Header = styled.div`
    height: 75px;
    background-color: #16ec56;
@@ -232,11 +298,7 @@ const ContainerIconButton = styled.div`
    float: right;
    margin: 160px 31px 0 0;
 `
-const SaveButton = styled(UIButton)`
-   &.jvAZlq.MuiButtonBase-root {
-      margin-left: 10px;
-   }
-`
+const SaveButton = styled(UIButton)``
 const TestRadio = styled.input`
    width: 20px;
    height: 20px;

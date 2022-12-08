@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = ({ children, width, height, padding, margin }) => {
+const Wrapper = ({ children, width, height, padding, margin, id }) => {
    return (
       <Container
+         id={id}
          width={width}
          height={height}
          padding={padding}
