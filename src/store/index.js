@@ -6,7 +6,6 @@ import { userSlice } from './slices/userSlice'
 import { groupsSlice } from './slices/admin-slices/group-slices/groupsSlice'
 import { InsCoursesSlice } from './slices/instructor-slices/courses/coursesSlice'
 import { teacherAdminSlice } from './slices/admin-slices/teacher-slices/addTeacherSlice'
-import TestSlice from './slices/instructor-slices/Test/TestSlice'
 
 const store = configureStore({
    reducer: {
@@ -16,7 +15,6 @@ const store = configureStore({
       groups: groupsSlice.reducer,
       insCourses: InsCoursesSlice.reducer,
       teacher: teacherAdminSlice.reducer,
-      test: TestSlice.reducer,
    },
 })
 

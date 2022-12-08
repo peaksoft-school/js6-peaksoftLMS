@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import Wrapper from './Wrapper'
-// import RadioButton from './RadioButtton'
 import basket from '../../assets/basket.svg'
 import copy from '../../assets/copy.svg'
 import Plus from '../../assets/Plus.svg'
@@ -32,22 +31,6 @@ const Test = () => {
          { id: Math.random().toString() },
       ]
       setNewTest(changeTest)
-
-      // вариант 1
-      // setNewTest([
-      //    ...newTest,
-      //    { data: newSubtask.data.push({ id: Math.random() }) },
-      // ])
-      // вариант 2
-      // setNewTest([
-      //    ...newTest,
-      //    ...newSubtask[i].data.push({ id: Math.random() }),
-      // ])
-      // вариант 3
-      // setNewTest([
-      //    ...newTest,
-      //    {newTest[i].data.push({ id: Math.random() }) },
-      // ])
    }
 
    return (
