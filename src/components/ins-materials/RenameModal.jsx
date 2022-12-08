@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, styled as style } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import ModalWindow from '../UI/ModalWindow'
@@ -11,11 +11,13 @@ export const RenameModal = ({ open, onClose }) => {
    const [lessonTitle, setLessonTitle] = useState('')
    const dispatch = useDispatch()
    const { id } = useParams()
+   const [params] = useSearchParams()
+   const { lessonId, lessonName } = Object.fromEntries(params)
 
    const submitHandler = () => {
       dispatch(
          renameLessons({
-            lessonId: id,
+            lessonId,
             sendedData: { courseId: id, lessonName: lessonTitle },
          })
       )
@@ -30,6 +32,7 @@ export const RenameModal = ({ open, onClose }) => {
          bodyContent={
             <InputBlock>
                <UiInput
+                  value={lessonName}
                   placeholder="Название урока"
                   width="491px"
                   onChange={(e) => setLessonTitle(e.target.value)}

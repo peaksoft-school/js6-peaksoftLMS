@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import lessonVideoIcon from '../../assets/LessonVideoIcon.svg'
 import presentationIcon from '../../assets/PresentationIcon.svg'
 import iconTask from '../../assets/IconTask.svg'
 import linkIcon from '../../assets/LinkIcon.svg'
 import testIcon from '../../assets/TestIcon.svg'
+import EditLesson from '../../assets/editItem.svg'
+import DeleteItem from '../../assets/deleteItem.svg'
 
 const LessonCard = (props) => {
    const {
@@ -14,6 +17,10 @@ const LessonCard = (props) => {
       actionButton,
       deleteHandler,
       editHandler,
+      editPresentation,
+      deletePresentation,
+      deleteVideo,
+      editVideo,
    } = props
    return (
       <CardMain>
@@ -36,32 +43,96 @@ const LessonCard = (props) => {
                )}
             </HeaderRight>
          </CardHeader>
-         <CardBody>
-            <ContentLessonCard>
+         <ContentLessonCard>
+            <TextBlock>
                <img src={lessonVideoIcon} alt="icon" />
                <TextLesson>Видеоурок</TextLesson>
-            </ContentLessonCard>
+            </TextBlock>
+            <ButtonBlock>
+               <CustomButton onClick={editVideo} variant="contained">
+                  <img src={EditLesson} alt="edit" />
+                  <p>Редактировать</p>
+               </CustomButton>
 
-            <ContentLessonCard>
+               <CustomButton onClick={deleteVideo} variant="contained">
+                  <img src={DeleteItem} alt="delete" />
+                  <p>Удалить</p>
+               </CustomButton>
+            </ButtonBlock>
+         </ContentLessonCard>
+
+         <ContentLessonCard>
+            <TextBlock>
                <img src={presentationIcon} alt="icon" />
                <TextLesson>Презентация</TextLesson>
-            </ContentLessonCard>
+            </TextBlock>
+            <ButtonBlock>
+               <CustomButton onClick={editPresentation} variant="contained">
+                  <img src={EditLesson} alt="edit" />
+                  <p>Редактировать</p>
+               </CustomButton>
 
-            <ContentLessonCard>
+               <CustomButton onClick={deletePresentation} variant="contained">
+                  <img src={DeleteItem} alt="delete" />
+                  <p>Удалить</p>
+               </CustomButton>
+            </ButtonBlock>
+         </ContentLessonCard>
+
+         <ContentLessonCard>
+            <TextBlock>
                <img src={iconTask} alt="icon" />
                <TextLesson>Задание</TextLesson>
-            </ContentLessonCard>
+            </TextBlock>
+            <ButtonBlock>
+               <CustomButton variant="contained">
+                  <img src={EditLesson} alt="edit" />
+                  <p>Редактировать</p>
+               </CustomButton>
 
-            <ContentLessonCard>
+               <CustomButton variant="contained">
+                  <img src={DeleteItem} alt="delete" />
+                  <p>Удалить</p>
+               </CustomButton>
+            </ButtonBlock>
+         </ContentLessonCard>
+
+         <ContentLessonCard>
+            <TextBlock>
                <img src={linkIcon} alt="icon" />
                <TextLesson>Ссылка</TextLesson>
-            </ContentLessonCard>
+            </TextBlock>
+            <ButtonBlock>
+               <CustomButton variant="contained">
+                  <img src={EditLesson} alt="edit" />
+                  <p>Редактировать</p>
+               </CustomButton>
 
-            <ContentLessonCard>
+               <CustomButton variant="contained">
+                  <img src={DeleteItem} alt="delete" />
+                  <p>Удалить</p>
+               </CustomButton>
+            </ButtonBlock>
+         </ContentLessonCard>
+
+         <ContentLessonCard>
+            <TextBlock>
                <img src={testIcon} alt="icon" />
                <TextLesson>Тест</TextLesson>
-            </ContentLessonCard>
-         </CardBody>
+            </TextBlock>
+
+            <ButtonBlock>
+               <CustomButton variant="contained">
+                  <img src={EditLesson} alt="edit" />
+                  <p>Редактировать</p>
+               </CustomButton>
+
+               <CustomButton variant="contained">
+                  <img src={DeleteItem} alt="delete" />
+                  <p>Удалить</p>
+               </CustomButton>
+            </ButtonBlock>
+         </ContentLessonCard>
       </CardMain>
    )
 }
@@ -90,16 +161,54 @@ const HeaderRight = styled.div`
    align-items: center;
    margin-right: 27px;
 `
-const CardBody = styled.div``
+
+const ButtonBlock = styled.div`
+   display: flex;
+`
+
+const CustomButton = styled.button`
+   color: #000;
+   border-radius: 6px;
+   background: #eff0f6;
+   border: 0px solid;
+   display: flex;
+   padding: 8px 6px;
+   transition: all 0.2s;
+   cursor: pointer;
+
+   p {
+      margin-left: 10px;
+   }
+   :hover {
+      background: #d4d4d4;
+   }
+`
+const TextBlock = styled.div`
+   display: flex;
+   align-items: center;
+`
 
 const ContentLessonCard = styled.div`
    display: flex;
-   padding: 10px 22px;
-   margin-top: 5px;
-   cursor: pointer;
+   justify-content: space-between;
+   padding: 13px 22px;
    transition: all 0.2s;
+
+   ${ButtonBlock} {
+      display: none;
+   }
+
    :hover {
       background: rgba(26, 35, 126, 0.07);
+      ${ButtonBlock} {
+         display: flex;
+         align-items: center;
+         height: 23px;
+
+         button {
+            margin-left: 20px;
+         }
+      }
    }
 `
 const TextLesson = styled.p`

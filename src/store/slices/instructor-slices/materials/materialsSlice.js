@@ -3,8 +3,14 @@ import { createSlice } from '@reduxjs/toolkit'
 import { setError, setLoading } from '../../../../utils/helpers/helper'
 import {
    createNewLessons,
+   createPresentation,
    deleteLesson,
+   deletePresentation,
+   deleteVideoLesson,
+   editPresentation,
+   editVideo,
    getCoursesLessons,
+   postVideo,
 } from './materials-actions'
 
 const initialState = {
@@ -32,11 +38,47 @@ export const insMaterials = createSlice({
          state.status = 'deleted'
       },
       [deleteLesson.rejected]: setError,
+
       // * creating new lesson
       [createNewLessons.fulfilled]: (state) => {
          state.status = 'created'
       },
       [createNewLessons.rejected]: setError,
+
+      // * adding presentation to lesson
+      [createPresentation.fulfilled]: (state) => {
+         state.status = 'uploaded'
+      },
+      [createPresentation.rejected]: setError,
+
+      // * editing presentation
+      [editPresentation.fulfilled]: (state) => {
+         state.status = 'edited'
+      },
+      [editPresentation.rejected]: setError,
+
+      // * deleting presentation
+      [deletePresentation.fulfilled]: (state) => {
+         state.status = 'deleted'
+      },
+      [deletePresentation.rejected]: setError,
+
+      // * adding a video link
+      [postVideo.fulfilled]: (state) => {
+         state.status = 'uploaded'
+      },
+      [postVideo.fulfilled]: setError,
+
+      // * editing video lesson
+      [editVideo.fulfilled]: (state) => {
+         state.status = 'edited'
+      },
+      [editVideo.rejected]: setError,
+      // * deleteing video lesson
+      [deleteVideoLesson.fulfilled]: (state) => {
+         state.status = 'deleted'
+      },
+      [deleteVideoLesson.rejected]: setError,
    },
 })
 
