@@ -5,11 +5,12 @@ import styled from 'styled-components'
 import { getCurseLessons } from '../../store/slices/student-slices/student-actions'
 import LessonCard from '../../components/UI/LessonCard'
 import HeaderLoyout from '../../components/UI/HeaderLoyout'
+import { UiLoading } from '../../components/UI/UiLoading'
 
 const StudentInnerPage = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
-   const { lessons } = useSelector((state) => state.student)
+   const { lessons, status } = useSelector((state) => state.student)
    const navigate = useNavigate()
    useEffect(() => {
       dispatch(getCurseLessons(id))
@@ -32,18 +33,23 @@ const StudentInnerPage = () => {
    return (
       <CourseMain>
          <HeaderLoyout roles="Студент" />
-         <GridCourse>
-            {lessons.map((element) => (
-               <LessonCard
-                  title={element.lessonName}
-                  navigateVideoLesson={navigateVideoLesson}
-                  navigatePresentation={navigatePresentation}
-                  navigateTask={navigateTask}
-                  navigateLink={navigateLink}
-                  navigateTest={navigateTest}
-               />
-            ))}
-         </GridCourse>
+
+         {status === 'loading' ? (
+            <UiLoading />
+         ) : (
+            <GridCourse>
+               {lessons.map((element) => (
+                  <LessonCard
+                     title={element.lessonName}
+                     navigateVideoLesson={navigateVideoLesson}
+                     navigatePresentation={navigatePresentation}
+                     navigateTask={navigateTask}
+                     navigateLink={navigateLink}
+                     navigateTest={navigateTest}
+                  />
+               ))}
+            </GridCourse>
+         )}
       </CourseMain>
    )
 }

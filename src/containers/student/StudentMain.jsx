@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
 import styled from 'styled-components'
 import GroupCard from '../../components/UI/GroupCard'
 import { getCurse } from '../../store/slices/student-slices/student-actions'
 import HeaderLayout from '../../components/UI/HeaderLoyout'
+import { UiLoading } from '../../components/UI/UiLoading'
 
 const StudentMain = () => {
    const navigate = useNavigate()
    const dispatch = useDispatch()
-   const { course } = useSelector((state) => state.student)
+   const { course, status } = useSelector((state) => state.student)
 
    const navigateHandler = (id) => {
       navigate(`/student/lessons/${id}`)
@@ -23,18 +23,22 @@ const StudentMain = () => {
    return (
       <CourseMain>
          <HeaderLayout roles="Студент" />
-         <GridCourse>
-            {course.map((element) => (
-               <GroupCard
-                  key={element.id}
-                  someImage={element.image}
-                  someName={element.courseName}
-                  someParagraph={element.description}
-                  someYear={element.dateOfStart}
-                  onClick={() => navigateHandler(element.id)}
-               />
-            ))}
-         </GridCourse>
+         {status === 'loading' ? (
+            <UiLoading />
+         ) : (
+            <GridCourse>
+               {course.map((element) => (
+                  <GroupCard
+                     key={element.id}
+                     someImage={element.image}
+                     someName={element.courseName}
+                     someParagraph={element.description}
+                     someYear={element.dateOfStart}
+                     onClick={() => navigateHandler(element.id)}
+                  />
+               ))}
+            </GridCourse>
+         )}
       </CourseMain>
    )
 }
