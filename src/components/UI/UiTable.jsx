@@ -78,7 +78,7 @@ const UiTable = (props) => {
                            <span>{el.password}</span>
                         </TableCell>
                         {actions && (
-                           <div>
+                           <div key={el.id}>
                               <TableCell
                                  onClick={(e) => {
                                     e.stopPropagation()
@@ -98,7 +98,10 @@ const UiTable = (props) => {
                                  {secondIcon}
                               </TableCell>
                               <TableCell
-                                 onClick={() => thirdOnClick(el.itemId)}
+                                 onClick={(e) => {
+                                    e.stopPropagation()
+                                    thirdOnClick(el.itemId)
+                                 }}
                                  align="left"
                               >
                                  {thirdIcon}

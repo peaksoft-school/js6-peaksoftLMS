@@ -1,10 +1,23 @@
 import React from 'react'
 import { MeatBalls } from '../UI/MeatBalls'
-import { ReactComponent as DeleteIcon } from '../../assets/deleteIconGroup.svg'
+import { ReactComponent as DeleteIcon } from '../../assets/deleteIcon.svg'
 import { ReactComponent as EditIcon } from '../../assets/editIcon.svg'
+import { ReactComponent as AssignTeacher } from '../../assets/assignTeacher.svg'
 
-export const GroupsMeatBalls = ({ openDeleteModal, openEdditModal, id }) => {
+const CourseMeatBalls = ({
+   openDeleteModal,
+   openEdditModal,
+   id,
+   openAssignModal,
+}) => {
    const navigate = [
+      {
+         id: '1',
+         icon: <AssignTeacher />,
+         name: 'Назначить учителя',
+         click: () => openAssignModal(id),
+      },
+
       {
          id: '2',
          icon: <EditIcon />,
@@ -12,7 +25,7 @@ export const GroupsMeatBalls = ({ openDeleteModal, openEdditModal, id }) => {
          click: () => openEdditModal(id),
       },
       {
-         id: '1',
+         id: '3',
          icon: <DeleteIcon />,
          name: 'Удалить',
          click: () => openDeleteModal(id),
@@ -20,3 +33,5 @@ export const GroupsMeatBalls = ({ openDeleteModal, openEdditModal, id }) => {
    ]
    return <MeatBalls options={navigate} />
 }
+
+export default CourseMeatBalls
