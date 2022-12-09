@@ -60,3 +60,28 @@ export const setError = (state, { payload }) => {
 export const setLoading = (state) => {
    state.status = 'loading'
 }
+
+export const routeHandler = (action, idLesson, navigate, id) => {
+   switch (action) {
+      case 'Видеоурок':
+         navigate(`/instructor/video/${id}/${idLesson}`)
+         break
+      case 'Презентация':
+         navigate(`/instructor/presentataion/${id}/${idLesson}`)
+
+         break
+      case 'Задание':
+         navigate(`/instructor/task/${id}/${idLesson}`)
+
+         break
+      case 'Ссылка':
+         navigate(`/instructor/lesson-link/${id}/${idLesson}`)
+
+         break
+      case 'Тест':
+         navigate(`/instructor/test/${id}/${idLesson}`)
+         break
+      default:
+         navigate()
+   }
+}

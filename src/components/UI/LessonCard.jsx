@@ -23,6 +23,8 @@ const LessonCard = (props) => {
       editVideo,
       editLink,
       deleteLink,
+      navigateHandler,
+      lessonId,
    } = props
    return (
       <CardMain>
@@ -46,7 +48,7 @@ const LessonCard = (props) => {
             </HeaderRight>
          </CardHeader>
          <ContentLessonCard>
-            <TextBlock>
+            <TextBlock onClick={() => navigateHandler('Видеоурок', lessonId)}>
                <img src={lessonVideoIcon} alt="icon" />
                <TextLesson>Видеоурок</TextLesson>
             </TextBlock>
@@ -64,7 +66,7 @@ const LessonCard = (props) => {
          </ContentLessonCard>
 
          <ContentLessonCard>
-            <TextBlock>
+            <TextBlock onClick={() => navigateHandler('Презентация', lessonId)}>
                <img src={presentationIcon} alt="icon" />
                <TextLesson>Презентация</TextLesson>
             </TextBlock>
@@ -82,7 +84,7 @@ const LessonCard = (props) => {
          </ContentLessonCard>
 
          <ContentLessonCard>
-            <TextBlock>
+            <TextBlock onClick={() => navigateHandler('Задание', lessonId)}>
                <img src={iconTask} alt="icon" />
                <TextLesson>Задание</TextLesson>
             </TextBlock>
@@ -100,7 +102,7 @@ const LessonCard = (props) => {
          </ContentLessonCard>
 
          <ContentLessonCard>
-            <TextBlock>
+            <TextBlock onClick={() => navigateHandler('Ссылка', lessonId)}>
                <img src={linkIcon} alt="icon" />
                <TextLesson>Ссылка</TextLesson>
             </TextBlock>
@@ -118,7 +120,7 @@ const LessonCard = (props) => {
          </ContentLessonCard>
 
          <ContentLessonCard>
-            <TextBlock>
+            <TextBlock onClick={() => navigateHandler('Тест', lessonId)}>
                <img src={testIcon} alt="icon" />
                <TextLesson>Тест</TextLesson>
             </TextBlock>
@@ -188,6 +190,7 @@ const CustomButton = styled.button`
 const TextBlock = styled.div`
    display: flex;
    align-items: center;
+   cursor: pointer;
 `
 
 const ContentLessonCard = styled.div`

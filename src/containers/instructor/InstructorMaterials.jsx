@@ -64,7 +64,7 @@ export const InstructorMaterials = () => {
             setParams({ modalOpen: 'POST-PPTX', idLesson, courseId: id })
             break
          case 'Задание':
-            navigate(`/instructor/task/${id}/${idLesson}`)
+            navigate(`/instructor/create-task/${id}/${idLesson}`)
             break
          case 'Ссылка':
             setParams({ modalOpen: 'POST-LINK', idLesson, courseId: id })
@@ -126,6 +126,31 @@ export const InstructorMaterials = () => {
       }
    }
 
+   const navigateHandler = (action, idLesson) => {
+      switch (action) {
+         case 'Видеоурок':
+            navigate(`/instructor/video/${id}/${idLesson}`)
+            break
+         case 'Презентация':
+            navigate(`/instructor/presentataion/${id}/${idLesson}`)
+
+            break
+         case 'Задание':
+            navigate(`/instructor/task/${id}/${idLesson}`)
+
+            break
+         case 'Ссылка':
+            navigate(`/instructor/lesson-link/${id}/${idLesson}`)
+
+            break
+         case 'Тест':
+            navigate(`/instructor/test/${id}/${idLesson}`)
+            break
+         default:
+            navigate()
+      }
+   }
+
    useEffect(() => {
       dispatch(getCoursesLessons(id))
       dispatch(getCoursesById(id))
@@ -178,6 +203,7 @@ export const InstructorMaterials = () => {
                            key={element.lessonId}
                            headerIcon={EditLesson}
                            actionIcon={DeleteLesson}
+                           lessonId={element.lessonId}
                            editHandler={() =>
                               submitEdit(element.lessonId, element.lessonName)
                            }
@@ -199,6 +225,7 @@ export const InstructorMaterials = () => {
                               editLink(element.linkId, element.lessonId)
                            }
                            deleteLink={() => deleteLink(element.linkId)}
+                           navigateHandler={navigateHandler}
                            actionButton={
                               <ActionSelect
                                  getActionHandler={onGetActionHandler}
