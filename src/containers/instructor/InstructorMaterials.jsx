@@ -13,7 +13,6 @@ import {
 import { courseCrumbs, courseLinks } from '../../utils/helpers/helper'
 import EditLesson from '../../assets/editLesson.svg'
 import DeleteLesson from '../../assets/deleteLesson.svg'
-import LessonCard from '../../components/UI/LessonCard'
 import { ActionSelect } from '../../components/ins-materials/LessonActionSelect'
 import PopUp from '../../components/UI/PopUp'
 import { UiLoading } from '../../components/UI/UiLoading'
@@ -31,6 +30,7 @@ import { CreateLinkModal } from '../../components/ins-materials/CreateLinkModal'
 import { EditLinkModal } from '../../components/ins-materials/EditLinkModal'
 import { DeleteLinkModal } from '../../components/ins-materials/DeleteLinkModal'
 import { SELECT_OPTIONS } from '../../utils/constants/constants'
+import MaterialsLessonCard from '../../components/ins-materials/MaterialsLessonCard'
 
 export const InstructorMaterials = () => {
    const { id } = useParams()
@@ -199,7 +199,7 @@ export const InstructorMaterials = () => {
                ) : (
                   <LessonGrid>
                      {lessons?.map((element) => (
-                        <LessonCard
+                        <MaterialsLessonCard
                            key={element.lessonId}
                            headerIcon={EditLesson}
                            actionIcon={DeleteLesson}

@@ -45,7 +45,7 @@ export const RenameModal = ({ open, onClose }) => {
                   Отмена
                </CustomButton>
                <CustomButton onClick={submitHandler} variant="contained">
-                  Добавить
+                  Переименовать
                </CustomButton>
             </ButtonBlock>
          }
@@ -53,10 +53,11 @@ export const RenameModal = ({ open, onClose }) => {
    )
 }
 const CustomButton = style(Button)`
-   width: 108px;
+   width: 117px;
    margin: 10px 10px 18px 0;
    padding: 10px 24px;
    border-radius: 10px;
+   text-transform: capitalize;
    font-size: 14px;
    :last-child {
       margin-right: 0;

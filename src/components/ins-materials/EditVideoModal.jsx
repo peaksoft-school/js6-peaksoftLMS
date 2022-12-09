@@ -119,7 +119,7 @@ export const EditVideoModal = ({ open, onClose }) => {
                      Отмена
                   </CustomButton>
                   <CustomButton onClick={submitHandler} variant="contained">
-                     Добавить
+                     Редактировать
                   </CustomButton>
                </ButtonBlock>
             }
@@ -128,7 +128,8 @@ export const EditVideoModal = ({ open, onClose }) => {
    )
 }
 const CustomButton = style(Button)`
-   width: 108px;
+   width: 117px;
+   text-transform: capitalize;
    margin: 10px 10px 18px 0;
    padding: 10px 24px;
    border-radius: 10px;
