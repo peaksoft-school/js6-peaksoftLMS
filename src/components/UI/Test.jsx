@@ -1,32 +1,18 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import MainFormTest from '../component/MainFormTest'
 import Wrapper from './Wrapper'
 import { ReactComponent as CopyIcon } from '../../assets/basket.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/copy.svg'
 import { ReactComponent as PlusIcon } from '../../assets/Plus.svg'
-import { ReactComponent as XIcon } from '../../assets/xIcon.svg'
 import UiInput from './UiInput'
 import UIButton from './UIButton'
 import IconButton from './IconButton'
-import Checkbox from './CheckBox'
 
 const Test = () => {
-   const [getOne, setGetOne] = React.useState()
-   const [getMore, setGetMore] = React.useState()
-   const [getRadio, setGetRadio] = useState()
    const [newTest, setNewTest] = useState([])
 
-   const getVariantHandler = (event) => {
-      setGetRadio(event.target.value)
-   }
-   const getOneHandler = (event) => {
-      setGetOne(event.target.value)
-   }
-   const getMoreHandler = (event) => {
-      setGetMore(event.target.value)
-   }
    const deleteTestHandler = (id) => {
       const filteredDelete = newTest.filter((item) => item.id !== id)
       setNewTest(filteredDelete)
@@ -60,10 +46,7 @@ const Test = () => {
 
    return (
       <Container>
-         <Header>
-            {getRadio}HEADER{getOne}
-            {getMore}
-         </Header>
+         <Header>Header</Header>
          <form>
             <Wrapper margin="24px 0px 20px 0px" width="1140px" height="124px">
                <TestName>Название теста</TestName>
@@ -82,79 +65,12 @@ const Test = () => {
                      margin="0px 0px 20px 0px "
                      width="1140px"
                   >
-                     <MainForm>
-                        <Label htmlFor="Question">
-                           <Num>{index + 1}</Num>
-                           <UiInput
-                              marginright="10px"
-                              width="659px"
-                              placeholder="Вопрос"
-                           />
-                        </Label>
-                        <FormControl>
-                           <RadioGroup
-                              name="controlled-radio-buttons-group"
-                              value={getOne}
-                           >
-                              <Label>
-                                 <FormControlLabel
-                                    // key={question.id}
-                                    // value={index + 1}
-                                    onChange={getOneHandler}
-                                    control={<Radio />}
-                                    label="Один из списка"
-                                 />
-                                 <FormControlLabel
-                                    // key={question.id + 1}
-                                    // value={index + 12}
-                                    onChange={getMoreHandler}
-                                    control={<Radio />}
-                                    label="Несколько из списков "
-                                 />
-                              </Label>
-                           </RadioGroup>
-                        </FormControl>
-                     </MainForm>
-                     {question.data?.map((variant) => {
-                        // return getOne === index + 1 ? (
-                        //    <OptionLabel key={variant.id} htmlFor="Variant">
-                        //       {/* <FormControl>
-                        //          <RadioGroup
-                        //             name="controlled-radio-buttons-group"
-                        //             value={getRadio}
-                        //             onChange={getVariantHandler}
-                        //          >
-                        //             <FormControlLabel
-                        //                value="dasd"
-                        //                control={<Radio />}
-                        //             />
-                        //          </RadioGroup>
-                        //       </FormControl> */}
-                        //       <TestRadio
-                        //          name="contact"
-                        //          type="radio"
-                        //          // id={variant.id}
-                        //          // value={variant.id}
-                        //          onChange={getVariantHandler}
-                        //       />
-                        //       <UiInput width="1064px" placeholder="Вариант" />
-                        //    </OptionLabel>
-                        // ) :
-                        return (
-                           <OptionLabel key={variant.id} htmlFor="Variant">
-                              <Checkbox
-                                 // value={variant.id}
-                                 setIsClicked={getVariantHandler}
-                              />
-                              <UiInput width="1064px" placeholder="Вариант" />
-                              <IconX
-                                 onClick={() =>
-                                    deleteVariantHandler(variant.id)
-                                 }
-                              />
-                           </OptionLabel>
-                        )
-                     })}
+                     <MainFormTest
+                        question={question}
+                        index={index}
+                        deleteVariantHandler={deleteVariantHandler}
+                     />
+
                      <BottomBlock>
                         <p>
                            <ButtonAddOption
@@ -182,7 +98,7 @@ const Test = () => {
                   Сохранить
                </SaveButton>
                <UIButton
-                  marginRight="10px"
+                  marginright="10px"
                   onClick={otmenaTestHandler}
                   variant="outlined"
                   width="103px"
@@ -203,15 +119,6 @@ const Test = () => {
 
 export default Test
 
-const IconX = styled(XIcon)`
-   position: relative;
-   margin-right: 10px;
-   cursor: pointer;
-   :hover {
-      background-color: #e6e3e3;
-      border-radius: 4px;
-   }
-`
 const IconDelete = styled(DeleteIcon)`
    :hover {
       background-color: #e6e3e3;
@@ -235,28 +142,11 @@ const Container = styled.div`
    margin: 0 30px 0 20px;
    background-color: #eff0f4;
 `
-const OptionLabel = styled.label`
-   display: flex;
-   align-items: center;
-   margin-top: 24px;
-`
-const Label = styled.label`
-   display: flex;
-   align-items: center;
-`
-const MainForm = styled.div`
-   display: flex;
-`
 const TestName = styled.h3`
    color: #1f6ed4;
    margin: 20px 0px 0px 20px;
 `
-const Num = styled.p`
-   color: #1f6ed4;
-   font-size: 20px;
-   margin-right: 18px;
-   margin-left: 15px;
-`
+
 const BottomBlock = styled.div`
    display: flex;
    justify-content: space-between;
@@ -288,9 +178,3 @@ const ContainerIconButton = styled.div`
    margin: 160px 31px 0 0;
 `
 const SaveButton = styled(UIButton)``
-const TestRadio = styled.input`
-   width: 20px;
-   height: 20px;
-   margin-right: 15px;
-   margin-left: 9px;
-`
