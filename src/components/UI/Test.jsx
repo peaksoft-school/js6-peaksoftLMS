@@ -12,6 +12,7 @@ import IconButton from './IconButton'
 
 const Test = () => {
    const [newTest, setNewTest] = useState([])
+   const [drugoe, setDrugoe] = useState(false)
 
    const deleteTestHandler = (id) => {
       const filteredDelete = newTest.filter((item) => item.id !== id)
@@ -25,7 +26,23 @@ const Test = () => {
          }))
       )
    }
-
+   const deleteVariantDrugoeHandler = (itemId) => {
+      setNewTest(
+         newTest.map((item) => ({
+            ...item,
+            data: item.data.filter((tag) => tag.id !== itemId),
+         }))
+      )
+   }
+   const addVariantDrugoeHandler = (i) => {
+      const changeTest2 = [...newTest]
+      changeTest2[i].data = [
+         ...changeTest2[i].data,
+         { id: Math.random().toString() },
+      ]
+      setNewTest(changeTest2)
+      setDrugoe(false)
+   }
    const otmenaTestHandler = (product) => {
       setNewTest(
          newTest.filter((productItem) => productItem.id.id !== product.id)
@@ -69,6 +86,8 @@ const Test = () => {
                         question={question}
                         index={index}
                         deleteVariantHandler={deleteVariantHandler}
+                        deleteVariantDrugoeHandler={deleteVariantDrugoeHandler}
+                        drugoe={drugoe}
                      />
 
                      <BottomBlock>
@@ -79,7 +98,9 @@ const Test = () => {
                               Добавить вариант
                            </ButtonAddOption>
                            или
-                           <ButtonAddOther>
+                           <ButtonAddOther
+                              onClick={() => addVariantDrugoeHandler(index)}
+                           >
                               добавить вариант “Другое”
                            </ButtonAddOther>
                         </p>
