@@ -101,6 +101,16 @@ const EditStudentModal = ({ open, handleClose }) => {
             })
          })
    }, [])
+
+   const getNumber = (number) => {
+      if (number.length < 13) {
+         setEditStudent({
+            ...editStudent,
+            phoneNumber: number,
+         })
+      }
+   }
+
    return (
       <>
          {status === 'error' && <PopUp message={error} messageType="error" />}
@@ -108,7 +118,7 @@ const EditStudentModal = ({ open, handleClose }) => {
          <ModalWindow
             open={open}
             handleClose={handleClose}
-            modalTitle="Добавить студента"
+            modalTitle="Редактирование студента"
             bodyContent={
                <DivContainer>
                   {validateError && (
@@ -133,12 +143,7 @@ const EditStudentModal = ({ open, handleClose }) => {
                      margintop="12px"
                      placeholder="+996 ___ __ __ __"
                      type="number"
-                     onChange={(e) =>
-                        setEditStudent({
-                           ...editStudent,
-                           phoneNumber: e.target.value,
-                        })
-                     }
+                     onChange={(e) => getNumber(e.target.value)}
                      value={editStudent.phoneNumber}
                   />
 

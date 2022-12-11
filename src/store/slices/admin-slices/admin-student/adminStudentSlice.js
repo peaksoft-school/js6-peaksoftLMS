@@ -79,7 +79,7 @@ export const adminStudentSlice = createSlice({
       },
       [editStudents.fulfilled]: (state) => {
          state.status = 'edited'
-         state.fulfilled = 'Редактирование суспешно проведено'
+         state.fulfilled = 'Редактирование успешно проведено'
       },
       [editStudents.rejected]: (state) => {
          state.status = 'error'

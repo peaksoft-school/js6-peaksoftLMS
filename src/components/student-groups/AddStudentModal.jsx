@@ -136,6 +136,10 @@ const AddStudentModal = ({ open, handleClose }) => {
                   name="phoneNumber"
                   rules={{
                      required: POLE_ZAPOLNEN,
+                     maxLength: {
+                        value: 12,
+                        message: 'Введите не более 12 символовн',
+                     },
                   }}
                   render={({ field }) => (
                      <UiInput
@@ -190,7 +194,7 @@ const AddStudentModal = ({ open, handleClose }) => {
                      required: POLE_ZAPOLNEN,
                      minLength: {
                         value: 6,
-                        message: 'Введите не менее 6 символовн',
+                        message: 'Введите не менее 6 символов',
                      },
                   }}
                   render={({ field }) => (
