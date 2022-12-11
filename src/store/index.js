@@ -5,8 +5,10 @@ import { resetPassSlice } from './slices/resetPasswordSlice'
 import { userSlice } from './slices/userSlice'
 import { groupsSlice } from './slices/admin-slices/group-slices/groupsSlice'
 import { adminStudentSlice } from './slices/admin-slices/admin-student/adminStudentSlice'
+import { coursesSlice } from './slices/admin-slices/courses-slices/coureseSlice'
 import { InsCoursesSlice } from './slices/instructor-slices/courses/coursesSlice'
 import { teacherAdminSlice } from './slices/admin-slices/teacher-slices/addTeacherSlice'
+import { studentSlice } from './slices/student-slices/studentSlice'
 
 const store = configureStore({
    reducer: {
@@ -15,8 +17,10 @@ const store = configureStore({
       newPassword: resetPassSlice.reducer,
       groups: groupsSlice.reducer,
       students: adminStudentSlice.reducer,
+      courses: coursesSlice.reducer,
       insCourses: InsCoursesSlice.reducer,
       teacher: teacherAdminSlice.reducer,
+      student: studentSlice.reducer,
    },
 })
 

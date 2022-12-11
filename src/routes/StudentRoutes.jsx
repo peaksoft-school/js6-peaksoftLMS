@@ -1,12 +1,39 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import StudentLayout from '../components/student/StudentLayout'
 import { NotFoundPage } from '../containers/NotFoundPage'
+import StudentInnerPage from '../containers/student/StudentInnerPage'
+import StudentMain from '../containers/student/StudentMain'
+import SidebarLayout from '../layout/SidebarLayout'
+import StudentVideoPage from '../containers/student/StudentVideoPage'
+import StudentPresentationPage from '../containers/student/StudentPresentationPage'
+import StudentTaskPage from '../containers/student/StudentTaskPage'
+import StudentLinkPage from '../containers/student/StudentLinkPage'
+import StudentTestPage from '../containers/student/StudentTestPage'
 
 export const StudentRoutes = () => {
    return (
-      <Routes>
-         <Route path="/" index element={<div>Student default page</div>} />
-         <Route path="*" index element={<NotFoundPage />} />
-      </Routes>
+      <SidebarLayout>
+         <Routes>
+            <Route path="/" element={<StudentLayout />}>
+               <Route index element={<StudentMain />} />
+               <Route path="lessons/:id" element={<StudentInnerPage />} />
+               <Route path="video-page" element={<StudentVideoPage />} />
+               <Route
+                  path="presentation-page"
+                  element={<StudentPresentationPage />}
+               />
+               <Route path="task-page" element={<StudentTaskPage />} />
+               <Route path="link-page" element={<StudentLinkPage />} />
+               <Route path="test-page" element={<StudentTestPage />} />
+
+               <Route
+                  path="presentaion-page"
+                  element={<StudentPresentationPage />}
+               />
+            </Route>
+            <Route path="*" index element={<NotFoundPage />} />
+         </Routes>
+      </SidebarLayout>
    )
 }

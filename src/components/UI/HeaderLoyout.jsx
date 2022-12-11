@@ -16,7 +16,7 @@ const HeaderLoyout = ({ roles, links }) => {
             <div> </div>
             <Navigation>
                {links?.map((item) => (
-                  <CustomLink key={item.link} to={item.path}>
+                  <CustomLink key={item.name} to={item.path}>
                      {item.name}
                   </CustomLink>
                ))}
