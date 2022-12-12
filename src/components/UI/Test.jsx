@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import MainFormTest from '../component/MainFormTest'
+import MainFormTest from '../createTest/MainFormTest'
 import Wrapper from './Wrapper'
 import { ReactComponent as CopyIcon } from '../../assets/basket.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/copy.svg'
