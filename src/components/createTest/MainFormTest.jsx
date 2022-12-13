@@ -21,7 +21,7 @@ const MainFormTest = ({ index, question, deleteVariantHandler }) => {
          <MainForm>
             <Label id="demo-controlled-radio-buttons-group" htmlFor="my-input">
                <Num>{index + 1}</Num>
-               <UiInput marginright="10px" width="659px" placeholder="Вопрос" />
+               <UiInput marginright="10px" width="730px" placeholder="Вопрос" />
             </Label>
             <FormControl>
                <RadioGroup
@@ -66,7 +66,7 @@ const MainFormTest = ({ index, question, deleteVariantHandler }) => {
                            </RadioVariant>
                            <UiInput
                               key={variant.id + 3}
-                              width="1064px"
+                              width="1116px"
                               placeholder={`Вариант ${i + 1}`}
                            />
                            <IconX
@@ -85,7 +85,7 @@ const MainFormTest = ({ index, question, deleteVariantHandler }) => {
                      />
                      <UiInput
                         key={variant.id + 6}
-                        width="1064px"
+                        width="1116px"
                         placeholder={`Вариант ${i + 1}`}
                      />
                      <IconX
@@ -124,7 +124,7 @@ const IconX = styled(XIcon)`
 `
 const OptionLabel = styled.label`
    display: flex;
-   width: 1095px;
+   width: 1150px;
    margin-top: 24px;
    align-items: center;
 `
@@ -134,4 +134,6 @@ const Label = styled.label`
 `
 const MainForm = styled.div`
    display: flex;
+   justify-content: space-between;
+   width: 1170px;
 `

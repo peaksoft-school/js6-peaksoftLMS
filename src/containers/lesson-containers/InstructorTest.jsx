@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
 import HeaderLayout from '../../components/UI/HeaderLoyout'
+import Test from '../../components/createTest/Test'
 import { taskCrumbs } from '../../utils/helpers/helper'
 
 export const InstructorTest = () => {
@@ -16,6 +17,7 @@ export const InstructorTest = () => {
          <BreadCrumbsBlock>
             <BreadCrumbs paths={taskCrumbs(courseName, 'Teст', courseId)} />
          </BreadCrumbsBlock>
+         <Test />
       </TestPageMain>
    )
 }

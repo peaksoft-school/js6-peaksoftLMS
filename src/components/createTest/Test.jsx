@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import MainFormTest from '../createTest/MainFormTest'
-import Wrapper from './Wrapper'
+import MainFormTest from './MainFormTest'
+import Wrapper from '../UI/Wrapper'
 import { ReactComponent as CopyIcon } from '../../assets/basket.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/copy.svg'
 import { ReactComponent as PlusIcon } from '../../assets/Plus.svg'
-import UiInput from './UiInput'
-import UIButton from './UIButton'
-import IconButton from './IconButton'
+import UiInput from '../UI/UiInput'
+import UIButton from '../UI/UIButton'
+import IconButton from '../UI/IconButton'
 
 const Test = () => {
    const [newTest, setNewTest] = useState([])
@@ -45,13 +45,12 @@ const Test = () => {
 
    return (
       <Container>
-         <Header>Header</Header>
          <form>
-            <Wrapper margin="24px 0px 20px 0px" width="1140px" height="124px">
+            <Wrapper margin="24px 0px 20px 0px" width="1205px" height="124px">
                <TestName>Название теста</TestName>
                <UiInput
                   margin="20px"
-                  width="1100px"
+                  width="1158px"
                   placeholder="Введите название теста"
                />
             </Wrapper>
@@ -62,7 +61,7 @@ const Test = () => {
                      id={index + 1}
                      padding="20px"
                      margin="0px 0px 20px 0px "
-                     width="1140px"
+                     width="1205px"
                   >
                      <MainFormTest
                         question={question}
@@ -127,11 +126,6 @@ const IconCopy = styled(CopyIcon)`
       background-color: #e6e3e3;
       border-radius: 4px;
    }
-`
-const Header = styled.div`
-   height: 75px;
-   background-color: #16ec56;
-   text-align: center;
 `
 const Container = styled.div`
    margin: 0 30px 0 20px;
