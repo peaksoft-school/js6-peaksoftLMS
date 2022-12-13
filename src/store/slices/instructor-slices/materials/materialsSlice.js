@@ -8,6 +8,7 @@ import {
    deleteLessonLink,
    deletePresentation,
    deleteVideoLesson,
+   editLink,
    editPresentation,
    editVideo,
    getCoursesLessons,
@@ -91,6 +92,11 @@ export const insMaterials = createSlice({
          state.status = 'deleted'
       },
       [deleteLessonLink.rejected]: setError,
+      // * edit lesson link
+      [editLink.fulfilled]: (state) => {
+         state.status = 'edited'
+      },
+      [editLink.rejected]: setError,
    },
 })
 

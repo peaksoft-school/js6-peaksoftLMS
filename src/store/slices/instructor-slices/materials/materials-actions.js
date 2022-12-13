@@ -211,6 +211,22 @@ export const getLinkById = createAsyncThunk(
       }
    }
 )
+
+export const editLink = createAsyncThunk(
+   'instructor-materials/editLink',
+   async (
+      { linkValueData, linkId, courseId },
+      { rejectWithValue, dispatch }
+   ) => {
+      try {
+         await axiosInstance.put(`link/${linkId}`, linkValueData)
+         return dispatch(getCoursesLessons(courseId))
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+
 export const deleteLessonLink = createAsyncThunk(
    'instructor-materials/deleteLessonLink',
    async ({ linkId, courseId }, { rejectWithValue, dispatch }) => {
