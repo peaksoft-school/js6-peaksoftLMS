@@ -1,14 +1,17 @@
 /* eslint-disable import/no-cycle */
 import { createSlice } from '@reduxjs/toolkit'
+import { setError, setLoading } from '../../../../utils/helpers/helper'
 import {
    assignGroups,
    getCourses,
+   getCoursesById,
    getCourseStudentsById,
 } from './course-actions'
 
 const initialState = {
    courses: [],
    courseStudents: [],
+   courseName: '',
    status: null,
    error: null,
 }
@@ -19,37 +22,28 @@ export const InsCoursesSlice = createSlice({
    reducers: {},
    extraReducers: {
       // * getting all courses
-      [getCourses.pending]: (state) => {
-         state.status = 'loading'
-      },
+      [getCourses.pending]: setLoading,
       [getCourses.fulfilled]: (state, { payload }) => {
          state.status = null
          state.courses = payload
       },
-      [getCourses.rejected]: (state, { payload }) => {
-         state.status = 'rejected'
-         state.error = `Ошибка: ${payload}`
-      },
+      [getCourses.rejected]: setError,
       // * assigning groups to course
       [assignGroups.fulfilled]: (state) => {
          state.status = 'assigned'
       },
-      [assignGroups.rejected]: (state, { payload }) => {
-         state.status = 'rejected'
-         state.error = `Ошибка: ${payload}`
-      },
+      [assignGroups.rejected]: setError,
       // * getting all students of course
-      [getCourseStudentsById.pending]: (state) => {
-         state.status = 'loading'
-      },
+      [getCourseStudentsById.pending]: setLoading,
       [getCourseStudentsById.fulfilled]: (state, { payload }) => {
          state.status = null
          state.courseStudents = payload
          state.error = null
       },
-      [getCourseStudentsById.rejected]: (state, { payload }) => {
-         state.status = 'rejected'
-         state.error = `Ошибка: ${payload}`
+      [getCourseStudentsById.rejected]: setError,
+      // * get course by id
+      [getCoursesById.fulfilled]: (state, { payload }) => {
+         state.courseName = payload.courseName
       },
    },
 })

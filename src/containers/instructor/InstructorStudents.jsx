@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { Button, styled as style } from '@mui/material'
@@ -16,36 +16,20 @@ import { NoDataInfo } from '../../components/UI/NoDataInfo'
 import { AssignGroupModal } from '../../components/instructor/AssignGroupModal'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
 import { ReactComponent as AddIcon } from '../../assets/groupAssign.svg'
+import HeaderLoyout from '../../components/UI/HeaderLoyout'
+import { courseCrumbs, courseLinks } from '../../utils/helpers/helper'
 
 export const InstructorStudents = () => {
    const dispatch = useDispatch()
    const { id } = useParams()
-   const { error, status, courseStudents } = useSelector(
+   const { error, status, courseStudents, courseName } = useSelector(
       (state) => state.insCourses
    )
    const [params, setParams] = useSearchParams()
    const { modalOpen } = Object.fromEntries(params)
-   const [currentCourse, setCurrentCourse] = useState('')
-
-   const INS_PATH = [
-      { path: '/instructor', to: '/instructor', name: 'Kурсы' },
-      {
-         path: '',
-         to: '',
-         name: currentCourse,
-      },
-      {
-         path: '',
-         to: '',
-         name: 'Студенты',
-      },
-   ]
 
    const openAssignModal = () => {
       setParams({ modalOpen: 'ASSIGN-GROUP', id })
-   }
-   const closeModalHandler = () => {
-      setParams({})
    }
 
    const render = courseStudents.map((item, i) => {
@@ -62,10 +46,6 @@ export const InstructorStudents = () => {
    useEffect(() => {
       dispatch(getCourseStudentsById(id))
       dispatch(getCoursesById(id))
-         .unwrap()
-         .then((response) => {
-            setCurrentCourse(response.courseName)
-         })
    }, [dispatch])
 
    return (
@@ -74,6 +54,7 @@ export const InstructorStudents = () => {
             <UiLoading />
          ) : (
             <StudetsMain>
+               <HeaderLoyout roles="Иструктор" links={courseLinks(id)} />
                {status === 'assigned' && (
                   <PopUp
                      message="Группа добавлена в курс"
@@ -82,7 +63,9 @@ export const InstructorStudents = () => {
                )}
                <HeaderBlock>
                   <div>
-                     <BreadCrumbs paths={INS_PATH} />
+                     <BreadCrumbs
+                        paths={courseCrumbs(courseName, 'Студенты')}
+                     />
                   </div>
                   <CustomButton variant="contained" onClick={openAssignModal}>
                      <AddIcon />
@@ -103,12 +86,13 @@ export const InstructorStudents = () => {
          {error && <PopUp message={error} messageType="error" />}
          <AssignGroupModal
             open={modalOpen === 'ASSIGN-GROUP'}
-            onClose={closeModalHandler}
+            onClose={() => setParams({})}
          />
       </>
    )
 }
 const StudetsMain = styled.div`
+   padding: 0 10px;
    background-color: #eff0f4;
    width: 100%;
 `
@@ -119,13 +103,13 @@ const TableMain = styled.div`
 const HeaderBlock = styled.div`
    display: flex;
    justify-content: space-between;
-   padding-top: 44px;
+   padding: 24px 0;
    margin: 0 39px;
 `
 const CustomButton = style(Button)`
    height: 40px;
    width: 260px;
-   borderradius: 8px;
+   border-radius: 8px;
 `
 const ButtonText = styled.p`
    font-size: 14px;
