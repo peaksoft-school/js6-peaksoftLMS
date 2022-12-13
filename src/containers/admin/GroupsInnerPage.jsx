@@ -47,7 +47,7 @@ export const GroupsInnerPage = () => {
                <BreadcrumsBlock>
                   <BreadCrumbs paths={ADMIN_INNER_PATH} />
                </BreadcrumsBlock>
-               {!groupStudents.length === 0 ? (
+               {groupStudents.length === 0 ? (
                   <NoDataInfo title="В этой группе пока нет студентов" />
                ) : (
                   <TableMain>

@@ -136,7 +136,7 @@ const EditStudentModal = ({ open, handleClose }) => {
                            fullName: e.target.value,
                         })
                      }
-                     value={editStudent.fullName}
+                     value={editStudent.fullName || ''}
                   />
 
                   <UiInput
@@ -144,7 +144,7 @@ const EditStudentModal = ({ open, handleClose }) => {
                      placeholder="+996 ___ __ __ __"
                      type="number"
                      onChange={(e) => getNumber(e.target.value)}
-                     value={editStudent.phoneNumber}
+                     value={editStudent.phoneNumber || ''}
                   />
 
                   <UiInput
@@ -157,7 +157,7 @@ const EditStudentModal = ({ open, handleClose }) => {
                            email: e.target.value,
                         })
                      }
-                     value={editStudent.email}
+                     value={editStudent.email || ''}
                   />
 
                   <GroupsSelect
