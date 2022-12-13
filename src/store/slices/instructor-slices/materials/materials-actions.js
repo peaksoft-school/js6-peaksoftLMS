@@ -28,10 +28,10 @@ export const getSingleLesson = createAsyncThunk(
 
 export const deleteLesson = createAsyncThunk(
    'instructor-materials/deleteLesson',
-   async (incomingData, { rejectWithValue, dispatch }) => {
+   async ({ lessonId, courseId }, { rejectWithValue, dispatch }) => {
       try {
-         await axiosInstance.delete(`lesson/${incomingData.id}`)
-         return dispatch(getCoursesLessons(incomingData.courseId))
+         await axiosInstance.delete(`lesson/${lessonId}`)
+         return dispatch(getCoursesLessons(courseId))
       } catch (err) {
          return rejectWithValue(err.response.data.message)
       }

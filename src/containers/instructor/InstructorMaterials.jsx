@@ -6,10 +6,7 @@ import { Button, styled as style } from '@mui/material'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
 import HeaderLoyout from '../../components/UI/HeaderLoyout'
 import { getCoursesById } from '../../store/slices/instructor-slices/courses/course-actions'
-import {
-   deleteLesson,
-   getCoursesLessons,
-} from '../../store/slices/instructor-slices/materials/materials-actions'
+import { getCoursesLessons } from '../../store/slices/instructor-slices/materials/materials-actions'
 import { courseCrumbs, courseLinks } from '../../utils/helpers/helper'
 import EditLesson from '../../assets/editLesson.svg'
 import DeleteLesson from '../../assets/deleteLesson.svg'
@@ -31,6 +28,7 @@ import { EditLinkModal } from '../../components/ins-materials/EditLinkModal'
 import { DeleteLinkModal } from '../../components/ins-materials/DeleteLinkModal'
 import { SELECT_OPTIONS } from '../../utils/constants/constants'
 import MaterialsLessonCard from '../../components/ins-materials/MaterialsLessonCard'
+import { DeleteLessonModal } from '../../components/ins-materials/DeleteLessonModal'
 
 export const InstructorMaterials = () => {
    const { id } = useParams()
@@ -52,7 +50,7 @@ export const InstructorMaterials = () => {
    }
 
    const deletLesson = (lessonId) => {
-      dispatch(deleteLesson({ id: lessonId, courseId: id }))
+      setParams({ modalOpen: 'DELETE-LESSON', lessonId })
    }
 
    const onGetActionHandler = (action, idLesson) => {
@@ -300,6 +298,12 @@ export const InstructorMaterials = () => {
                {modalOpen === 'DELETE-LINK' && (
                   <DeleteLinkModal
                      open={modalOpen === 'DELETE-LINK'}
+                     onClose={() => setParams({})}
+                  />
+               )}
+               {modalOpen === 'DELETE-LESSON' && (
+                  <DeleteLessonModal
+                     open={modalOpen === 'DELETE-LESSON'}
                      onClose={() => setParams({})}
                   />
                )}
