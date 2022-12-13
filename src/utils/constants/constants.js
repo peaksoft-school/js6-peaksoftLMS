@@ -101,6 +101,28 @@ export const STUDENT_HEADER = [
       phoryatLearning: 'Формат',
       phoneName: 'Номер телефона',
       emailName: 'E-mail',
+      actionsName: 'Действия',
+   },
+]
+
+export const LEARNING_FORMAT = [
+   {
+      studyFormat: 'ONLINE',
+   },
+   {
+      studyFormat: 'OFFLINE',
+   },
+]
+
+export const LEARNING_FORMAT_STUDENTS = [
+   {
+      studyFormat: 'ONLINE',
+   },
+   {
+      studyFormat: 'OFFLINE',
+   },
+   {
+      studyFormat: 'ALL',
    },
 ]
 
