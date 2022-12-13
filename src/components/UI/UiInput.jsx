@@ -14,9 +14,11 @@ const UiInput = ({
    margintop,
    marginbottom,
    onChange,
+   isDisabled,
 }) => {
    return (
       <Input
+         disabled={isDisabled}
          onChange={onChange}
          value={value}
          error={error}

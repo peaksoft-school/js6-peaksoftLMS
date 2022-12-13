@@ -71,7 +71,7 @@ export const GroupsPage = () => {
                   onClick={showModalHandler}
                   background="#3772FF"
                >
-                  Создать курс
+                  Создать группу
                </UIButton>
             </ButtonBlock>
 

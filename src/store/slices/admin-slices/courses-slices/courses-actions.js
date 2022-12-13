@@ -1,6 +1,6 @@
+/* eslint-disable import/no-cycle */
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { format } from 'date-fns'
-// eslint-disable-next-line import/no-cycle
 import axiosInstance from '../../../../api/axiosConfig'
 import fileUpload from '../../../../api/axiosFileUpload'
 

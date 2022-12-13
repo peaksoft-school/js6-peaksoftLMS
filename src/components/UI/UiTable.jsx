@@ -22,6 +22,7 @@ const UiTable = (props) => {
       secondOnClick,
       thirdOnClick,
    } = props
+
    return (
       <div>
          <TableContainer component={Paper}>

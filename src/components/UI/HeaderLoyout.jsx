@@ -74,7 +74,7 @@ const EllipseLogo = styled.div`
 const ProfileBlock = styled.div`
    display: flex;
    align-items: center;
-   padding-left: 4px;
+   padding-left: 8px;
    p {
       margin-right: 8px;
    }

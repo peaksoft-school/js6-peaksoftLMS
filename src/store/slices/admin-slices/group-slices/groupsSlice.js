@@ -14,7 +14,6 @@ const initialState = {
    error: null,
    groupStudents: [],
 }
-
 export const groupsSlice = createSlice({
    name: 'admin-groups',
    initialState,

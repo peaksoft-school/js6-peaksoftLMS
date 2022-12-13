@@ -100,6 +100,28 @@ export const STUDENT_HEADER = [
       phoryatLearning: 'Формат',
       phoneName: 'Номер телефона',
       emailName: 'E-mail',
+      actionsName: 'Действия',
+   },
+]
+
+export const LEARNING_FORMAT = [
+   {
+      studyFormat: 'ONLINE',
+   },
+   {
+      studyFormat: 'OFFLINE',
+   },
+]
+
+export const LEARNING_FORMAT_STUDENTS = [
+   {
+      studyFormat: 'ONLINE',
+   },
+   {
+      studyFormat: 'OFFLINE',
+   },
+   {
+      studyFormat: 'ALL',
    },
 ]
 
@@ -128,3 +150,26 @@ export const PATTERN_FOR_EMAIL =
    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export const POLE_ZAPOLNEN = 'Поле обязательно к заполнению'
+
+export const SELECT_OPTIONS = [
+   {
+      id: Math.random(),
+      name: 'Видеоурок',
+   },
+   {
+      id: Math.random(),
+      name: 'Презентация',
+   },
+   {
+      id: Math.random(),
+      name: 'Задание',
+   },
+   {
+      id: Math.random(),
+      name: 'Ссылка',
+   },
+   {
+      id: Math.random(),
+      name: 'Тест',
+   },
+]
