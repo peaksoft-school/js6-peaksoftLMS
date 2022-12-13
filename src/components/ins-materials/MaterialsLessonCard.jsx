@@ -25,6 +25,7 @@ const MaterialsLessonCard = (props) => {
       deleteLink,
       navigateHandler,
       lessonId,
+      linkId,
    } = props
    return (
       <CardMain>
@@ -102,7 +103,7 @@ const MaterialsLessonCard = (props) => {
          </ContentLessonCard>
 
          <ContentLessonCard>
-            <TextBlock onClick={() => navigateHandler('Ссылка', lessonId)}>
+            <TextBlock onClick={() => navigateHandler('Ссылка', linkId)}>
                <img src={linkIcon} alt="icon" />
                <TextLesson>Ссылка</TextLesson>
             </TextBlock>
