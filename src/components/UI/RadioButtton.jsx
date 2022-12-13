@@ -1,18 +1,18 @@
-import styled from '@emotion/styled/macro'
-// import styled from 'styled-components'
+// import styled from '@emotion/styled/macro'
+import styled from 'styled-components'
 
-export const RadioButton = (props) => {
+export const RadioButton = (key, id, value, name, onChange, checked) => {
    return (
       <div>
          <StyledInput
-            id={props.id}
-            value={props.value}
+            key={key}
+            id={id}
+            value={value}
             type="radio"
-            name={props.name}
-            onChange={props.onChange}
-            checked={props.checked}
+            name={name}
+            onChange={onChange}
+            checked={checked}
          />
-         <StyledLabel htmlFor={props.id}>{props.label}</StyledLabel>
       </div>
    )
 }
@@ -20,7 +20,4 @@ export const RadioButton = (props) => {
 const StyledInput = styled.input`
    width: 22px;
    height: 22px;
-`
-const StyledLabel = styled.label`
-   cursor: pointer;
 `

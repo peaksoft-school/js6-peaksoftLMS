@@ -5,18 +5,11 @@ import { ReactComponent as XIcon } from '../../assets/xIcon.svg'
 import Checkbox from '../UI/CheckBox'
 import UiInput from '../UI/UiInput'
 
-const MainFormTest = ({
-   index,
-   question,
-   deleteVariantHandler,
-   // drugoe,
-   // deleteVariantDrugoeHandler,
-}) => {
+const MainFormTest = ({ index, question, deleteVariantHandler }) => {
    const [getOneMore, setGetOneMore] = React.useState('Один из списка')
    const [getRadio, setGetRadio] = useState(null)
 
    const getVariantHandler = (event) => {
-      console.log(event.target.value)
       setGetRadio(event.target.value)
    }
    const getOneOrMoreHandler = (event) => {
@@ -38,7 +31,6 @@ const MainFormTest = ({
                   onChange={getOneOrMoreHandler}
                >
                   <Label id="controlled-radio-buttons-group" htmlFor="my-input">
-                     {console.log(question.id)}
                      <FormControlLabel
                         key={question.id}
                         value="Один из списка"
@@ -55,93 +47,65 @@ const MainFormTest = ({
                </RadioGroup>
             </FormControl>
          </MainForm>
-         <FormControl>
-            <RadioGroup
-               aria-labelledby="demo-controlled-radio-buttons-group"
-               name="controlled-radio-buttons-group"
-               value={getRadio}
-               onChange={getVariantHandler}
-            >
-               {question.data?.map((variant, i) => {
-                  return (
-                     <>
-                        {getOneMore === 'Один из списка' ? (
-                           <OptionLabel key={variant.id}>
-                              <RadioVariant key={variant.id + 7}>
-                                 {console.log('variant', getRadio)}
-                                 <FormControlLabel
-                                    key={variant.id + 2}
-                                    value={i + 2}
-                                    name={`variant ${question.id}`}
-                                    control={<Radio />}
-                                 />
-                              </RadioVariant>
-                              {/* <TestRadio
-                     name="contact"
-                     type="radio"
-                     id={i + 1}
-                     value={variant.id}
-                     onChange={getVariantHandler}
-                  /> */}
-                              <UiInput
-                                 key={variant.id + 3}
-                                 // id={variant.id}
-                                 width="1064px"
-                                 placeholder={`Вариант ${i + 1}`}
+         {question.data?.map(
+            (variant, i) =>
+               (getOneMore === 'Один из списка' && (
+                  <FormControl>
+                     <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={getRadio}
+                        onChange={getVariantHandler}
+                     >
+                        <OptionLabel key={variant.id}>
+                           <RadioVariant>
+                              <FormControlLabel
+                                 value={variant.id}
+                                 control={<Radio />}
                               />
-                              <IconX
-                                 key={variant.id + 6}
-                                 onClick={() =>
-                                    deleteVariantHandler(variant.id)
-                                 }
-                              />
-                           </OptionLabel>
-                        ) : (
-                           <OptionLabel key={variant.id + 4} htmlFor="Variant">
-                              <Checkbox
-                                 key={variant.id + 5}
-                                 value={i + 3}
-                                 setIsClicked={getVariantHandler}
-                              />
-                              <UiInput
-                                 key={variant.id + 6}
-                                 // id={variant.id}
-                                 width="1064px"
-                                 placeholder={`Вариант ${i + 1}`}
-                              />
-                              <IconX
-                                 key={variant.id + 8}
-                                 onClick={() =>
-                                    deleteVariantHandler(variant.id)
-                                 }
-                              />
-                           </OptionLabel>
-                        )}
-                        {/* {!drugoe && (
-                     <OptionLabel key={variant.id} htmlFor="Variant">
-                        <UiInput
-                           id="Variant"
-                           width="1064px"
-                           placeholder="Вариант другой"
-                        />
-                        <IconX
-                           onClick={() => deleteVariantDrugoeHandler(i + 1)}
-                        />
-                     </OptionLabel>
-                  )} */}
-                     </>
-                  )
-               })}
-            </RadioGroup>
-         </FormControl>
+                           </RadioVariant>
+                           <UiInput
+                              key={variant.id + 3}
+                              width="1064px"
+                              placeholder={`Вариант ${i + 1}`}
+                           />
+                           <IconX
+                              key={variant.id + 6}
+                              onClick={() => deleteVariantHandler(variant.id)}
+                           />
+                        </OptionLabel>
+                     </RadioGroup>
+                  </FormControl>
+               )) || (
+                  <OptionLabel key={variant.id + 4} htmlFor="Variant">
+                     <Checkbox
+                        key={variant.id + 5}
+                        value={i + 3}
+                        setIsClicked={getVariantHandler}
+                     />
+                     <UiInput
+                        key={variant.id + 6}
+                        width="1064px"
+                        placeholder={`Вариант ${i + 1}`}
+                     />
+                     <IconX
+                        key={variant.id + 8}
+                        onClick={() => deleteVariantHandler(variant.id)}
+                     />
+                  </OptionLabel>
+               )
+         )}
       </>
    )
 }
 
 export default MainFormTest
 
-const RadioVariant = styled(Radio)`
-   margin-left: 5px;
+const RadioVariant = styled.div`
+   margin-right: 12px;
+   margin-left: 10px;
+   width: 20px;
+   border-radius: 50%;
 `
 const Num = styled.p`
    color: #1f6ed4;
@@ -152,7 +116,6 @@ const Num = styled.p`
 
 const IconX = styled(XIcon)`
    position: relative;
-   margin-right: 10px;
    cursor: pointer;
    :hover {
       background-color: #e6e3e3;
@@ -161,8 +124,9 @@ const IconX = styled(XIcon)`
 `
 const OptionLabel = styled.label`
    display: flex;
-   align-items: center;
+   width: 1095px;
    margin-top: 24px;
+   align-items: center;
 `
 const Label = styled.label`
    display: flex;

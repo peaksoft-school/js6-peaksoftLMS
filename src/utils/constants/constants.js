@@ -25,7 +25,6 @@ export const ICONS_IMG = {
    StudentsSvg,
    StudentsActive,
 }
-export const TEST_KEY = '@peaksoft-lms-a-test-info'
 export const SIDELAYOUT_DATA = [
    {
       title: 'Группы',
