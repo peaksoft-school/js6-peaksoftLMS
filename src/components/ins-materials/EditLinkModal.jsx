@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import ModalWindow from '../UI/ModalWindow'
 import UiInput from '../UI/UiInput'
 import {
-   editVideo,
+   editLink,
    getLinkById,
 } from '../../store/slices/instructor-slices/materials/materials-actions'
 import PopUp from '../UI/PopUp'
@@ -39,7 +39,7 @@ export const EditLinkModal = ({ open, onClose }) => {
          lessonId,
       }
       return dispatch(
-         editVideo({ linkValueData: sendingData, linkId, courseId: id })
+         editLink({ linkValueData: sendingData, linkId, courseId: id })
       )
          .unwrap()
          .then(() => onClose())
