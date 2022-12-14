@@ -24,6 +24,10 @@ const store = configureStore({
       materials: insMaterials.reducer,
       student: studentSlice.reducer,
    },
+   middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+         serializableCheck: false,
+      }),
 })
 
 export default store

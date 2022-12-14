@@ -13,6 +13,7 @@ import { getGroups } from '../../store/slices/admin-slices/group-slices/group-ac
 import { GroupDeleteModal } from '../../components/admin-groups/DeleteModal'
 import { UiLoading } from '../../components/UI/UiLoading'
 import HeaderLoyout from '../../components/UI/HeaderLoyout'
+import { NoDataInfo } from '../../components/UI/NoDataInfo'
 
 export const GroupsPage = () => {
    const [params, setParams] = useSearchParams()
@@ -46,7 +47,7 @@ export const GroupsPage = () => {
       navigate(`/admin/groups/${id}`)
    }
    return (
-      <>
+      <GroupsMain>
          {error && <PopUp message={error} messageType="error" />}
          {status === 'created' && (
             <PopUp message="Группа успешно создана" messageType="success" />
@@ -60,61 +61,64 @@ export const GroupsPage = () => {
                messageType="success"
             />
          )}
-         <GroupsMain>
+         <HeaderBlock>
             <HeaderLoyout roles="Администратор" />
-            <ButtonBlock>
-               <UIButton
-                  width="177px"
-                  height="40px"
-                  startIcon={<PlusIcon />}
-                  variant="contained"
-                  onClick={showModalHandler}
-                  background="#3772FF"
-               >
-                  Создать группу
-               </UIButton>
-            </ButtonBlock>
+         </HeaderBlock>
+         <ButtonBlock>
+            <UIButton
+               width="177px"
+               height="40px"
+               startIcon={<PlusIcon />}
+               variant="contained"
+               onClick={showModalHandler}
+               background="#3772FF"
+            >
+               Создать группу
+            </UIButton>
+         </ButtonBlock>
 
-            {status === 'loading' ? (
-               <UiLoading />
-            ) : (
-               <GridGroups>
-                  {groups.map((element) => (
-                     <GroupCard
-                        key={element.id}
-                        someImage={element.image}
-                        someName={element.groupName}
-                        someParagraph={element.description}
-                        someYear={element.dateOfStart}
-                        onClick={() => navigateHanlder(element.id)}
-                        someButton={
-                           <GroupsMeatBalls
-                              openDeleteModal={openDeleteModal}
-                              openEdditModal={openEdditModal}
-                              id={element.id}
-                           />
-                        }
-                     />
-                  ))}
-               </GridGroups>
-            )}
+         {status === 'loading' ? (
+            <UiLoading />
+         ) : (
+            <GridGroups>
+               {groups.length === 0 && (
+                  <NoDataInfo title="Пока нет никаких групп, создайте" />
+               )}
+               {groups?.map((element) => (
+                  <GroupCard
+                     key={element.id}
+                     someImage={element.image}
+                     someName={element.groupName}
+                     someParagraph={element.description}
+                     someYear={element.dateOfStart}
+                     onClick={() => navigateHanlder(element.id)}
+                     someButton={
+                        <GroupsMeatBalls
+                           openDeleteModal={openDeleteModal}
+                           openEdditModal={openEdditModal}
+                           id={element.id}
+                        />
+                     }
+                  />
+               ))}
+            </GridGroups>
+         )}
 
-            <GroupsModalWindow
-               open={modalOpen === 'CREATE-GROUP'}
+         <GroupsModalWindow
+            open={modalOpen === 'CREATE-GROUP'}
+            onClose={onCloseModal}
+         />
+         <GroupDeleteModal
+            open={modalOpen === 'DELETE-GROUP'}
+            onClose={onCloseModal}
+         />
+         {modalOpen === 'EDDIT-GROUP' && (
+            <GroupsEditModal
+               open={modalOpen === 'EDDIT-GROUP'}
                onClose={onCloseModal}
             />
-            <GroupDeleteModal
-               open={modalOpen === 'DELETE-GROUP'}
-               onClose={onCloseModal}
-            />
-            {modalOpen === 'EDDIT-GROUP' && (
-               <GroupsEditModal
-                  open={modalOpen === 'EDDIT-GROUP'}
-                  onClose={onCloseModal}
-               />
-            )}
-         </GroupsMain>
-      </>
+         )}
+      </GroupsMain>
    )
 }
 
@@ -122,7 +126,6 @@ const GroupsMain = styled.div`
    width: 100%;
    display: flex;
    flex-direction: column;
-   padding: 0 40px 0 20px;
    background-color: #eff0f4;
 `
 
@@ -130,6 +133,7 @@ const ButtonBlock = styled.div`
    display: flex;
    justify-content: end;
    margin: 20px 0;
+   padding: 0 40px 0 20px;
 `
 
 const GridGroups = styled.div`
@@ -137,4 +141,8 @@ const GridGroups = styled.div`
    grid-template-columns: repeat(4, 1fr);
    column-gap: 20px;
    row-gap: 20px;
+   padding: 0 40px 0 20px;
+`
+const HeaderBlock = styled.div`
+   padding: 0 25px;
 `

@@ -73,7 +73,9 @@ export const TeachersPage = () => {
             />
          )}
          <Container>
-            <HeaderLoyout roles="Администратор" />
+            <HeaderBlock>
+               <HeaderLoyout roles="Администратор" />
+            </HeaderBlock>
             <ButtonWrapper>
                <UIButton
                   startIcon={<PlusIcon />}
@@ -137,4 +139,7 @@ const DeleteIconTeacher = styled(DeleteIcon)`
 `
 const RenameIconTeacher = styled(RenameIcon)`
    cursor: pointer;
+`
+const HeaderBlock = styled.div`
+   padding: 0 15px;
 `

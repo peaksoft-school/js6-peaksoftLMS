@@ -105,7 +105,9 @@ export const StudentsPage = () => {
          )}
 
          <Conatiner>
-            <HeaderLoyout roles="Администратор" />
+            <HeaderBlock>
+               <HeaderLoyout roles="Администратор" />
+            </HeaderBlock>
             <Block>
                <FilteredStudyFormat
                   valueFormats={filteredFormat}
@@ -184,18 +186,22 @@ export const StudentsPage = () => {
 const Conatiner = styled.div`
    width: 100%;
    background: #eff0f4;
-   padding: 0 40px 0 20px;
 `
 const TableMain = styled.div`
    display: flex;
    justify-content: center;
+   padding: 0 10px;
 `
 const Block = styled.div`
    margin-top: 20px;
    display: flex;
    justify-content: space-between;
+   padding: 0 10px;
 `
 const ButtonBlock = styled.div`
    display: flex;
    gap: 10px;
+`
+const HeaderBlock = styled.div`
+   padding: 0 25px;
 `
