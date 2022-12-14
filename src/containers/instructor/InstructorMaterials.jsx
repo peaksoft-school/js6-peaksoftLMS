@@ -45,8 +45,8 @@ export const InstructorMaterials = () => {
    const openCreateModal = () => {
       setParams({ modalOpen: 'CREATE-LESSON', id })
    }
-   const submitEdit = (lessonId, lessonName) => {
-      setParams({ modalOpen: 'RENAME-LESSON', id, lessonId, lessonName })
+   const submitEdit = (lessonId) => {
+      setParams({ modalOpen: 'RENAME-LESSON', id, lessonId })
    }
 
    const deletLesson = (lessonId) => {
@@ -239,14 +239,20 @@ export const InstructorMaterials = () => {
                      ))}
                   </LessonGrid>
                )}
-               <CreateLessonModal
-                  open={modalOpen === 'CREATE-LESSON'}
-                  onClose={() => setParams({})}
-               />
-               <RenameModal
-                  open={modalOpen === 'RENAME-LESSON'}
-                  onClose={() => setParams({})}
-               />
+
+               {modalOpen === 'CREATE-LESSON' && (
+                  <CreateLessonModal
+                     open={modalOpen === 'CREATE-LESSON'}
+                     onClose={() => setParams({})}
+                  />
+               )}
+               {modalOpen === 'RENAME-LESSON' && (
+                  <RenameModal
+                     open={modalOpen === 'RENAME-LESSON'}
+                     onClose={() => setParams({})}
+                  />
+               )}
+
                {modalOpen === 'POST-PPTX' && (
                   <CreatePresentationModal
                      open={modalOpen === 'POST-PPTX'}
