@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, styled as style } from '@mui/material'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import ModalWindow from '../UI/ModalWindow'
 import UiInput from '../UI/UiInput'
-import { renameLessons } from '../../store/slices/instructor-slices/materials/materials-actions'
+import {
+   renameLessons,
+   getSingleLesson,
+} from '../../store/slices/instructor-slices/materials/materials-actions'
 
 export const RenameModal = ({ open, onClose }) => {
    const [lessonTitle, setLessonTitle] = useState('')
    const dispatch = useDispatch()
    const { id } = useParams()
    const [params] = useSearchParams()
-   const { lessonId, lessonName } = Object.fromEntries(params)
+   const { lessonId } = Object.fromEntries(params)
 
    const submitHandler = () => {
       dispatch(
@@ -24,6 +27,12 @@ export const RenameModal = ({ open, onClose }) => {
       onClose()
    }
 
+   useEffect(() => {
+      dispatch(getSingleLesson(lessonId))
+         .unwrap()
+         .then((result) => setLessonTitle(result.data.lessonName))
+   }, [])
+
    return (
       <ModalWindow
          open={open}
@@ -32,7 +41,7 @@ export const RenameModal = ({ open, onClose }) => {
          bodyContent={
             <InputBlock>
                <UiInput
-                  value={lessonName}
+                  value={lessonTitle}
                   placeholder="Название урока"
                   width="491px"
                   onChange={(e) => setLessonTitle(e.target.value)}

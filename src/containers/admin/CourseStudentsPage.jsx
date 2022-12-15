@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -62,31 +63,30 @@ export const CourseStudentsPage = () => {
    })
    return (
       <>
-         {status === 'loading' ? (
-            <UiLoading />
-         ) : (
-            <StudetsMain>
-               <StudentContainer>
-                  <HeaderLoyout
-                     links={COURSE_STUDENT_PATH}
-                     roles="Администратор"
-                  />
-                  <BreadcrumsBlock>
-                     <BreadCrumbs paths={ADMIN_COURSE_PATH} />
-                  </BreadcrumsBlock>
-                  {courseStudent.length === 0 ? (
-                     <NoDataInfo title="В этой курсе пока нет студентов" />
-                  ) : (
-                     <Wrapper width="1140px" margin="24px 0" height="100vh">
-                        <UiTable
-                           headData={COURSE_DATA_STUDENT}
-                           data={courseStudentDate}
-                        />
-                     </Wrapper>
-                  )}
-               </StudentContainer>
-            </StudetsMain>
-         )}
+         <StudetsMain>
+            <StudentContainer>
+               <HeaderLoyout
+                  links={COURSE_STUDENT_PATH}
+                  roles="Администратор"
+               />
+               <BreadcrumsBlock>
+                  <BreadCrumbs paths={ADMIN_COURSE_PATH} />
+               </BreadcrumsBlock>
+
+               {status === 'loading' ? (
+                  <UiLoading />
+               ) : courseStudent.length === 0 ? (
+                  <NoDataInfo title="В этой группе пока нет студентов" />
+               ) : (
+                  <Wrapper width="1140px" margin="24px 0" height="100vh">
+                     <UiTable
+                        headData={COURSE_DATA_STUDENT}
+                        data={courseStudentDate}
+                     />
+                  </Wrapper>
+               )}
+            </StudentContainer>
+         </StudetsMain>
          {error && <PopUp message={error} messageType="error" />}
       </>
    )

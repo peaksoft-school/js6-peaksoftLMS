@@ -127,12 +127,14 @@ const RenameInstructorModal = ({ open, handleClose }) => {
                   />
                   <DivBtn>
                      <ButtonCloseTeacher
+                        marginleft="10px"
                         onClick={handleClose}
                         variant="outlined"
                      >
                         Отмена
                      </ButtonCloseTeacher>
                      <ButtonAddTeacher
+                        marginleft="10px"
                         onClick={editGroupHandler}
                         variant="contained"
                         background="#3772FF"
@@ -172,9 +174,6 @@ const ButtonAddTeacher = styled(UIButton)`
 `
 const ButtonCloseTeacher = styled(UIButton)`
    width: 117px;
-   &.gPSgfD.MuiButtonBase-root {
-      margin-left: 10px;
-   }
 `
 const ErrorMessage = styled.p`
    color: red;

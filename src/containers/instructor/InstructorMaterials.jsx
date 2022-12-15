@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
@@ -45,8 +46,8 @@ export const InstructorMaterials = () => {
    const openCreateModal = () => {
       setParams({ modalOpen: 'CREATE-LESSON', id })
    }
-   const submitEdit = (lessonId, lessonName) => {
-      setParams({ modalOpen: 'RENAME-LESSON', id, lessonId, lessonName })
+   const submitEdit = (lessonId) => {
+      setParams({ modalOpen: 'RENAME-LESSON', id, lessonId })
    }
 
    const deletLesson = (lessonId) => {
@@ -156,45 +157,25 @@ export const InstructorMaterials = () => {
 
    return (
       <>
-         {validateError && (
-            <PopUp
-               messageType="error"
-               message="Файл не существует, сначала создайте"
-            />
-         )}
-         {status === 'created' && (
-            <PopUp message="Урок успешно создан" messageType="success" />
-         )}
-         {status === 'deleted' && (
-            <PopUp message="Удалено" messageType="success" />
-         )}
-         {status === 'edited' && (
-            <PopUp message="Отредактировано" messageType="success" />
-         )}
-         {status === 'uploaded' && (
-            <PopUp message="Загружено успешно" messageType="success" />
-         )}
-         {error && <PopUp message={error} messageType="error" />}
+         <StudetsMain>
+            <HeaderLoyout roles="Инструктор" links={courseLinks(id)} />
+            <HeaderBlock>
+               <BreadCrumbsBlock>
+                  <BreadCrumbs paths={courseCrumbs(courseName, 'Материалы')} />
+               </BreadCrumbsBlock>
+               <CustomButton variant="contained" onClick={openCreateModal}>
+                  <AddIcon />
+                  <ButtonText>Добавить урок</ButtonText>
+               </CustomButton>
+            </HeaderBlock>
 
-         {status === 'loading' ? (
-            <UiLoading />
-         ) : (
-            <StudetsMain>
-               <HeaderLoyout roles="Иструктор" links={courseLinks(id)} />
-               <HeaderBlock>
-                  <BreadCrumbsBlock>
-                     <BreadCrumbs
-                        paths={courseCrumbs(courseName, 'Материалы')}
-                     />
-                  </BreadCrumbsBlock>
-                  <CustomButton variant="contained" onClick={openCreateModal}>
-                     <AddIcon />
-                     <ButtonText>Добавить урок</ButtonText>
-                  </CustomButton>
-               </HeaderBlock>
-               {lessons.length === 0 ? (
-                  <NoDataInfo title="Тут пока нет никаких уроков" />
-               ) : (
+            {status === 'loading' ? (
+               <UiLoading />
+            ) : (
+               <>
+                  {lessons.length === 0 && (
+                     <NoDataInfo title="Тут пока нет никаких уроков" />
+                  )}
                   <LessonGrid>
                      {lessons?.map((element) => (
                         <MaterialsLessonCard
@@ -240,76 +221,103 @@ export const InstructorMaterials = () => {
                         />
                      ))}
                   </LessonGrid>
-               )}
-               <CreateLessonModal
-                  open={modalOpen === 'CREATE-LESSON'}
-                  onClose={() => setParams({})}
-               />
-               <RenameModal
-                  open={modalOpen === 'RENAME-LESSON'}
-                  onClose={() => setParams({})}
-               />
-               {modalOpen === 'POST-PPTX' && (
-                  <CreatePresentationModal
-                     open={modalOpen === 'POST-PPTX'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'EDIT-PPTX' && (
-                  <EditPresentationModal
-                     open={modalOpen === 'EDIT-PPTX'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'DELETE-PPTX' && (
-                  <PpesentationDeleteModal
-                     open={modalOpen === 'DELETE-PPTX'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'POST-VIDEO' && (
-                  <CreateVideoModal
-                     open={modalOpen === 'POST-VIDEO'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'EDIT-VIDEO' && (
-                  <EditVideoModal
-                     open={modalOpen === 'EDIT-VIDEO'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'DELETE-VIDEO' && (
-                  <DeleteVideoModal
-                     open={modalOpen === 'DELETE-VIDEO'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'POST-LINK' && (
-                  <CreateLinkModal
-                     open={modalOpen === 'POST-LINK'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'EDIT-LINK' && (
-                  <EditLinkModal
-                     open={modalOpen === 'EDIT-LINK'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'DELETE-LINK' && (
-                  <DeleteLinkModal
-                     open={modalOpen === 'DELETE-LINK'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-               {modalOpen === 'DELETE-LESSON' && (
-                  <DeleteLessonModal
-                     open={modalOpen === 'DELETE-LESSON'}
-                     onClose={() => setParams({})}
-                  />
-               )}
-            </StudetsMain>
+               </>
+            )}
+         </StudetsMain>
+
+         {validateError && (
+            <PopUp
+               messageType="error"
+               message="Файл не существует, сначала создайте"
+            />
+         )}
+         {status === 'created' && (
+            <PopUp message="Урок успешно создан" messageType="success" />
+         )}
+         {status === 'deleted' && (
+            <PopUp message="Удалено" messageType="success" />
+         )}
+         {status === 'edited' && (
+            <PopUp message="Отредактировано" messageType="success" />
+         )}
+         {status === 'uploaded' && (
+            <PopUp message="Загружено успешно" messageType="success" />
+         )}
+         {error && <PopUp message={error} messageType="error" />}
+
+         {modalOpen === 'CREATE-LESSON' && (
+            <CreateLessonModal
+               open={modalOpen === 'CREATE-LESSON'}
+               onClose={() => setParams({})}
+            />
+         )}
+
+         {modalOpen === 'RENAME-LESSON' && (
+            <RenameModal
+               open={modalOpen === 'RENAME-LESSON'}
+               onClose={() => setParams({})}
+            />
+         )}
+
+         {modalOpen === 'POST-PPTX' && (
+            <CreatePresentationModal
+               open={modalOpen === 'POST-PPTX'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'EDIT-PPTX' && (
+            <EditPresentationModal
+               open={modalOpen === 'EDIT-PPTX'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'DELETE-PPTX' && (
+            <PpesentationDeleteModal
+               open={modalOpen === 'DELETE-PPTX'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'POST-VIDEO' && (
+            <CreateVideoModal
+               open={modalOpen === 'POST-VIDEO'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'EDIT-VIDEO' && (
+            <EditVideoModal
+               open={modalOpen === 'EDIT-VIDEO'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'DELETE-VIDEO' && (
+            <DeleteVideoModal
+               open={modalOpen === 'DELETE-VIDEO'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'POST-LINK' && (
+            <CreateLinkModal
+               open={modalOpen === 'POST-LINK'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'EDIT-LINK' && (
+            <EditLinkModal
+               open={modalOpen === 'EDIT-LINK'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'DELETE-LINK' && (
+            <DeleteLinkModal
+               open={modalOpen === 'DELETE-LINK'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'DELETE-LESSON' && (
+            <DeleteLessonModal
+               open={modalOpen === 'DELETE-LESSON'}
+               onClose={() => setParams({})}
+            />
          )}
       </>
    )

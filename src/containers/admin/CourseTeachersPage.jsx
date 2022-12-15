@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useSearchParams } from 'react-router-dom'
@@ -84,46 +85,39 @@ export const CourseTeachersPage = () => {
       setParams({})
    }
    return (
-      <>
-         {status === 'loading' ? (
-            <UiLoading />
-         ) : (
-            <TeacherMain>
-               <TeacherContainer>
-                  <HeaderLoyout
-                     links={COURSE_TEACHERS_PATH}
-                     roles="Администратор"
+      <TeacherMain>
+         <TeacherContainer>
+            <HeaderLoyout links={COURSE_TEACHERS_PATH} roles="Администратор" />
+            <Block>
+               <BreadCrumbs paths={ADMIN_COURSE_PATH} />
+               <UIButton
+                  width="250px"
+                  startIcon={<AsignTeacherModal />}
+                  onClick={openAssignModal}
+                  variant="contained"
+                  background="#3772FF"
+                  colour="#FFF"
+                  height="40px"
+               >
+                  Назначить учителя
+               </UIButton>
+            </Block>
+            {status === 'loading' ? (
+               <UiLoading />
+            ) : courseTeachers.length === 0 ? (
+               <NoDataInfo title="В этой группе не назначены учителя" />
+            ) : (
+               <Wrapper width="1140px" margin="24px 0" height="100vh">
+                  <UiTable
+                     headData={COURSE_DATA_TEACHERS}
+                     data={courseStudentDate}
+                     actions
+                     thirdIcon={<DeleteIconTeacher />}
+                     thirdOnClick={deleteHandler}
                   />
-                  <Block>
-                     <BreadCrumbs paths={ADMIN_COURSE_PATH} />
-                     <UIButton
-                        width="250px"
-                        startIcon={<AsignTeacherModal />}
-                        onClick={openAssignModal}
-                        variant="contained"
-                        background="#3772FF"
-                        colour="#FFF"
-                        height="40px"
-                     >
-                        Назначить учителя
-                     </UIButton>
-                  </Block>
-                  {courseTeachers.length === 0 ? (
-                     <NoDataInfo title="В этой курсе не назначены учителя" />
-                  ) : (
-                     <Wrapper width="1140px" margin="24px 0" height="100vh">
-                        <UiTable
-                           headData={COURSE_DATA_TEACHERS}
-                           data={courseStudentDate}
-                           actions
-                           thirdIcon={<DeleteIconTeacher />}
-                           thirdOnClick={deleteHandler}
-                        />
-                     </Wrapper>
-                  )}
-               </TeacherContainer>
-            </TeacherMain>
-         )}
+               </Wrapper>
+            )}
+         </TeacherContainer>
          <CourseAssignModal
             open={modalOpen === 'ASSIGN-TEACHER'}
             onClose={closeModalHandler}
@@ -133,7 +127,7 @@ export const CourseTeachersPage = () => {
          )}
 
          {error && <PopUp message={error} messageType="error" />}
-      </>
+      </TeacherMain>
    )
 }
 const TeacherContainer = styled.div`
