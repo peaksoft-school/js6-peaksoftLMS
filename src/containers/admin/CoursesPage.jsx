@@ -53,7 +53,6 @@ export const CoursesPage = () => {
 
    return (
       <CourseMain>
-         {/* <ContainerDiv> */}
          {error && <PopUp message={error} messageType="error" />}
          {status === 'created' && (
             <PopUp message="Группа успешно создана" messageType="success" />
@@ -131,7 +130,6 @@ export const CoursesPage = () => {
             />
          )}
          <Outlet />
-         {/* </ContainerDiv> */}
       </CourseMain>
    )
 }

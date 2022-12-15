@@ -75,7 +75,7 @@ export const CourseStudentsPage = () => {
                      <BreadCrumbs paths={ADMIN_COURSE_PATH} />
                   </BreadcrumsBlock>
                   {courseStudent.length === 0 ? (
-                     <NoDataInfo title="В этой группе пока нет студентов" />
+                     <NoDataInfo title="В этой курсе пока нет студентов" />
                   ) : (
                      <Wrapper width="1140px" margin="24px 0" height="100vh">
                         <UiTable

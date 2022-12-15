@@ -22,7 +22,7 @@ export const CourseDeleteModal = ({ open, onClose }) => {
          handleClose={() => onClose()}
          headerContent={
             <TitleText>
-               <h3>Вы уверены, что хотите удалить группу ... ?</h3>
+               <h3>Вы уверены, что хотите удалить курс... ?</h3>
             </TitleText>
          }
          footerContent={

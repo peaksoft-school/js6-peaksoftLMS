@@ -109,7 +109,7 @@ export const CourseTeachersPage = () => {
                      </UIButton>
                   </Block>
                   {courseTeachers.length === 0 ? (
-                     <NoDataInfo title="В этой группе не назначены учителя" />
+                     <NoDataInfo title="В этой курсе не назначены учителя" />
                   ) : (
                      <Wrapper width="1140px" margin="24px 0" height="100vh">
                         <UiTable

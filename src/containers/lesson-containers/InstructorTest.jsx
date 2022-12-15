@@ -7,7 +7,8 @@ import HeaderLayout from '../../components/UI/HeaderLoyout'
 import { taskCrumbs } from '../../utils/helpers/helper'
 
 export const InstructorTest = () => {
-   const { courseId } = useParams()
+   const courseId = useParams()
+
    const { courseName } = useSelector((state) => state.insCourses)
 
    return (

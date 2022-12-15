@@ -85,3 +85,10 @@ export const routeHandler = (action, idLesson, navigate, id) => {
          navigate()
    }
 }
+export const getYoutubeThumbnail = (link) => {
+   if (link) {
+      const youtubeThumbnailId = link.substr(link.indexOf('=') + 1, 11)
+      return `https://www.youtube.com/embed/${youtubeThumbnailId}`
+   }
+   return ''
+}
