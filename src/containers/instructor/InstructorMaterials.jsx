@@ -125,25 +125,25 @@ export const InstructorMaterials = () => {
       }
    }
 
-   const navigateHandler = (action, idLesson) => {
+   const navigateHandler = (action, incomingId) => {
       switch (action) {
          case 'Видеоурок':
-            navigate(`/instructor/video/${id}/${idLesson}`)
+            navigate(`/instructor/video/${id}/${incomingId}`)
             break
          case 'Презентация':
-            navigate(`/instructor/presentataion/${id}/${idLesson}`)
+            navigate(`/instructor/presentataion/${id}/${incomingId}`)
 
             break
          case 'Задание':
-            navigate(`/instructor/task/${id}/${idLesson}`)
+            navigate(`/instructor/task/${id}/${incomingId}`)
 
             break
          case 'Ссылка':
-            navigate(`/instructor/lesson-link/${id}/${idLesson}`)
+            navigate(`/instructor/lesson-link/${id}/${incomingId}`)
 
             break
          case 'Тест':
-            navigate(`/instructor/test/${id}/${idLesson}`)
+            navigate(`/instructor/test/${id}/${incomingId}`)
             break
          default:
             navigate()
@@ -183,6 +183,8 @@ export const InstructorMaterials = () => {
                            headerIcon={EditLesson}
                            actionIcon={DeleteLesson}
                            lessonId={element.lessonId}
+                           videoId={element.videoId}
+                           presentationId={element.presentationId}
                            editHandler={() =>
                               submitEdit(element.lessonId, element.lessonName)
                            }
