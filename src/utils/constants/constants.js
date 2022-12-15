@@ -25,7 +25,6 @@ export const ICONS_IMG = {
    StudentsSvg,
    StudentsActive,
 }
-
 export const SIDELAYOUT_DATA = [
    {
       title: 'Группы',
