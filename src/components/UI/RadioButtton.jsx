@@ -1,33 +1,23 @@
-import * as React from 'react'
-import Radio from '@mui/material/Radio'
-import { styled } from '@mui/material'
-import { ReactComponent as SuccessIcon } from '../../assets/checkedRadio.svg'
-import { ReactComponent as ErrorIcon } from '../../assets/crossRadio.svg'
+// import styled from '@emotion/styled/macro'
+import styled from 'styled-components'
 
-const RadioButton = ({ onChange, value, changeRadio }) => {
+export const RadioButton = (key, id, value, name, onChange, checked) => {
    return (
       <div>
-         {!changeRadio ? (
-            <StyledRadio onChange={onChange} value={value} />
-         ) : (
-            <StyledRadio
-               onChange={onChange}
-               value={value}
-               checkedIcon={
-                  (changeRadio === 'error' && <ErrorIcon />) ||
-                  (changeRadio === 'success' && <SuccessIcon />)
-               }
-            />
-         )}
+         <StyledInput
+            key={key}
+            id={id}
+            value={value}
+            type="radio"
+            name={name}
+            onChange={onChange}
+            checked={checked}
+         />
       </div>
    )
 }
 
-export default RadioButton
-
-const StyledRadio = styled(Radio)`
-   &.Mui-root {
-      width: 20px;
-      height: 20px;
-   }
+const StyledInput = styled.input`
+   width: 22px;
+   height: 22px;
 `

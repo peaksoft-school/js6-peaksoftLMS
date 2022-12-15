@@ -26,6 +26,10 @@ const store = configureStore({
       student: studentSlice.reducer,
       task: taskSlice.reducer,
    },
+   middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+         serializableCheck: false,
+      }),
 })
 
 export default store

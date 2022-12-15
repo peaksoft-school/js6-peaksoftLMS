@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 import FadeLoader from 'react-spinners/FadeLoader'
 import {
@@ -53,24 +53,10 @@ export const CoursesPage = () => {
 
    return (
       <CourseMain>
-         {/* <ContainerDiv> */}
-         {error && <PopUp message={error} messageType="error" />}
-         {status === 'created' && (
-            <PopUp message="Группа успешно создана" messageType="success" />
-         )}
-         {status === 'assigned' && (
-            <PopUp message="Успешно назначено" messageType="success" />
-         )}
-         {status === 'deleted' && (
-            <PopUp message="Группа удалена" messageType="success" />
-         )}
-         {status === 'edited' && (
-            <PopUp
-               message="Группа отредактирована успешно"
-               messageType="success"
-            />
-         )}
-         <HeaderLoyout roles="Администратор" />
+         <HeaderBlock>
+            <HeaderLoyout roles="Администратор" />
+         </HeaderBlock>
+
          <ButtonDiv>
             <UiButton
                onClick={() => setShowModal((prev) => !prev)}
@@ -111,6 +97,23 @@ export const CoursesPage = () => {
             </CardDiv>
          )}
 
+         {error && <PopUp message={error} messageType="error" />}
+         {status === 'created' && (
+            <PopUp message="Группа успешно создана" messageType="success" />
+         )}
+         {status === 'assigned' && (
+            <PopUp message="Успешно назначено" messageType="success" />
+         )}
+         {status === 'deleted' && (
+            <PopUp message="Группа удалена" messageType="success" />
+         )}
+         {status === 'edited' && (
+            <PopUp
+               message="Группа отредактирована успешно"
+               messageType="success"
+            />
+         )}
+
          {showModal && <CoursesModal open={showModal} isOpen={setShowModal} />}
          {modalOpen === 'EDIT-COURSE' && (
             <CourseEditModal
@@ -130,8 +133,6 @@ export const CoursesPage = () => {
                onClose={setClose}
             />
          )}
-         <Outlet />
-         {/* </ContainerDiv> */}
       </CourseMain>
    )
 }
@@ -141,13 +142,12 @@ const CourseMain = styled.div`
    background: #eff0f4;
    display: flex;
    flex-direction: column;
-   padding: 20px 50px;
 `
 
 const ButtonDiv = styled.div`
    display: flex;
    justify-content: end;
-   margin: 24px 0;
+   padding: 20px 50px;
 `
 
 const CardDiv = styled.div`
@@ -155,6 +155,7 @@ const CardDiv = styled.div`
    column-width: 100%;
    flex-wrap: wrap;
    gap: 20px;
+   padding: 10px 35px;
 `
 
 const LoadingBlock = styled.div`
@@ -162,4 +163,7 @@ const LoadingBlock = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
+`
+const HeaderBlock = styled.div`
+   padding: 0 25px;
 `
