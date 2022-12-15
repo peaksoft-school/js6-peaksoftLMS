@@ -7,6 +7,7 @@ import HeaderLayout from '../../components/UI/HeaderLoyout'
 import Wrapper from '../../components/UI/Wrapper'
 import { getCoursesById } from '../../store/slices/instructor-slices/courses/course-actions'
 import { getPresentationById } from '../../store/slices/instructor-slices/materials/materials-actions'
+import { VIEWER } from '../../utils/constants/constants'
 import { taskCrumbs } from '../../utils/helpers/helper'
 
 export const InstructorPresentaion = () => {
@@ -22,8 +23,6 @@ export const InstructorPresentaion = () => {
          .then((result) => setData(result))
    }, [])
 
-   const viewer = 'https://drive.google.com/viewerng/viewer?embedded=true&url='
-
    return (
       <TestPageMain>
          <HeaderLayout roles="Инструктор" />
@@ -34,7 +33,7 @@ export const InstructorPresentaion = () => {
          </BreadCrumbsBlock>
          <Wrapper padding="20px 300px 20px 20px">
             <Embet
-               src={viewer + data.presentationLink}
+               src={VIEWER + data.presentationLink}
                type="application/pdf"
                title="PeakSoft presentation viewer"
             />
