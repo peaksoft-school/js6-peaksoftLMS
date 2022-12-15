@@ -74,7 +74,6 @@ const MenuBar = ({ editor }) => {
 }
 
 const TextEditor = ({ editor }) => {
-   // console.log(text, 'texxxt')
    return (
       <div>
          <MenuBar editor={editor} />

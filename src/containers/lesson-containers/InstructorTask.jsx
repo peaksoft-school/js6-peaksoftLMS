@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
-import CreateTask from '../../components/UI/createTask/CreateTask'
 import HeaderLayout from '../../components/UI/HeaderLoyout'
 import { taskCrumbs } from '../../utils/helpers/helper'
 
@@ -17,7 +16,6 @@ export const InstructorTask = () => {
          <BreadCrumbsBlock>
             <BreadCrumbs paths={taskCrumbs(courseName, 'Задание', courseId)} />
          </BreadCrumbsBlock>
-         <CreateTask />
       </TaskPageMain>
    )
 }

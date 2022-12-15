@@ -1,4 +1,6 @@
-import React, { useCallback, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone'
 import { useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -15,134 +17,163 @@ import UIButton from '../UIButton'
 import TextEditor from './TextEditor'
 import { ReactComponent as Gallery } from '../../../assets/Gallery.svg'
 import ModalWindow from '../ModalWindow'
+import { saveTask } from '../../../store/slices/task-slices/task-actions'
+import fileUpload from '../../../api/axiosFileUpload'
 
-const CreateTask = ({ getDataHandler }) => {
+const CreateTask = () => {
+   const dispatch = useDispatch()
+   const { lessonId } = useParams()
+
+   const [file, setFile] = useState(null)
+   const [photo, setPhoto] = useState(null)
+   const [code, setCode] = useState(null)
+   const [link, setLink] = useState(null)
+
+   const onChange = (type, value) => {
+      switch (type) {
+         case 'FILE':
+            return setFile(value)
+         case 'PHOTO':
+            return setPhoto(value)
+         case 'LINK':
+            return setLink(value)
+         case 'CODE':
+            return setCode(value)
+         default:
+            return null
+      }
+   }
+
    const editor = useEditor({
       extensions: [StarterKit, Underline],
       content: ` `,
    })
-   const textEditorVakue = editor?.getText()
-
-   const [images, setImages] = useState([])
 
    const [values, setValue] = useState({
       text: '',
       link: '',
    })
 
-   const [stateItems, setStateItems] = useState({
-      showTextEditor: false,
-      showImage: false,
-      showCode: false,
-      showModal: false,
-      showModalImage: false,
-      showModalLink: false,
-      showModalLinkDelete: false,
-      selectedFile: null,
-      valueNameTask: '',
-      valueCode: '',
+   const [createTask, setCreateTask] = useState({
+      taskName: '',
    })
 
-   const onSendingData = () => {
-      getDataHandler({
-         nameTask: stateItems.valueNameTask,
-         textEditor: textEditorVakue,
-         file: stateItems.selectedFile,
-         link: data,
-         image: images,
-         code: stateItems.valueCode,
-      })
+   const [modals, setModals] = useState({
+      showTextEditor: false,
+      showCode: false,
+      showFileDelete: false,
+
+      showCreateLink: false,
+      showDeleteLink: false,
+      showCreateImage: false,
+      showDeleteImage: false,
+      showDeleteFile: false,
+      valueNameTask: '',
+   })
+
+   const openCreateLink = () => {
+      return setModals({ ...modals, showCreateLink: true })
    }
-   const [data, setData] = useState([])
+   const closeCreateLink = () => {
+      return setModals({ ...modals, showCreateLink: false })
+   }
+   const openDeleteLink = () => {
+      return setModals({ ...modals, showDeleteLink: true })
+   }
+   const closeDeleteLink = () => {
+      return setModals({ ...modals, showDeleteLink: false })
+   }
+
+   const openDeleteFile = () => {
+      return setModals({ ...modals, showDeleteFile: true })
+   }
+   const closeDeleteFile = () => {
+      return setModals({ ...modals, showDeleteFile: false })
+   }
+
+   const openDeleteImage = () => {
+      return setModals({ ...modals, showDeleteImage: true })
+   }
+   const closeDeleteImage = () => {
+      return setModals({ ...modals, showDeleteImage: false })
+   }
+
+   const addCode = () => {
+      return setModals({ ...modals, showCode: true })
+   }
+   const addText = () => {
+      return setModals({ ...modals, showTextEditor: true })
+   }
+
+   // eslint-disable-next-line consistent-return
+   const addDataHandler = async (e) => {
+      e.preventDefault()
+
+      const contentRequests = []
+
+      if (file) {
+         const formData = new FormData()
+         formData.append('file', file)
+         const response = await fileUpload.post('file', formData)
+         contentRequests.push({
+            contentName: file.name,
+            contentFormat: 'FILE',
+            contentValue: response.link,
+         })
+      }
+      if (photo) {
+         const formData = new FormData()
+         formData.append('file', file)
+         const response = await fileUpload.post('file', formData)
+
+         contentRequests.push({
+            contentName: file.name,
+            contentFormat: 'FILE',
+            contentValue: response.link,
+         })
+      }
+
+      if (code) {
+         contentRequests.push({
+            contentName: 'file',
+            contentFormat: 'CODE',
+            contentValue: code,
+         })
+      }
+
+      const html = editor.getHTML()
+      if (html) {
+         contentRequests.push({
+            contentName: 'file',
+            contentFormat: 'TEXT',
+            contentValue: html,
+         })
+      }
+
+      dispatch(
+         saveTask({
+            lessonId: +lessonId,
+            taskName: createTask.taskName,
+            contentRequests,
+         })
+      )
+   }
 
    const filePicker = useRef(null)
 
-   const handleChange = (event) => {
-      setStateItems({ ...stateItems, selectedFile: event.target.files[0] })
+   const getValueTaskName = (e) => {
+      setCreateTask({
+         ...createTask,
+         taskName: e.target.value,
+      })
+   }
+
+   const handleFile = (event) => {
+      return onChange('FILE', event.target.files[0])
    }
 
    const handlePick = () => {
       filePicker.current.click()
-   }
-
-   const openImageHandler = () => {
-      open(setStateItems({ ...stateItems, showImage: !stateItems.showImage }))
-   }
-
-   const openLinkModal = () => {
-      setStateItems({ ...stateItems, showModalLink: !stateItems.showModalLink })
-   }
-   const openModalDelete = () => {
-      setStateItems({ ...stateItems, showModal: !stateItems.showModal })
-   }
-   const openModalLinkDelete = () => {
-      setStateItems({
-         ...stateItems,
-         showModalLinkDelete: !stateItems.showModalLinkDelete,
-      })
-   }
-   const openModalDeleteImage = () => {
-      setStateItems({
-         ...stateItems,
-         showModalImage: !stateItems.showModalImage,
-      })
-   }
-   const closeModalLink = () => {
-      setStateItems({ ...stateItems, showModalLink: !stateItems.showModalLink })
-   }
-   const closeModal = () => {
-      setStateItems({
-         ...stateItems,
-         showModalImage: !stateItems.showModalImage,
-      })
-   }
-
-   const closeModalImage = () => {
-      setStateItems({ ...stateItems, showModal: !stateItems.showModal })
-   }
-   const closeModalLinkDelete = () => {
-      setStateItems({
-         ...stateItems,
-         showModalLinkDelete: !stateItems.showModalLinkDelete,
-      })
-   }
-   const deleteFileInModal = () => {
-      setStateItems({ ...stateItems, selectedFile: null, showModal: false })
-   }
-   const deleteModalLink = (text) => {
-      setStateItems({
-         ...stateItems,
-         showModalLinkDelete: false,
-      })
-      const deletedLink = data.filter((item) => item.text !== text)
-      setData(deletedLink)
-   }
-   const deleteImageModal = () => {
-      setStateItems({ ...stateItems, showImage: null, showModalImage: false })
-   }
-   const onDrop = useCallback((acceptedFiles) => {
-      acceptedFiles.forEach((file) => {
-         const reader = new FileReader()
-         reader.onload = () => {
-            setImages((prevState) => [...prevState, reader.result])
-         }
-         reader.readAsDataURL(file)
-      })
-      setImages([])
-   }, [])
-
-   const getValueNameTask = (e) => {
-      setStateItems({
-         ...stateItems,
-         valueNameTask: e.target.value,
-      })
-   }
-
-   const getValueCode = (e) => {
-      setStateItems({
-         ...stateItems,
-         valueCode: e.target.value,
-      })
    }
 
    const getValueText = (e) => {
@@ -152,12 +183,12 @@ const CreateTask = ({ getDataHandler }) => {
       setValue({ ...values, link: e.target.value })
    }
 
-   const sendingData = () => {
-      setData([...data, values])
-      setStateItems({ ...stateItems, showModalLink: null })
+   const onChangeLink = () => {
+      onChange('LINK', values)
+      return closeCreateLink()
    }
    const { getRootProps, isDragActive, open } = useDropzone({
-      onDrop,
+      onDrop: (files) => onChange('PHOTO', files[0]),
       maxFiles: 1,
       accept: {
          'image/jpeg': [],
@@ -165,27 +196,22 @@ const CreateTask = ({ getDataHandler }) => {
          'image/JPG': [],
       },
    })
+   // console.log(createTask)
+
    return (
       <Container>
          <h1>Создать задание</h1>
 
          <TopBox>
             <UiInput
-               onChange={getValueNameTask}
+               onChange={getValueTaskName}
                width="842px"
                placeholder="название задания"
             />
             <ImgTopBox>
                <Tooltip title="Текстовое поле" placement="top">
                   <ImageBackground>
-                     <p
-                        onClick={() =>
-                           setStateItems({
-                              ...stateItems,
-                              showTextEditor: !stateItems.showTextEditor,
-                           })
-                        }
-                     >
+                     <p onClick={addText}>
                         <TextImg src={TextImage} alt="TextImage" />
                      </p>
                   </ImageBackground>
@@ -196,24 +222,24 @@ const CreateTask = ({ getDataHandler }) => {
                   </ImageBackground>
                </Tooltip>
                <Tooltip title="Добавить картинку" placement="top">
-                  <ImageBackground>
-                     <Gallery onClick={openImageHandler} />
+                  <ImageBackground {...getRootProps()}>
+                     <Gallery />
                   </ImageBackground>
                </Tooltip>
                <Tooltip title="Вставить ссылку" placement="top">
                   <ImageBackground>
                      <LinkImg
-                        onClick={openLinkModal}
+                        onClick={openCreateLink}
                         src={LinkImage}
                         alt="ExportImage"
                      />
                   </ImageBackground>
                </Tooltip>
 
-               {stateItems.showModalLink && (
+               {modals.showCreateLink && (
                   <ModalWindow
-                     open={stateItems.showModalLink}
-                     handleClose={closeModalLink}
+                     open={modals.showCreateLink}
+                     handleClose={closeCreateLink}
                      modalTitle="Добавить ссылку"
                      footerContent={
                         <>
@@ -233,14 +259,14 @@ const CreateTask = ({ getDataHandler }) => {
                            </InputContainer>
                            <BoxButton>
                               <UIButton
-                                 onClick={closeModalLink}
+                                 onClick={closeCreateLink}
                                  variant="outlined"
                               >
                                  Отмена
                               </UIButton>
                               <UIButton
                                  variant="contained"
-                                 onClick={sendingData}
+                                 onClick={onChangeLink}
                               >
                                  Добавить
                               </UIButton>
@@ -252,12 +278,7 @@ const CreateTask = ({ getDataHandler }) => {
                <Tooltip title="Код" placement="top">
                   <ImageBackground>
                      <CodeImg
-                        onClick={() =>
-                           setStateItems({
-                              ...stateItems,
-                              showCode: !stateItems.showCode,
-                           })
-                        }
+                        onClick={addCode}
                         src={CodeImage}
                         alt="CodeImage"
                      />
@@ -267,39 +288,39 @@ const CreateTask = ({ getDataHandler }) => {
          </TopBox>
 
          <BottomBox>
-            {stateItems.showTextEditor && <TextEditor editor={editor} />}
+            {modals.showTextEditor && <TextEditor editor={editor} />}
             <input
                className="hidden"
                type="file"
                ref={filePicker}
-               onChange={handleChange}
-               multiple
+               onChange={handleFile}
             />
 
-            {stateItems.selectedFile && (
+            {file && (
                <ListBox>
                   <ListImage />
-                  <a href={stateItems.selectedFile}>
-                     {stateItems.selectedFile.name}
-                  </a>
-                  <Deleteimage onClick={openModalDelete}>
+                  <a href={file}>{file.name}</a>
+                  <Deleteimage onClick={openDeleteFile}>
                      <img src={DeleteImage} alt="DeleteImage" />
                   </Deleteimage>
                </ListBox>
             )}
 
-            {stateItems.showModal && (
+            {modals.showDeleteFile && (
                <ModalWindow
-                  open={stateItems.showModal}
-                  handleClose={closeModalImage}
+                  open={modals.showDeleteFile}
+                  handleClose={closeDeleteFile}
                   modalTitle="Вы уверены что хотите удалить этот элемент?"
                   footerContent={
                      <ModalButton>
-                        <UIButton onClick={closeModalImage} variant="outlined">
+                        <UIButton onClick={closeDeleteFile} variant="outlined">
                            Отмена
                         </UIButton>
                         <UIButton
-                           onClick={deleteFileInModal}
+                           onClick={() => {
+                              setFile(null)
+                              closeDeleteFile()
+                           }}
                            variant="contained"
                            background="#C91E1E"
                            hover="#B62727"
@@ -312,73 +333,29 @@ const CreateTask = ({ getDataHandler }) => {
                />
             )}
 
-            {data.map((item) => (
-               <>
-                  <LinkBox>
-                     <LinkImg src={LinkImage} alt="ExportImage" />
-                     <a href={item.link}>{item.text}</a>
-                     <Deleteimage onClick={openModalLinkDelete}>
-                        <img src={DeleteImage} alt="DeleteImage" />
-                     </Deleteimage>
-                  </LinkBox>
-                  {stateItems.showModalLinkDelete && (
-                     <ModalWindow
-                        open={open}
-                        handleClose={closeModalLinkDelete}
-                        modalTitle="Вы уверены что хотите удалить этот элемент?"
-                        footerContent={
-                           <ModalButton>
-                              <UIButton
-                                 onClick={closeModalLinkDelete}
-                                 variant="outlined"
-                              >
-                                 Отмена
-                              </UIButton>
-                              <UIButton
-                                 onClick={() => deleteModalLink(item.text)}
-                                 variant="contained"
-                                 background="#C91E1E"
-                                 hover="#B62727"
-                                 active="#E13A3A"
-                              >
-                                 Удалить
-                              </UIButton>
-                           </ModalButton>
-                        }
-                     />
-                  )}
-               </>
-            ))}
-
-            {stateItems.showImage && (
-               <UploadImage>
-                  <div {...getRootProps()}>
-                     {images.length === 0 ? (
-                        <StyledImagePickerTittle>
-                           {isDragActive}
-                        </StyledImagePickerTittle>
-                     ) : (
-                        <StyledImagePicker src={images} />
-                     )}
-                  </div>
-                  <DeleteButton onClick={openModalDeleteImage}>
-                     Удалить
-                  </DeleteButton>
-               </UploadImage>
+            {link && (
+               <LinkBox>
+                  <LinkImg src={LinkImage} alt="ExportImage" />
+                  <a target="_blank" rel="noreferrer" href={link.link}>
+                     {link.text}
+                  </a>
+                  <Deleteimage onClick={openDeleteLink}>
+                     <img src={DeleteImage} alt="DeleteImage" />
+                  </Deleteimage>
+               </LinkBox>
             )}
-
-            {stateItems.showModalImage && (
+            {modals.showDeleteLink && (
                <ModalWindow
                   open={open}
-                  handleClose={closeModal}
+                  handleClose={closeDeleteLink}
                   modalTitle="Вы уверены что хотите удалить этот элемент?"
                   footerContent={
                      <ModalButton>
-                        <UIButton onClick={closeModal} variant="outlined">
+                        <UIButton onClick={closeDeleteLink} variant="outlined">
                            Отмена
                         </UIButton>
                         <UIButton
-                           onClick={deleteImageModal}
+                           onClick={() => setLink(null)}
                            variant="contained"
                            background="#C91E1E"
                            hover="#B62727"
@@ -391,10 +368,80 @@ const CreateTask = ({ getDataHandler }) => {
                />
             )}
 
-            {stateItems.showCode && (
+            <UploadImage>
+               <div {...getRootProps()}>
+                  {!photo ? (
+                     <StyledImagePickerTittle>
+                        {isDragActive}
+                     </StyledImagePickerTittle>
+                  ) : (
+                     <StyledImagePicker src={URL.createObjectURL(photo)} />
+                  )}
+               </div>
+               <DeleteButton onClick={openDeleteImage}>Удалить</DeleteButton>
+            </UploadImage>
+
+            {modals.showDeleteImage && (
+               <ModalWindow
+                  open={modals.showDeleteImage}
+                  handleClose={closeDeleteImage}
+                  modalTitle="Вы уверены что хотите удалить этот элемент?"
+                  footerContent={
+                     <ModalButton>
+                        <UIButton onClick={closeDeleteImage} variant="outlined">
+                           Отмена
+                        </UIButton>
+                        <UIButton
+                           onClick={() => {
+                              setPhoto(null)
+                              closeDeleteImage()
+                           }}
+                           variant="contained"
+                           background="#C91E1E"
+                           hover="#B62727"
+                           active="#E13A3A"
+                        >
+                           Удалить
+                        </UIButton>
+                     </ModalButton>
+                  }
+               />
+            )}
+            {modals.showDeleteLink && (
+               <ModalWindow
+                  open={modals.showDeleteLink}
+                  handleClose={closeDeleteLink}
+                  modalTitle="Вы уверены что хотите удалить этот элемент?"
+                  footerContent={
+                     <ModalButton>
+                        <UIButton onClick={closeDeleteLink} variant="outlined">
+                           Отмена
+                        </UIButton>
+                        <UIButton
+                           onClick={() => {
+                              setLink(null)
+                              closeDeleteLink()
+                           }}
+                           variant="contained"
+                           background="#C91E1E"
+                           hover="#B62727"
+                           active="#E13A3A"
+                        >
+                           Удалить
+                        </UIButton>
+                     </ModalButton>
+                  }
+               />
+            )}
+
+            {modals.showCode && (
                <InputBox>
                   <CodeImg src={CodeImage} alt="CodeImage" />
-                  <UiInput onChange={getValueCode} placeholder="Вставьте код" />
+                  <UiInput
+                     value={code || ''}
+                     onChange={(e) => onChange('CODE', e.target.value)}
+                     placeholder="Вставьте код"
+                  />
                </InputBox>
             )}
          </BottomBox>
@@ -413,7 +460,7 @@ const CreateTask = ({ getDataHandler }) => {
                borderradius="8px"
                fontSize="14px"
                variant="contained"
-               onClick={onSendingData}
+               onClick={addDataHandler}
             >
                Сохранить
             </UIButton>
@@ -423,6 +470,7 @@ const CreateTask = ({ getDataHandler }) => {
 }
 
 export default CreateTask
+
 const Container = styled.div`
    box-sizing: border-box;
    width: 1140px;

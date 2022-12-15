@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { createSlice } from '@reduxjs/toolkit'
 import { saveTask } from './task-actions'
 
@@ -10,7 +11,11 @@ const initialState = {
 export const taskSlice = createSlice({
    name: 'task',
    initialState,
-   reducers: {},
+   reducers: {
+      getDataFromTask: (state, action) => {
+         state.task.push(action.payload)
+      },
+   },
    extraReducers: {
       // post SaveTask
       [saveTask.pending]: (state) => {
@@ -24,3 +29,5 @@ export const taskSlice = createSlice({
       },
    },
 })
+
+export const { getDataFromTask } = taskSlice.actions

@@ -10,6 +10,7 @@ import { InsCoursesSlice } from './slices/instructor-slices/courses/coursesSlice
 import { teacherAdminSlice } from './slices/admin-slices/teacher-slices/addTeacherSlice'
 import { insMaterials } from './slices/instructor-slices/materials/materialsSlice'
 import { studentSlice } from './slices/student-slices/studentSlice'
+import { taskSlice } from './slices/task-slices/taskSlice'
 
 const store = configureStore({
    reducer: {
@@ -23,6 +24,7 @@ const store = configureStore({
       teacher: teacherAdminSlice.reducer,
       materials: insMaterials.reducer,
       student: studentSlice.reducer,
+      task: taskSlice.reducer,
    },
 })
 
