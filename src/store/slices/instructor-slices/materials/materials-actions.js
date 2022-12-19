@@ -238,3 +238,53 @@ export const deleteLessonLink = createAsyncThunk(
       }
    }
 )
+
+export const saveTask = createAsyncThunk(
+   'task/save',
+   async (data, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.post('task', data)
+         const result = response.data
+         return result
+      } catch (err) {
+         return rejectWithValue(err.message)
+      }
+   }
+)
+
+export const deleteTask = createAsyncThunk(
+   'task/deleteTask',
+   async ({ taskId, courseId }, { dispatch, rejectWithValue }) => {
+      try {
+         await axiosInstance.delete(`task/${taskId}`)
+         return dispatch(getCoursesLessons(courseId))
+      } catch (error) {
+         return rejectWithValue(error.message)
+      }
+   }
+)
+
+export const getTaskById = createAsyncThunk(
+   'task/getTaskById',
+   async (taskId, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`task/${taskId}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)
+
+export const editTask = createAsyncThunk(
+   'task/editTask',
+   async (taskId, { rejectWithValue, dispatch }) => {
+      try {
+         const response = await axiosInstance.put(`task/${taskId}`)
+         return dispatch(getTaskById(response.data))
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)

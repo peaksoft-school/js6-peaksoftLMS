@@ -30,6 +30,7 @@ import { DeleteLinkModal } from '../../components/ins-materials/DeleteLinkModal'
 import { SELECT_OPTIONS } from '../../utils/constants/constants'
 import MaterialsLessonCard from '../../components/ins-materials/MaterialsLessonCard'
 import { DeleteLessonModal } from '../../components/ins-materials/DeleteLessonModal'
+import { DeleteTask } from '../../components/ins-materials/DeleteTask'
 
 export const InstructorMaterials = () => {
    const { id } = useParams()
@@ -125,6 +126,22 @@ export const InstructorMaterials = () => {
       }
    }
 
+   // * delete task
+   const deleteTask = (taskId) => {
+      if (taskId === null) {
+         setValidateError((prev) => !prev)
+      } else {
+         setParams({ modalOpen: 'DELETE-TASK', taskId })
+      }
+   }
+   const editTask = (taskId, lessonId) => {
+      if (taskId === null) {
+         setValidateError((prev) => !prev)
+      } else {
+         navigate(`/instructor/edit-task/${id}/${lessonId}/${taskId}`)
+      }
+   }
+
    const navigateHandler = (action, incomingId) => {
       switch (action) {
          case 'Видеоурок':
@@ -179,6 +196,9 @@ export const InstructorMaterials = () => {
                   <LessonGrid>
                      {lessons?.map((element) => (
                         <MaterialsLessonCard
+                           editTask={() =>
+                              editTask(element.taskId, element.lessonId)
+                           }
                            key={element.lessonId}
                            headerIcon={EditLesson}
                            actionIcon={DeleteLesson}
@@ -196,6 +216,8 @@ export const InstructorMaterials = () => {
                            deletePresentation={() =>
                               deletePresentation(element.presentationId)
                            }
+                           // * delete task
+                           deleteTask={() => deleteTask(element.taskId)}
                            // * video lesson functions
                            editVideo={() =>
                               editVideo(element.videoId, element.lessonId)
@@ -233,6 +255,9 @@ export const InstructorMaterials = () => {
          )}
          {status === 'created' && (
             <PopUp message="Урок успешно создан" messageType="success" />
+         )}
+         {status === 'createdTask' && (
+            <PopUp message="Задача успешно создана" messageType="success" />
          )}
          {status === 'deleted' && (
             <PopUp message="Удалено" messageType="success" />
@@ -316,6 +341,12 @@ export const InstructorMaterials = () => {
          {modalOpen === 'DELETE-LESSON' && (
             <DeleteLessonModal
                open={modalOpen === 'DELETE-LESSON'}
+               onClose={() => setParams({})}
+            />
+         )}
+         {modalOpen === 'DELETE-TASK' && (
+            <DeleteTask
+               open={modalOpen === 'DELETE-TASK'}
                onClose={() => setParams({})}
             />
          )}

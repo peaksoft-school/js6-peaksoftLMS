@@ -27,7 +27,10 @@ const MaterialsLessonCard = (props) => {
       lessonId,
       videoId,
       presentationId,
+      deleteTask,
+      editTask,
    } = props
+
    return (
       <CardMain>
          <CardHeader>
@@ -95,10 +98,10 @@ const MaterialsLessonCard = (props) => {
             <ButtonBlock>
                <CustomButton variant="contained">
                   <img src={EditLesson} alt="edit" />
-                  <p>Редактировать</p>
+                  <p onClick={editTask}>Редактировать</p>
                </CustomButton>
 
-               <CustomButton variant="contained">
+               <CustomButton onClick={deleteTask} variant="contained">
                   <img src={DeleteItem} alt="delete" />
                   <p>Удалить</p>
                </CustomButton>

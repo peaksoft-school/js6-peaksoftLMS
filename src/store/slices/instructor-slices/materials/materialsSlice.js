@@ -7,6 +7,7 @@ import {
    deleteLesson,
    deleteLessonLink,
    deletePresentation,
+   deleteTask,
    deleteVideoLesson,
    editLink,
    editPresentation,
@@ -14,6 +15,7 @@ import {
    getCoursesLessons,
    postLink,
    postVideo,
+   saveTask,
 } from './materials-actions'
 
 const initialState = {
@@ -97,6 +99,16 @@ export const insMaterials = createSlice({
          state.status = 'edited'
       },
       [editLink.rejected]: setError,
+      // * post task
+      [saveTask.fulfilled]: (state) => {
+         state.status = 'createdTask'
+      },
+      [saveTask.rejected]: setError,
+      // delete task
+      [deleteTask.fulfilled]: (state) => {
+         state.status = 'deleted'
+      },
+      [deleteTask.rejected]: setError,
    },
 })
 

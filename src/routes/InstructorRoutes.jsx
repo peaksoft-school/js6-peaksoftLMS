@@ -12,6 +12,7 @@ import { InstructorLinkPage } from '../containers/lesson-containers/InstructorLi
 import { NotFoundPage } from '../containers/NotFoundPage'
 import SidebarLayout from '../layout/SidebarLayout'
 import { InstructorCreateTask } from '../containers/instructor/InstructorCreateTask'
+import { InstructorEditTask } from '../containers/instructor/InstructorEditTask'
 
 export const InstructorRoutes = () => {
    return (
@@ -47,6 +48,10 @@ export const InstructorRoutes = () => {
                <Route
                   path="create-task/:courseId/:lessonId"
                   element={<InstructorCreateTask />}
+               />
+               <Route
+                  path="edit-task/:courseId/:lessonId/:taskId"
+                  element={<InstructorEditTask />}
                />
             </Route>
             <Route path="*" index element={<NotFoundPage />} />

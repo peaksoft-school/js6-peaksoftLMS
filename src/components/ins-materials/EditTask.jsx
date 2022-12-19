@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useDropzone } from 'react-dropzone'
@@ -7,22 +7,26 @@ import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import styled from 'styled-components'
 import { Tooltip } from '@mui/material'
-import UiInput from '../UiInput'
-import TextImage from '../../../assets/Text.svg'
-import { ReactComponent as ListImage } from '../../../assets/List.svg'
-import LinkImage from '../../../assets/Export.svg'
-import CodeImage from '../../../assets/Export2.svg'
-import DeleteImage from '../../../assets/Delete.svg'
-import UIButton from '../UIButton'
-import TextEditor from './TextEditor'
-import { ReactComponent as Gallery } from '../../../assets/Gallery.svg'
-import ModalWindow from '../ModalWindow'
-import { saveTask } from '../../../store/slices/instructor-slices/materials/materials-actions'
-import fileUpload from '../../../api/axiosFileUpload'
+import UiInput from '../UI/UiInput'
+import TextImage from '../../assets/Text.svg'
+import { ReactComponent as ListImage } from '../../assets/List.svg'
+import LinkImage from '../../assets/Export.svg'
+import CodeImage from '../../assets/Export2.svg'
+import DeleteImage from '../../assets/Delete.svg'
+import UIButton from '../UI/UIButton'
+import TextEditor from '../UI/createTask/TextEditor'
+import { ReactComponent as Gallery } from '../../assets/Gallery.svg'
+import ModalWindow from '../UI/ModalWindow'
+import {
+   getTaskById,
+   saveTask,
+} from '../../store/slices/instructor-slices/materials/materials-actions'
+import fileUpload from '../../api/axiosFileUpload'
 
-const CreateTask = () => {
+const EditTask = () => {
    const dispatch = useDispatch()
-   const { lessonId } = useParams()
+   const { lessonId, taskId } = useParams()
+
    const navigate = useNavigate()
 
    const [file, setFile] = useState(null)
@@ -70,6 +74,13 @@ const CreateTask = () => {
       showDeleteImage: false,
       showDeleteFile: false,
       valueNameTask: '',
+   })
+
+   const [editTask, setEditTask] = useState({
+      contentFormat: '',
+      contentName: '',
+      contentValue: '',
+      id: null,
    })
 
    const openCreateLink = () => {
@@ -136,7 +147,7 @@ const CreateTask = () => {
 
       if (code) {
          contentRequests.push({
-            contentName: 'file',
+            contentName: 'code',
             contentFormat: 'CODE',
             contentValue: code,
          })
@@ -145,7 +156,7 @@ const CreateTask = () => {
       const html = editor.getText()
       if (html) {
          contentRequests.push({
-            contentName: 'text',
+            contentName: 'textEditor',
             contentFormat: 'TEXT',
             contentValue: html,
          })
@@ -199,12 +210,38 @@ const CreateTask = () => {
       },
    })
 
+   useEffect(() => {
+      dispatch(getTaskById(taskId))
+         .unwrap()
+         .then((response) => {
+            setCreateTask({ ...createTask, taskName: response.taskName })
+            response.contentResponses.map((item) =>
+               setEditTask({
+                  ...editTask,
+                  contentFormat: item.contentFormat,
+                  contentName: item.contentName,
+                  contentValue: item.contentValue,
+                  id: item.id,
+               })
+            )
+         })
+   }, [])
+
+   //    {
+   //     lessonId: response.id,
+   //     taskName: response.taskName,
+   //     contentRequests: [
+
+   //     ]
+   //  }
+
    return (
       <Container>
          <h1>Создать задание</h1>
 
          <TopBox>
             <UiInput
+               value={createTask.taskName}
                onChange={getValueTaskName}
                width="842px"
                placeholder="название задания"
@@ -289,7 +326,7 @@ const CreateTask = () => {
          </TopBox>
 
          <BottomBox>
-            {modals.showTextEditor && <TextEditor editor={editor} />}
+            <TextEditor editor={editor} />
             <input
                className="hidden"
                type="file"
@@ -435,18 +472,16 @@ const CreateTask = () => {
                />
             )}
 
-            {modals.showCode && (
-               <TextAreaContainer>
-                  <CodeImg src={CodeImage} alt="CodeImage" />
-                  <InputBox>
-                     <TextAreaStyle
-                        value={code || ''}
-                        onChange={(e) => onChange('CODE', e.target.value)}
-                        placeholder="Вставьте код"
-                     />
-                  </InputBox>
-               </TextAreaContainer>
-            )}
+            <TextAreaContainer>
+               <CodeImg src={CodeImage} alt="CodeImage" />
+               <InputBox>
+                  <TextAreaStyle
+                     value={editTask.contentValue || ''}
+                     onChange={(e) => onChange('CODE', e.target.value)}
+                     placeholder="Вставьте код"
+                  />
+               </InputBox>
+            </TextAreaContainer>
          </BottomBox>
 
          <ButtonBox>
@@ -473,7 +508,7 @@ const CreateTask = () => {
    )
 }
 
-export default CreateTask
+export default EditTask
 
 const Container = styled.div`
    box-sizing: border-box;
