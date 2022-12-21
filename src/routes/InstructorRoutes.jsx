@@ -25,11 +25,11 @@ export const InstructorRoutes = () => {
                />
                <Route path="materials/:id" element={<InstructorMaterials />} />
                <Route
-                  path="video/:courseId/:lessonId"
+                  path="video/:courseId/:videoId"
                   element={<InstructorVideoPage />}
                />
                <Route
-                  path="presentataion/:courseId/:lessonId"
+                  path="presentataion/:courseId/:presentationId"
                   element={<InstructorPresentaion />}
                />
                <Route

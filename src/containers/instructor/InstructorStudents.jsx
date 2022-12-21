@@ -32,7 +32,7 @@ export const InstructorStudents = () => {
       setParams({ modalOpen: 'ASSIGN-GROUP', id })
    }
 
-   const render = courseStudents.map((item, i) => {
+   const render = courseStudents?.map((item, i) => {
       return {
          id: i + 1,
          name: item.fullName,
@@ -49,46 +49,42 @@ export const InstructorStudents = () => {
    }, [dispatch])
 
    return (
-      <>
+      <StudetsMain>
+         <HeaderLoyout roles="Инструктор" links={courseLinks(id)} />
+         <HeaderBlock>
+            <div>
+               <BreadCrumbs paths={courseCrumbs(courseName, 'Студенты')} />
+            </div>
+            <CustomButton variant="contained" onClick={openAssignModal}>
+               <AddIcon />
+               <ButtonText> Добавить группу в курс</ButtonText>
+            </CustomButton>
+         </HeaderBlock>
+
          {status === 'loading' ? (
             <UiLoading />
          ) : (
-            <StudetsMain>
-               <HeaderLoyout roles="Иструктор" links={courseLinks(id)} />
-               {status === 'assigned' && (
-                  <PopUp
-                     message="Группа добавлена в курс"
-                     messageType="success"
-                  />
-               )}
-               <HeaderBlock>
-                  <div>
-                     <BreadCrumbs
-                        paths={courseCrumbs(courseName, 'Студенты')}
-                     />
-                  </div>
-                  <CustomButton variant="contained" onClick={openAssignModal}>
-                     <AddIcon />
-                     <ButtonText> Добавить группу в курс</ButtonText>
-                  </CustomButton>
-               </HeaderBlock>
-               {courseStudents.length === 0 ? (
+            <>
+               {courseStudents.length === 0 && (
                   <NoDataInfo title="В этом курсе пока нет студентов" />
-               ) : (
-                  <TableMain>
-                     <Wrapper width="1140px" margin="24px 0" height="100vh">
-                        <UiTable headData={STUDENT_HEADER} data={render} />
-                     </Wrapper>
-                  </TableMain>
                )}
-            </StudetsMain>
+               <TableMain>
+                  <Wrapper width="1140px" margin="24px 0" height="100vh">
+                     <UiTable headData={STUDENT_HEADER} data={render} />
+                  </Wrapper>
+               </TableMain>
+            </>
+         )}
+
+         {status === 'assigned' && (
+            <PopUp message="Группа добавлена в курс" messageType="success" />
          )}
          {error && <PopUp message={error} messageType="error" />}
          <AssignGroupModal
             open={modalOpen === 'ASSIGN-GROUP'}
             onClose={() => setParams({})}
          />
-      </>
+      </StudetsMain>
    )
 }
 const StudetsMain = styled.div`

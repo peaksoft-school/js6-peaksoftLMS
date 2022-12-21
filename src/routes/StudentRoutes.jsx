@@ -18,17 +18,16 @@ export const StudentRoutes = () => {
             <Route path="/" element={<StudentLayout />}>
                <Route index element={<StudentMain />} />
                <Route path="lessons/:id" element={<StudentInnerPage />} />
-               <Route path="video-page" element={<StudentVideoPage />} />
                <Route
-                  path="presentation-page"
-                  element={<StudentPresentationPage />}
+                  path="video-page/:videoId"
+                  element={<StudentVideoPage />}
                />
                <Route path="task-page" element={<StudentTaskPage />} />
                <Route path="link-page" element={<StudentLinkPage />} />
                <Route path="test-page" element={<StudentTestPage />} />
 
                <Route
-                  path="presentaion-page"
+                  path="presentaion-page/:presentationId"
                   element={<StudentPresentationPage />}
                />
             </Route>

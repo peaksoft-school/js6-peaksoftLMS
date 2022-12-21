@@ -15,11 +15,11 @@ const StudentInnerPage = () => {
    useEffect(() => {
       dispatch(getCurseLessons(id))
    }, [])
-   const navigateVideoLesson = () => {
-      navigate('/student/video-page')
+   const navigateVideoLesson = (videoId) => {
+      navigate(`/student/video-page/${videoId}`)
    }
-   const navigatePresentation = () => {
-      navigate('/student/presentation-page')
+   const navigatePresentation = (presentationId) => {
+      navigate(`/student/presentaion-page/${presentationId}`)
    }
    const navigateTask = () => {
       navigate('/student/task-page')
@@ -41,8 +41,12 @@ const StudentInnerPage = () => {
                {lessons.map((element) => (
                   <LessonCard
                      title={element.lessonName}
-                     navigateVideoLesson={navigateVideoLesson}
-                     navigatePresentation={navigatePresentation}
+                     navigateVideoLesson={() =>
+                        navigateVideoLesson(element.videoId)
+                     }
+                     navigatePresentation={() =>
+                        navigatePresentation(element.presentationId)
+                     }
                      navigateTask={navigateTask}
                      navigateLink={navigateLink}
                      navigateTest={navigateTest}

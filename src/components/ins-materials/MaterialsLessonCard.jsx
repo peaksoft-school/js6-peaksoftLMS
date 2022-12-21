@@ -27,6 +27,8 @@ const MaterialsLessonCard = (props) => {
       lessonId,
       linkId,
       taskId,
+      videoId,
+      presentationId,
    } = props
    return (
       <CardMain>
@@ -50,7 +52,7 @@ const MaterialsLessonCard = (props) => {
             </HeaderRight>
          </CardHeader>
          <ContentLessonCard>
-            <TextBlock onClick={() => navigateHandler('Видеоурок', lessonId)}>
+            <TextBlock onClick={() => navigateHandler('Видеоурок', videoId)}>
                <img src={lessonVideoIcon} alt="icon" />
                <TextLesson>Видеоурок</TextLesson>
             </TextBlock>
@@ -68,7 +70,9 @@ const MaterialsLessonCard = (props) => {
          </ContentLessonCard>
 
          <ContentLessonCard>
-            <TextBlock onClick={() => navigateHandler('Презентация', lessonId)}>
+            <TextBlock
+               onClick={() => navigateHandler('Презентация', presentationId)}
+            >
                <img src={presentationIcon} alt="icon" />
                <TextLesson>Презентация</TextLesson>
             </TextBlock>

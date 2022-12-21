@@ -15,6 +15,9 @@ export const ROUTES = {
    // other routes under
 }
 
+export const VIEWER =
+   'https://drive.google.com/viewerng/viewer?embedded=true&url='
+
 export const ICONS_IMG = {
    GroupSvg,
    GroupActive,
@@ -25,7 +28,6 @@ export const ICONS_IMG = {
    StudentsSvg,
    StudentsActive,
 }
-
 export const SIDELAYOUT_DATA = [
    {
       title: 'Группы',

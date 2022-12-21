@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+
 import { InsMeatBalls } from '../../components/instructor/InsMeatBalls'
 import GroupCard from '../../components/UI/GroupCard'
 import { getCourses } from '../../store/slices/instructor-slices/courses/course-actions'
@@ -32,23 +33,20 @@ export const InstructorMain = () => {
       dispatch(getCourses())
    }, [dispatch])
 
-   return status === 'loading' ? (
-      <UiLoading />
-   ) : (
-      <>
-         <CourseMain>
+   return (
+      <CourseMain>
+         <HeaderBlock>
             <HeaderLayout roles="Инструктор" />
-            {courses.length === 0 ? (
-               <NoDataInfo title="У вас пока нет курсов" />
-            ) : (
+         </HeaderBlock>
+         {status === 'loading' ? (
+            <UiLoading />
+         ) : (
+            <>
+               {courses.length === 0 && (
+                  <NoDataInfo title="У вас пока нет курсов" />
+               )}
                <GridCourses>
-                  {status === 'assigned' && (
-                     <PopUp
-                        message="Группа добавлена в курс"
-                        messageType="success"
-                     />
-                  )}
-                  {courses.map((element) => (
+                  {courses?.map((element) => (
                      <GroupCard
                         key={element.id}
                         someImage={element.image}
@@ -65,14 +63,17 @@ export const InstructorMain = () => {
                      />
                   ))}
                </GridCourses>
-            )}
-         </CourseMain>
+            </>
+         )}
+
+         {status === 'assigned' && (
+            <PopUp message="Группа добавлена в курс" messageType="success" />
+         )}
          <AssignGroupModal
             open={modalOpen === 'ASSIGN-GROUP'}
             onClose={closeModalHandler}
          />
-         <Outlet />
-      </>
+      </CourseMain>
    )
 }
 
@@ -80,7 +81,6 @@ const CourseMain = styled.div`
    width: 100%;
    display: flex;
    flex-direction: column;
-   padding: 0 40px 0 20px;
    background-color: #eff0f4;
 `
 const GridCourses = styled.div`
@@ -89,4 +89,8 @@ const GridCourses = styled.div`
    column-gap: 20px;
    row-gap: 20px;
    margin-top: 10px;
+   padding: 0 40px 0 20px;
+`
+const HeaderBlock = styled.div`
+   padding: 0 10px;
 `

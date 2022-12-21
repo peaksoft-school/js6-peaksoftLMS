@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -22,7 +23,7 @@ export const GroupsInnerPage = () => {
       { path: `/admin/groups/${id}`, name: groupStudents[0]?.groupName },
    ]
 
-   const render = groupStudents.map((item, i) => {
+   const render = groupStudents?.map((item, i) => {
       return {
          id: i + 1,
          name: item.fullName,
@@ -38,28 +39,27 @@ export const GroupsInnerPage = () => {
    }, [dispatch])
 
    return (
-      <>
+      <StudetsMain>
+         <HeaderBlock>
+            <HeaderLoyout roles="Администратор" />
+         </HeaderBlock>
+         <BreadcrumsBlock>
+            <BreadCrumbs paths={ADMIN_INNER_PATH} />
+         </BreadcrumsBlock>
+
          {status === 'loading' ? (
             <UiLoading />
+         ) : groupStudents.length === 0 ? (
+            <NoDataInfo title="В этой группе пока нет студентов" />
          ) : (
-            <StudetsMain>
-               <HeaderLoyout roles="Администратор" />
-               <BreadcrumsBlock>
-                  <BreadCrumbs paths={ADMIN_INNER_PATH} />
-               </BreadcrumsBlock>
-               {groupStudents.length === 0 ? (
-                  <NoDataInfo title="В этой группе пока нет студентов" />
-               ) : (
-                  <TableMain>
-                     <Wrapper width="1140px" margin="24px 0" height="100vh">
-                        <UiTable headData={STUDENT_HEADER} data={render} />
-                     </Wrapper>
-                  </TableMain>
-               )}
-            </StudetsMain>
+            <TableMain>
+               <Wrapper width="1140px" margin="24px 0" height="100vh">
+                  <UiTable headData={STUDENT_HEADER} data={render} />
+               </Wrapper>
+            </TableMain>
          )}
          {error && <PopUp message={error} messageType="error" />}
-      </>
+      </StudetsMain>
    )
 }
 const StudetsMain = styled.div`
@@ -75,4 +75,7 @@ const BreadcrumsBlock = styled.div`
    display: flex;
    padding-top: 44px;
    margin-left: 39px;
+`
+const HeaderBlock = styled.div`
+   padding: 0 25px;
 `

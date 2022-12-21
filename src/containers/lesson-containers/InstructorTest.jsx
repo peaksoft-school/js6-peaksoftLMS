@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
 import HeaderLayout from '../../components/UI/HeaderLoyout'
+import Test from '../../components/createTest/Test'
 import { taskCrumbs } from '../../utils/helpers/helper'
 
 export const InstructorTest = () => {
-   const { courseId } = useParams()
+   const courseId = useParams()
+
    const { courseName } = useSelector((state) => state.insCourses)
 
    return (
@@ -16,6 +18,7 @@ export const InstructorTest = () => {
          <BreadCrumbsBlock>
             <BreadCrumbs paths={taskCrumbs(courseName, 'Teст', courseId)} />
          </BreadCrumbsBlock>
+         <Test />
       </TestPageMain>
    )
 }

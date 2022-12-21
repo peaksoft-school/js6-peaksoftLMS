@@ -200,6 +200,7 @@ const AddInstructorModal = ({ open, handleClose }) => {
                      Отмена
                   </ButtonCloseTeacher>
                   <ButtonAddTeacher
+                     marginleft="10px"
                      type="submit"
                      variant="contained"
                      background="#3772FF"

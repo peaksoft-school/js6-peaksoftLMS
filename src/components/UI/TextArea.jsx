@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-function TextArea({ onChange, value, type, placeholder, ...props }) {
+function TextArea({ onChange, value, type, placeholder, id, ...props }) {
    return (
       <TextAreaContainer>
          <TextAreaIn
+            id={id}
             onChange={onChange}
             value={value}
             placeholder={placeholder}
