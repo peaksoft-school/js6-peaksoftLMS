@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom'
-
 import { InsMeatBalls } from '../../components/instructor/InsMeatBalls'
 import GroupCard from '../../components/UI/GroupCard'
 import { getCourses } from '../../store/slices/instructor-slices/courses/course-actions'

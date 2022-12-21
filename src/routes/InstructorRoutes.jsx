@@ -37,7 +37,7 @@ export const InstructorRoutes = () => {
                   element={<InstructorLinkPage />}
                />
                <Route
-                  path="task/:courseId/:lessonId"
+                  path="task/:courseId/:taskId"
                   element={<InstructorTask />}
                />
                <Route

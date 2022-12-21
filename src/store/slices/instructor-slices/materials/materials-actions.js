@@ -251,3 +251,17 @@ export const getLessonLink = createAsyncThunk(
       }
    }
 )
+
+// * test crud actions
+export const getLessonTask = createAsyncThunk(
+   'instructor-materials/getLessonTask',
+   async (id, { rejectWithValue }) => {
+      try {
+         const response = await axiosInstance.get(`task/${id}`)
+         const { data } = response
+         return data
+      } catch (err) {
+         return rejectWithValue(err.response.data.message)
+      }
+   }
+)

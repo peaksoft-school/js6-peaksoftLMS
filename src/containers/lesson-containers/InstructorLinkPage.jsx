@@ -7,12 +7,14 @@ import BreadCrumbs from '../../components/UI/BreadCrambs'
 import HeaderLayout from '../../components/UI/HeaderLoyout'
 import { getLessonLink } from '../../store/slices/instructor-slices/materials/materials-actions'
 import { taskCrumbs } from '../../utils/helpers/helper'
+import Wrapper from '../../components/UI/Wrapper'
 
 export const InstructorLinkPage = () => {
    const [linkData, setLinkData] = useState({})
    const { courseId, linkId } = useParams()
    const { courseName } = useSelector((state) => state.insCourses)
 
+   console.log(linkId)
    const dispatch = useDispatch()
    useEffect(() => {
       dispatch(getLessonLink(linkId))
@@ -26,12 +28,12 @@ export const InstructorLinkPage = () => {
          <BreadCrumbsBlock>
             <BreadCrumbs paths={taskCrumbs(courseName, 'Ссылка', courseId)} />
          </BreadCrumbsBlock>
-         <div>
-            <h2>{linkData.linkText}</h2>
+         <Wrapper width="100%" margin="20px 0" height="80%" padding="20px">
+            <Title>{linkData.linkText}</Title>
             <a href={linkData.link} target="_blank">
                {linkData.link}
             </a>
-         </div>
+         </Wrapper>
       </TestPageMain>
    )
 }
@@ -42,5 +44,8 @@ const TestPageMain = styled.div`
    overflow: auto;
 `
 const BreadCrumbsBlock = styled.div`
-   margin: 47px 0 24px 41px;
+   margin: 34px 0 24px 35px;
+`
+const Title = styled.h2`
+   margin-bottom: 20px;
 `

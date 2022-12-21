@@ -202,6 +202,7 @@ export const InstructorMaterials = () => {
                            headerIcon={EditLesson}
                            actionIcon={DeleteLesson}
                            lessonId={element.lessonId}
+                           taskId={element.taskId}
                            linkId={element.linkId}
                            editHandler={() =>
                               submitEdit(element.lessonId, element.lessonName)

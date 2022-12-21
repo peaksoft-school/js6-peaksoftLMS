@@ -1,15 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import BreadCrumbs from '../../components/UI/BreadCrambs'
-import CreateTask from '../../components/UI/createTask/CreateTask'
 import HeaderLayout from '../../components/UI/HeaderLoyout'
 import { taskCrumbs } from '../../utils/helpers/helper'
+import { getLessonTask } from '../../store/slices/instructor-slices/materials/materials-actions'
+import Wrapper from '../../components/UI/Wrapper'
 
 export const InstructorTask = () => {
-   const { courseId } = useParams()
+   const { courseId, taskId } = useParams()
    const { courseName } = useSelector((state) => state.insCourses)
+   const dispatch = useDispatch()
+   const dataTask = useSelector((state) => state.materials.taskData)
+
+   console.log(dataTask.contentResponses, 'taskData')
+
+   useEffect(() => {
+      dispatch(getLessonTask(taskId))
+   }, [])
 
    return (
       <TaskPageMain>
@@ -17,7 +26,14 @@ export const InstructorTask = () => {
          <BreadCrumbsBlock>
             <BreadCrumbs paths={taskCrumbs(courseName, 'Задание', courseId)} />
          </BreadCrumbsBlock>
-         <CreateTask />
+
+         <Wrapper>
+            {dataTask.contentResponses.map((item) => (
+               <div key={item.id}>
+                  <h2>{item.contentName}</h2>
+               </div>
+            ))}
+         </Wrapper>
       </TaskPageMain>
    )
 }

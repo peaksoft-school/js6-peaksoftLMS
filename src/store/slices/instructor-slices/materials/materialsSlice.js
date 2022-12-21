@@ -14,12 +14,14 @@ import {
    getCoursesLessons,
    postLink,
    postVideo,
+   getLessonTask,
 } from './materials-actions'
 
 const initialState = {
    lessons: [],
    status: null,
    error: null,
+   taskData: [],
 }
 
 export const insMaterials = createSlice({
@@ -97,6 +99,10 @@ export const insMaterials = createSlice({
          state.status = 'edited'
       },
       [editLink.rejected]: setError,
+      // * get task
+      [getLessonTask.fulfilled]: (state, { payload }) => {
+         state.taskData = payload
+      },
    },
 })
 
