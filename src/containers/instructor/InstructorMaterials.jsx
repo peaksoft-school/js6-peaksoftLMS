@@ -183,6 +183,8 @@ export const InstructorMaterials = () => {
                            headerIcon={EditLesson}
                            actionIcon={DeleteLesson}
                            lessonId={element.lessonId}
+                           taskId={element.taskId}
+                           linkId={element.linkId}
                            videoId={element.videoId}
                            presentationId={element.presentationId}
                            editHandler={() =>
